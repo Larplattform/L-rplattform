@@ -4,6 +4,7 @@ using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Data;
+using ApplicationDbContext = Data.Context.ApplicationDbContext;
 
 namespace MainApp;
 
