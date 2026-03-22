@@ -17,6 +17,6 @@ It handles:
 
 # Database
 **SQL Server Management Studio (SSMS)** is used for storing all the tables.
-**Entity Framework Core is the orm (object relational mapping) that intracts with sql server via linq syntax.
+**Entity Framework Core** is the orm (object relational mapping) that intracts with sql server via linq syntax.
 **Database Migration is used for updating data scheme if something is forgotten or adding a new item.
   
