@@ -1,4 +1,4 @@
-using Lärplattform.Data;
+using Data.Context;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
