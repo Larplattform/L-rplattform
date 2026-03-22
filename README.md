@@ -1,16 +1,16 @@
 # Learning plattform
-This Razor page applikation uses **Entity Framework Code first** method. The goal with this projekt is to solve the problem of data loss and provide solution for faster preformance. It handles school aspects such as:
+This Razor page application uses **Entity Framework Code first** method. The goal with this projekt is to solve the problem of data loss and provide solution for faster performance. It handles school aspects such as:
 * User.
 * Courses.
 * Schedule.
 * Report.
 * CRUD.
-* Assigemnets.
+* Assignments.
 * Submission.
 
 # Technologies Used
 *  C#
-*  .NET CORE.
+* .NET CORE.
 *  Entity Framework Core
 *  ASP NET CORE Razor Pages
 
