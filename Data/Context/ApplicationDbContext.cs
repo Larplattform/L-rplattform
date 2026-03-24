@@ -19,6 +19,8 @@ namespace Data.Context
         public DbSet<Course> Courses { get; set; } = null!;
         public DbSet<Schedule> Schedules { get; set; } = null!;
 
+        public DbSet<Lesson> Lessons { get; set; } = null!;
+
 
 
         /// <inheritdoc cref="Microsoft.EntityFrameworkCore.DbContext.OnModelCreating"/>
