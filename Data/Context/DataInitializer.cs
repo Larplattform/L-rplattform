@@ -21,7 +21,7 @@ namespace Data.Context
 
             await SeedRoles();
             await SeedUsers();
-            await SeedSessions();
+            await SeedCourses();
 
             await dbContext.SaveChangesAsync();
         }
@@ -50,8 +50,10 @@ namespace Data.Context
         /// Seeds initial sessions for the application.
         /// </summary>
         /// <returns></returns>
-        private async Task SeedSessions()
+        private async Task SeedCourses()
         {
+
+           
            
         }
 

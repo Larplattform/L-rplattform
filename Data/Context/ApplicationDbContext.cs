@@ -16,6 +16,8 @@ namespace Data.Context
         /// Set of all tracked sessions.
         /// </summary>
 
+        public DbSet<Course> Courses { get; set; } = null!;
+
 
 
         /// <inheritdoc cref="Microsoft.EntityFrameworkCore.DbContext.OnModelCreating"/>
