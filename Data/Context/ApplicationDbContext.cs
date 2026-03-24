@@ -21,6 +21,8 @@ namespace Data.Context
 
         public DbSet<Lesson> Lessons { get; set; } = null!;
 
+        public DbSet<Assigment> Assigments { get; set; } = null!;
+
 
 
         /// <inheritdoc cref="Microsoft.EntityFrameworkCore.DbContext.OnModelCreating"/>
