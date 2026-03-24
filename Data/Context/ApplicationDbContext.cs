@@ -17,6 +17,7 @@ namespace Data.Context
         /// </summary>
 
         public DbSet<Course> Courses { get; set; } = null!;
+        public DbSet<Schedule> Schedules { get; set; } = null!;
 
 
 
