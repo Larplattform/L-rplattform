@@ -31,9 +31,9 @@ namespace Data.Context
         /// </summary>
         private async Task SeedUsers()
         {
-            await AddUserIfNotExists("GruppA@gmail.com", "Erik", "Lund", "Lundgatan 2", "Stockholm", "Sweden", "Hejsan123#", ["Admin"]);
-            await AddUserIfNotExists("GruppA2@gmail.com", "Amanda", "Persson", "Lundgatan 29", "Stockholm", "Sweden", "Hejsan123#", ["Member"]);
-            await AddUserIfNotExists("GruppA3@gmail.com", "Gunila", "Andersson", "Lundgatan 3", "Stockholm", "Sweden", "Hejsan123#", ["Trainer"]);
+            await AddUserIfNotExists("Admin1@admin.com", "Erik", "Lund", "Lundgatan 2", "Stockholm", "Sweden", "Hejsan123#", ["Admin"]);
+            await AddUserIfNotExists("Elev1@elev.com", "Amanda", "Persson", "Lundgatan 29", "Stockholm", "Sweden", "Hejsan123#", ["Student"]);
+            await AddUserIfNotExists("Larare@larare.com", "Gunila", "Andersson", "Lundgatan 3", "Stockholm", "Sweden", "Hejsan123#", ["Teacher"]);
         }
 
         /// <summary>
@@ -42,8 +42,8 @@ namespace Data.Context
         private async Task SeedRoles()
         {
             await AddRoleIfNotExisting("Admin");
-            await AddRoleIfNotExisting("Member");
-            await AddRoleIfNotExisting("Trainer");
+            await AddRoleIfNotExisting("Student");
+            await AddRoleIfNotExisting("Teacher");
         }
 
         /// <summary>
@@ -52,9 +52,75 @@ namespace Data.Context
         /// <returns></returns>
         private async Task SeedCourses()
         {
+            if (await dbContext.Courses.AnyAsync())
+            {
+                return;
+            }
 
-           
-           
+
+            var teacher = await userManager.FindByEmailAsync("Larare@larare.com");
+            var student = await userManager.FindByEmailAsync("Elev1@elev.com");
+
+            if (teacher == null)
+            {
+                throw new Exception("Teacher user not found. Ensure users are seeded before courses.");
+            }
+
+            var MathematicsCourse = new Course
+            {
+                SubjectName = "Matematik 101",
+                TotalMarks = 100,
+                ClassName = "MatteA",
+                TeacherID = teacher.Id,
+                Users = new List<User> { teacher, student! }
+
+
+
+            };
+
+            await dbContext.Courses.AddAsync(MathematicsCourse);
+            await dbContext.SaveChangesAsync();
+
+            var Mathlesson = new Lesson
+            {
+                CourseID = MathematicsCourse.CourseID,
+                Title = "Introduktion till Algebra",
+                Content = "Innehåll för Matematik 101",
+
+                Description = "Lär dig grunderna i algebra, inklusive variabler, ekvationer och funktioner.",
+
+            };
+
+            await dbContext.Lessons.AddAsync(Mathlesson);
+            await dbContext.SaveChangesAsync();
+
+            var MathAssignment = new Assigment
+            {
+                Title = "Algebra Uppgift 1",
+                Description = "Lös följande ekvationer: 2x + 3 = 7, x^2 - 4 = 0",
+                Marks = 20,
+                LessonID = Mathlesson.LessonID,
+                IsPublished = true
+
+            };
+
+            await dbContext.Assigments.AddAsync(MathAssignment);
+            await dbContext.SaveChangesAsync();
+
+            var Schedule = new Schedule
+            {
+                CourseID = MathematicsCourse.CourseID,
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddMonths(3),
+                Location = "Online",
+                Course = MathematicsCourse
+
+            };
+
+            await dbContext.Schedules.AddAsync(Schedule);
+            await dbContext.SaveChangesAsync();
+
+
         }
 
         /// <summary>
@@ -82,11 +148,11 @@ namespace Data.Context
         /// <param name="roles">Roles to give this user.</param>
         private async Task AddUserIfNotExists(string userName, string firstName, string lastName, string address, string city, string country, string password, string[] roles)
         {
-            if (userManager.FindByEmailAsync(userName).Result != null)
+            var existingUser = await userManager.FindByNameAsync(userName);
+            if (existingUser != null)
             {
                 return;
             }
-
             var user = new User
             {
                 FirstName = firstName,
@@ -104,4 +170,5 @@ namespace Data.Context
         }
 
     }
+
 }
