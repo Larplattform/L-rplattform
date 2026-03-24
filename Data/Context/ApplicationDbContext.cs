@@ -23,6 +23,8 @@ namespace Data.Context
 
         public DbSet<Assigment> Assigments { get; set; } = null!;
 
+        public DbSet<Submission> Submissions { get; set; } = null!;
+
 
 
         /// <inheritdoc cref="Microsoft.EntityFrameworkCore.DbContext.OnModelCreating"/>
