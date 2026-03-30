@@ -44,6 +44,8 @@ public class Program
 
         app.UseRouting();
 
+        // Ensure authentication middleware runs before authorization so Identity can validate users
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapStaticAssets();

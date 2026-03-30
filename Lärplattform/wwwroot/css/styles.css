@@ -135,6 +135,8 @@ header{
     width: 100%;
     max-width: 400px;
     min-height: 80px;
+    position:relative;
+    bottom:150px;
    
     border-radius: 0 !important;
 }
