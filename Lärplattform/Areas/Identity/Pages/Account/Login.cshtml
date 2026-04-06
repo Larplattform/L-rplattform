@@ -10,42 +10,22 @@
 
                     <!-- Background image for card set in CSS! -->
               
-           
-                    <form id="account" method="post">
+                         <form id="account" method="post">
+                             <div class="form-floating mb-3">
+        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                             </div>
 
-                        <div class="form-floating mb-3">
-                             <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
-                                        
-                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
-                        </div>
+                             <hr>
 
-                      
-                        <hr>
+                             <div class="form-floating mb-3">
+        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                             </div>
 
-                        <div class="form-floating mb-3">
-                            <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
-                                       
-                            <span asp-validation-for="Input.Password" class="text-danger"></span>
-                        </div>
-
-                       
-                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
-
-                        <hr class="my-4">
-
-                        <div class="d-grid mb-2">
-                            <button class="btn btn-lg btn-google btn-login fw-bold text-uppercase" type="submit">
-                                <i class="fab fa-google me-2"></i> Sign up with Google
-                            </button>
-                        </div>
-
-                        <div class="d-grid">
-                            <button class="btn btn-lg btn-facebook btn-login fw-bold text-uppercase" type="submit">
-                                <i class="fab fa-facebook-f me-2"></i> Sign up with Facebook
-                            </button>
-                        </div>
-
-                    </form>
+    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                         </form>
+                   
                
     <div class="col-md-6 col-md-offset-2">
         <section>
