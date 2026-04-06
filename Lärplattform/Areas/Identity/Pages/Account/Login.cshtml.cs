@@ -68,8 +68,12 @@ namespace Lärplattform.Areas.Identity.Pages.Account
             [Display(Name = "User role")]
             public string UserRole { get; set; }
 
-	           /// <summary>
-        	   
+            /// <summary>
+
+            [Required]
+            [Display(Name = "First Name")]
+
+            public string FirstName { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
