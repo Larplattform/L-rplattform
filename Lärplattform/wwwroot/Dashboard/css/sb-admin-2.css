@@ -73,6 +73,12 @@ body {
   outline: 0 !important;
 }
 
+.Bg-Flowerhouse {
+    background-color: #77CA5C;
+    background-image:none;
+    border:none;
+}
+
 hr {
   box-sizing: content-box;
   height: 0;
