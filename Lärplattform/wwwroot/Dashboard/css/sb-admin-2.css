@@ -79,6 +79,15 @@ body {
     border:none;
 }
 
+#Img-Dashboard {
+    background-image: url('/Dashboard-picture.svg');
+    background-size: cover;
+    background-position: center;
+    height: 200px;
+    background-repeat: no-repeat;
+   
+}
+
 hr {
   box-sizing: content-box;
   height: 0;
