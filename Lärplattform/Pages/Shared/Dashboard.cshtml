@@ -80,10 +80,9 @@
 
             <!-- Logout Section -->
             <li class="nav-item mt-auto mx-3 mb-4 text-center">
-                <a class="btn btn-primary btn-sm btn-block shadow-sm font-weight-bold py-2 d-flex align-items-center justify-content-center"
-                   asp-area="" asp-page="/Account/Logout">
-                    <span class="text-nowrap">Log out</span>
-                </a>
+               <form method="post" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                            <button type="submit" class="btn btn-danger btn-sm w-100">Logout</button>
+                        </form>
                 <div class="px-2">
                     <span class="text-black-50 small font-italic d-block text-truncate mb-0" title="FlowerSchool@Teacher.com">
                         FlowerSchool@Teacher.com
