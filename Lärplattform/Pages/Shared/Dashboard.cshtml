@@ -28,108 +28,70 @@
     <div id="wrapper">
 
         <!-- Sidebar -->
-                <ul class="navbar-nav Bg-Flowerhouse sidebar sidebar-dark accordion" id="accordionSidebar">
+        <ul class="navbar-nav Bg-Flowerhouse sidebar sidebar-dark accordion" id="accordionSidebar">
 
-                    <!-- Sidebar - Brand -->
-                    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-                      
-                            <i class="fas fa-school text-dark"></i>
-                        
-                        <div class="sidebar-brand-text mx-3 text-dark">FlowerSchool</div>
-                    </a>
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+                <i class="fas fa-school text-dark"></i>
+                <div class="sidebar-brand-text mx-3 text-dark">FlowerSchool</div>
+            </a>
 
-                    <form class="navbar-search mx-3 mt-2 mb-4" >
-                     
-                            <div class="input-group input-group-sm">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text bg-light border-0 p-0" id="basic-addon2">
-                                        <i class="fas fa-search fa-sm text-muted pt-1 pl-2 mr-1"></i>
-                                    </span>
-                                </div>
-                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                       aria-label="Search" aria-describedby="basic-addon2">
-                            </div>
-                    </form>
+            <form class="navbar-search mx-3 mt-2 mb-4">
+                <div class="input-group input-group-sm">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text bg-light border-0 p-0" id="basic-addon2">
+                            <i class="fas fa-search fa-sm text-muted pt-1 pl-2 mr-1"></i>
+                        </span>
+                    </div>
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                           aria-label="Search" aria-describedby="basic-addon2">
+                </div>
+            </form>
 
-                    
-                    <!-- Divider -->
-                   <div class="mx-2 bg-white rounded shadow-sm overflow-hidden">
-                        <li class="nav-item ">
-                            <a class="nav-link d-flex align-items-center  py-2 px-2" href="index.html">
-                                <i class="fa fa-home text-dark mr-2"></i>
-                                <span class="text-dark font-weight-bold small">Courses</span>
-                            </a>
-                   
+                    <ul class=" list-unstyled mx-2 bg-white rounded shadow-sm overflow-hidden">
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Teacher">
+            <i class="fa fa-home text-dark mr-2"></i>
+            <span class="text-dark font-weight-bold small">Courses</span>
+        </a>
+    </li>
 
-                        <li class="nav-item">
-                                <a class="nav-link d-flex align-items-center  py-2 px-2" href="index.html">
-                                <i class="fa fa-calendar text-dark mr-2"></i>
-                                <span class="text-dark font-weight-bold small">Schedule</span>
-                            </a>
-                        </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Schedule">
+            <i class="fa fa-calendar text-dark mr-2"></i>
+            <span class="text-dark font-weight-bold small">Schedule</span>
+        </a>
+    </li>
 
-                        <li class=" nav-item">
-                            <a class="nav-link d-flex align-items-center  py-2 px-2">
-                                <i class="fa fa-book-open text-dark mr-2"></i>
-                                <span class="text-dark font-weight-bold small">Plannings</span>
-                            </a>
-                        </li>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center py-2 px-2">
+            <i class="fa fa-book-open text-dark mr-2"></i>
+            <span class="text-dark font-weight-bold small">Plannings</span>
+        </a>
+    </li>
 
-                        <li class=" nav-item">
-                            <a class="nav-link d-flex align-items-center  py-2 px-2">
-                                <i class="fa fa-address-book text-dark mr-2"></i>
-                                <span class="text-dark font-weight-bold small">Reports</span>
-                            </a>
-                        </li>
-                   </div>
-                  
-                   
-                    <div class="nav-item mt-auto mx-3 mb-4 text-center">
-                        <a class="btn btn-primary btn-sm btn-block shadow-sm font-weight-bold py-2 d-flex align-items-center justify-content-center"
-                               href="/Account/Logout">
-                        
-                            <span class="text-nowrap">Log out</span>
-                            </a>
+    <li class="nav-item">
+        <a class="nav-link d-flex align-items-center py-2 px-2">
+            <i class="fa fa-address-book text-dark mr-2"></i>
+            <span class="text-dark font-weight-bold small">Reports</span>
+        </a>
+    </li>
+</ul>
 
-                            <div class="px-2">
-                          
-                        
-                                <span class="text-black-50 small font-italic d-block  text-truncate mb-0" title="FlowerSchool@Teacher.com">FlowerSchool@Teacher.com</span>
-                            </div>
-                        </div>
+            <!-- Logout Section -->
+            <li class="nav-item mt-auto mx-3 mb-4 text-center">
+                <a class="btn btn-primary btn-sm btn-block shadow-sm font-weight-bold py-2 d-flex align-items-center justify-content-center"
+                   href="/Account/Logout">
+                    <span class="text-nowrap">Log out</span>
+                </a>
+                <div class="px-2">
+                    <span class="text-black-50 small font-italic d-block text-truncate mb-0" title="FlowerSchool@Teacher.com">
+                        FlowerSchool@Teacher.com
+                    </span>
+                </div>
+            </li>
 
-                        
-                   @*  <li class="nav-item mt-auto mx-3 mb-4">
-                        <a class="btn btn-primary btn-sm btn-block shadow-sm font-weight-bold py-2 d-flex align-items-center justify-content-center"
-                               href="/Account/Logout">
-                            <i class="fas fa-sign-out-alt mr-2"></i>
-                            <span class="text-nowrap">Log out</span>
-                        </a>
-                    </li> *@
-                    <!-- Divider -->
-                
-
-                    <!-- Heading -->
-                   
-                    <!-- Nav Item - Pages Collapse Menu -->
-                  
-                    <!-- Nav Item - Utilities Collapse Menu -->
-                  
-                 
-
-                    <!-- Nav Item - Pages Collapse Menu -->
-                  
-
-                    <!-- Nav Item - Charts -->
-                  
-
-                </ul>
-
-
-                    
-                   
-
-                
+        </ul>
         <!-- End of Sidebar -->
 
         <!-- Content Wrapper -->
@@ -140,7 +102,7 @@
             <!-- End of Main Content -->
 
             <!-- Footer -->
-            <footer class="sticky-footer " style="background-color:#3F6E2F">
+            <footer class="sticky-footer" style="background-color:#3F6E2F">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
                         <span>Copyright &copy; Your Website 2021</span>
