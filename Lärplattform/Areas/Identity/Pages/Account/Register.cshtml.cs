@@ -139,10 +139,10 @@ namespace Lärplattform.Areas.Identity.Pages.Account
                     if (Input.UserRole == null)
                     {
                         await _userManager.AddToRoleAsync(
-                            user, "Member");
+                            user, "Student");
 
                         await _userManager.AddToRoleAsync(
-                           user, "Trainer");
+                           user, "Teacher");
                     }
                     else
                     {
