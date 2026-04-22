@@ -2,4 +2,5 @@
   <Project Path="Business/Business.csproj" Id="a1cc5f98-5cfa-49c6-9f75-bbd3a323a661" />
   <Project Path="Data/Data.csproj" Id="7211c073-39fc-4f41-82cf-713e857b3f6c" />
   <Project Path="Lärplattform/Lärplattform.csproj" />
+  <Project Path="LärplattformApi/LärplattformApi.csproj" Id="81cd8ae7-4f74-465d-b6ab-c5a312255802" />
 </Solution>

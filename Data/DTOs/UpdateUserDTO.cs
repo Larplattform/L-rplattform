@@ -1,11 +1,10 @@
-﻿using Data.Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Data.DTOs
 {
-    public class CreateUserDTO
+    public class UpdateUserDTO
     {
         public string FirstName { get; set; } = string.Empty;
         public string LastName { get; set; } = string.Empty;
@@ -14,10 +13,11 @@ namespace Data.DTOs
         public string Country { get; set; } = string.Empty;
         public string Street { get; set; } = string.Empty;
 
-        public ICollection<CreateCourseDTO> Courses { get; set; } = new List<CreateCourseDTO>();
+        public ICollection<UpdateCourseDTO> Courses { get; set; } = new List<UpdateCourseDTO>();
 
 
 
         public bool IsDeleted { get; set; }
     }
 }
+
