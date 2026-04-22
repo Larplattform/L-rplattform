@@ -22,6 +22,12 @@ public class Program
         builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                       .AddRoles<IdentityRole<int>>()
                       .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
+        builder .Services.AddHttpClient("APIClient", client =>
+        {
+          client.BaseAddress = new Uri("https://localhost:7222");
+        });
        
 
         builder.Services.AddTransient<DataInitializer>();

@@ -1,0 +1,58 @@
+﻿@page
+@model Lärplattform.Pages.Teacher.CreateCourseModel
+@{
+    Layout = "~/Pages/Shared/Dashboard.cshtml";
+}
+<div id="content" style="background-color:#3F6E2F">
+
+    <div id="Img-Dashboard" class="rounded shadow-sm mb-4 d-flex align-items-center">
+        <div class="pl-5">
+            <h1 class="text-dark font-weight-bold">Welcome Teacher! </h1>
+           
+        </div>
+    </div>
+
+
+
+<div class="container mt-5">
+    <div class="justify-content-center ">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Create New Course</h3>
+                </div>
+                    <div class="card-body">
+       
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group mb-3">
+                <label asp-for="NewCourse.SubjectName" class="form-label">Subject Name</label>
+                <input asp-for="NewCourse.SubjectName" class="form-control" placeholder="e.g. Matematik 101" />
+                <span asp-validation-for="NewCourse.SubjectName" class="text-danger"></span>
+            </div>
+                <div class="form-group mb-3">
+                    <label asp-for="NewCourse.TotalMarks" class="form-label">Total Marks</label>
+                    <input asp-for="NewCourse.TotalMarks" class="form-control" type="number" />
+                    <span asp-validation-for="NewCourse.TotalMarks" class="text-danger"></span>
+                    </div>
+                <div class="form-group mb-3">
+                    <label asp-for="NewCourse.ClassName" class="form-label">Class Name</label>
+                    <input asp-for="NewCourse.ClassName" class="form-control" placeholder="e.g. MatteA" />
+                    <span asp-validation-for="NewCourse.ClassName" class="text-danger"></span>
+                </div>
+                <div class="form-group mb-3">
+                   
+                    <input type="hidden" asp-for="NewCourse.TeacherID" class="form-control" />
+                    <span asp-validation-for="NewCourse.TeacherID" class="text-danger"></span>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-success">Create Course</button>
+                        <a asp-page="/Teacher/Teacher" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
