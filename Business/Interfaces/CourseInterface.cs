@@ -12,6 +12,9 @@ namespace Business.Interfaces
         public Task<IEnumerable<CourseDTO>> GetAllCourses();
 
         public Task<UpdateCourseDTO> UpdateCourse(int id, UpdateCourseDTO courseDTO);
+
+        public Task<LinkStudentToCourseDTO> LinkStudentToCourse(LinkStudentToCourseDTO linkDTO);
+
         public Task DeleteCourse(int id);
 
     }

@@ -12,6 +12,6 @@ namespace Data.DTOs
         public string ClassName { get; set; } = string.Empty;
         public int TeacherID { get; set; }
 
-        public ICollection<UpdateUserDTO> Users { get; set; } = new List<UpdateUserDTO>();
+       
     }
 }

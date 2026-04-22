@@ -22,7 +22,7 @@ namespace Business.Services
         {
            var course = new Course
             {
-                 CourseID = courseDTO.CourseID,
+                
                 SubjectName = courseDTO.SubjectName,
                 TotalMarks = courseDTO.TotalMarks,
                 ClassName = courseDTO.ClassName,
@@ -45,19 +45,48 @@ namespace Business.Services
 
         public async Task<IEnumerable<CourseDTO>> GetAllCourses()
         {
-           var courses = await _dbContext.Courses.ToListAsync();
+           var courses = await _dbContext.Courses.Include(c => c.Users).ToListAsync();
             var courseDTOs = new List<CourseDTO>();
             foreach (var course in courses)
             {
                 courseDTOs.Add(new CourseDTO
                 {
+                    CourseID = course.CourseID,
                     SubjectName = course.SubjectName,
                     TotalMarks = course.TotalMarks,
                     ClassName = course.ClassName,
-                    TeacherID = course.TeacherID
+                    TeacherID = course.TeacherID,
+                    Users = course.Users.Select(u => new UserDTO
+                    {
+                        
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                        City = u.City,
+                        Country = u.Country,
+                        Address = u.Address,
+
+                    }).ToList()
+
+
                 });
             }
             return courseDTOs;
+        }
+
+        public async Task<LinkStudentToCourseDTO> LinkStudentToCourse(LinkStudentToCourseDTO linkDTO)
+        {
+            var course = await _dbContext.Courses.Include(x => x.Users).
+                FirstOrDefaultAsync(c => c.CourseID == linkDTO.CourseId);
+
+            var user = await _dbContext.Users.FindAsync(linkDTO.UserId);
+
+            if (!course.Users.Any(u => u.Id == linkDTO.UserId))
+            {
+                course.Users.Add(user);
+                await _dbContext.SaveChangesAsync();
+            }
+
+            return linkDTO;
         }
 
         public async Task<UpdateCourseDTO> UpdateCourse(int id, UpdateCourseDTO courseDTO)

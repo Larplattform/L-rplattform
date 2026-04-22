@@ -29,6 +29,15 @@ namespace LärplattformApi.Controllers
             return Ok(createdCourse);
         }
 
+        [HttpPost("AddStudentToCourse")]
+        public async Task<IActionResult> AddStudentToCourse([FromBody] LinkStudentToCourseDTO linkDTO)
+        {
+            await CourseService.LinkStudentToCourse(linkDTO);       
+            
+       
+            return Ok();
+        }
+
         [HttpPut]
         public async Task<IActionResult> UpdateCourse(int id, UpdateCourseDTO courseDTO)
         {
