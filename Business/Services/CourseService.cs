@@ -28,6 +28,7 @@ namespace Business.Services
                     SubjectName = courseDTO.SubjectName,
                     TotalMarks = courseDTO.TotalMarks,
                     ClassName = courseDTO.ClassName,
+                    Url = courseDTO.Url,
                     TeacherID = courseDTO.TeacherID
                 };
                 _dbContext.Courses.Add(course);
@@ -76,14 +77,13 @@ namespace Business.Services
                         TotalMarks = course.TotalMarks,
                         ClassName = course.ClassName,
                         TeacherID = course.TeacherID,
+                        Url = course.Url,
                         Users = course.Users.Select(u => new UserDTO
                         {
 
                             FirstName = u.FirstName,
                             LastName = u.LastName,
-                            City = u.City,
-                            Country = u.Country,
-                            Address = u.Address,
+                          
 
                         }).ToList()
 

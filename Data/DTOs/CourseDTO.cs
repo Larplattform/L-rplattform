@@ -13,6 +13,8 @@ namespace Data.DTOs
         public string ClassName { get; set; } = string.Empty;
         public int TeacherID { get; set; }
 
+        public string? Url { get; set; }
+
         public IEnumerable<UserDTO> Users { get; set; } = new List<UserDTO>();
 
 

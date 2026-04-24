@@ -30,7 +30,8 @@ namespace Lärplattform.Pages.Teacher
                     TotalMarks = dto.TotalMarks,
                     ClassName = dto.ClassName,
                     TeacherID = dto.TeacherID,
-                  
+                    Url = dto.Url,
+
                 }).ToList();
                 return Page();
             }

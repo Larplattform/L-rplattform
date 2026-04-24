@@ -8,7 +8,7 @@ namespace Lärplattform.ViewModels
         public string LastName { get; set; } = string.Empty;
         
 
-        public ICollection<CourseViewModel> Courses { get; set; } = new List<CourseViewModel>();
+     
 
 
 
