@@ -18,38 +18,108 @@ namespace LärplattformApi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllCourses()
         {
-            var courses = await CourseService.GetAllCourses();
-            return Ok(courses);
+            try
+            {
+                var courses = await CourseService.GetAllCourses();
+                return Ok(courses);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCourseById( int id)
+        {
+            try
+            {
+                var course = await CourseService.GetCourseById(id);
+                if(course == null)
+                {
+                    return NotFound($"Course with ID {id} not found.");
+                }
+                return Ok(course);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateCourse(CreateCourseDTO courseDTO)
         {
-            var createdCourse = await CourseService.CreateCourse(courseDTO);
-            return Ok(createdCourse);
+            try
+            {
+                var createdCourse = await CourseService.CreateCourse(courseDTO);
+                return Ok(createdCourse);
+            }catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+
+            }
         }
 
         [HttpPost("AddStudentToCourse")]
         public async Task<IActionResult> AddStudentToCourse([FromBody] LinkStudentToCourseDTO linkDTO)
         {
-            await CourseService.LinkStudentToCourse(linkDTO);       
-            
-       
-            return Ok();
+            try
+            {
+                await CourseService.LinkStudentToCourse(linkDTO);
+
+
+                return Ok();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+
+            }
         }
 
         [HttpPut]
         public async Task<IActionResult> UpdateCourse(int id, UpdateCourseDTO courseDTO)
         {
-            var updatedCourse = await CourseService.UpdateCourse(id, courseDTO);
-            return Ok(updatedCourse);
+            try
+            {
+                var updatedCourse = await CourseService.UpdateCourse(id, courseDTO);
+                return Ok(updatedCourse);
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+
+            }
         }
 
         [HttpDelete]
         public async Task<IActionResult> DeleteCourse(int id)
         {
-            await CourseService.DeleteCourse(id);
-            return NoContent();
+            try
+            {
+                await CourseService.DeleteCourse(id);
+                return NoContent();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+
+            }
+
         }
     }
 }

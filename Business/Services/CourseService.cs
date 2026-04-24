@@ -99,6 +99,38 @@ namespace Business.Services
             }
         }
 
+       
+       
+        public async Task<CourseDTO> GetCourseById(int id)
+        {
+            try
+            {
+                var course = await _dbContext.Courses.Include(c => c.Users).FirstOrDefaultAsync(c => c.CourseID == id && !c.IsDeleted);
+                if (course == null)
+                {
+                    throw new KeyNotFoundException($"Course with ID {id} not found.");
+                }
+                return new CourseDTO
+                {
+                    CourseID = course.CourseID,
+                    SubjectName = course.SubjectName,
+                    TotalMarks = course.TotalMarks,
+                    ClassName = course.ClassName,
+                    TeacherID = course.TeacherID,
+                    Url = course.Url,
+                    Users = course.Users.Select(u => new UserDTO
+                    {
+                        FirstName = u.FirstName,
+                        LastName = u.LastName,
+                    }).ToList()
+                };
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"An error occurred while retrieving the course with ID {id}.", ex);
+            }
+        }
+
         public async Task<LinkStudentToCourseDTO> LinkStudentToCourse(LinkStudentToCourseDTO linkDTO)
         {
             try
