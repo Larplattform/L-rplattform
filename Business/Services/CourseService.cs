@@ -133,6 +133,7 @@ namespace Business.Services
                     course.TotalMarks = courseDTO.TotalMarks;
                     course.ClassName = courseDTO.ClassName;
                     course.TeacherID = courseDTO.TeacherID;
+                    course.Url = courseDTO.Url;
                     await _dbContext.SaveChangesAsync();
                 }
                 return courseDTO;
