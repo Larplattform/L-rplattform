@@ -66,7 +66,7 @@ namespace Business.Services
         {
             try
             {
-                var courses = await _dbContext.Courses.Include(c => c.Users).ToListAsync();
+                var courses = await _dbContext.Courses.Include(c => c.Users).Where(c => !c.IsDeleted).ToListAsync();
                 var courseDTOs = new List<CourseDTO>();
                 foreach (var course in courses)
                 {

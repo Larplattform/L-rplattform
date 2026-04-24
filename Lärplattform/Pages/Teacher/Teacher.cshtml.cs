@@ -26,6 +26,7 @@ namespace Lärplattform.Pages.Teacher
                 var courseDTOs = await response.Content.ReadFromJsonAsync<List<CourseDTO>>() ?? new List<CourseDTO>();
                 Courses = courseDTOs.Select(dto => new CourseViewModel
                 {
+                    CourseID = dto.CourseID,
                     SubjectName = dto.SubjectName,
                     TotalMarks = dto.TotalMarks,
                     ClassName = dto.ClassName,
