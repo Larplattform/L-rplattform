@@ -31,7 +31,7 @@ namespace LärplattformApi.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCourseById( int id)
+        public async Task<IActionResult> GetCourseById([FromRoute] int id)
         {
             try
             {
