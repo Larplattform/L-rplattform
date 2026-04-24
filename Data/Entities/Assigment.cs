@@ -20,6 +20,8 @@ namespace Data.Entities
 
         public bool IsPublished { get; set; }
 
+        public bool IsDeleted { get; set; }
+
 
     }
 }

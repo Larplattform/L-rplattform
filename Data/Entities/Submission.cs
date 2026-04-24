@@ -23,5 +23,7 @@ namespace Data.Entities
         public Assigment Assigment { get; set; } = null!;
 
         public bool Status { get; set; }
+
+        public bool IsDeleted { get; set; }
     }
 }
