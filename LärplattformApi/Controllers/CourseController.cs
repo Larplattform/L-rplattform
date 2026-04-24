@@ -30,15 +30,15 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetCourseById([FromRoute] int id)
+        [HttpGet("{courseId}")]
+        public async Task<IActionResult> GetCourseById([FromRoute] int courseId)
         {
             try
             {
-                var course = await CourseService.GetCourseById(id);
+                var course = await CourseService.GetCourseById(courseId);
                 if(course == null)
                 {
-                    return NotFound($"Course with ID {id} not found.");
+                    return NotFound($"Course with ID {courseId} not found.");
                 }
                 return Ok(course);
             }
@@ -49,7 +49,7 @@ namespace LärplattformApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCourse(CreateCourseDTO courseDTO)
+        public async Task<IActionResult> CreateCourse([FromBody] CreateCourseDTO courseDTO)
         {
             try
             {
@@ -83,12 +83,12 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateCourse(int id, UpdateCourseDTO courseDTO)
+        [HttpPut("{courseId}")]
+        public async Task<IActionResult> UpdateCourse([FromRoute] int courseId, [FromBody] UpdateCourseDTO courseDTO)
         {
             try
             {
-                var updatedCourse = await CourseService.UpdateCourse(id, courseDTO);
+                var updatedCourse = await CourseService.UpdateCourse(courseId, courseDTO);
                 return Ok(updatedCourse);
             }
             catch (KeyNotFoundException ex)
@@ -102,12 +102,12 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteCourse(int id)
+        [HttpDelete("{courseId}")]
+        public async Task<IActionResult> DeleteCourse([FromRoute] int courseId)
         {
             try
             {
-                await CourseService.DeleteCourse(id);
+                await CourseService.DeleteCourse(courseId);
                 return NoContent();
             }
             catch (KeyNotFoundException ex)

@@ -42,14 +42,14 @@ namespace Business.Services
             }
         }
 
-        public async Task DeleteCourse(int id)
+        public async Task DeleteCourse(int courseId)
         {
             try
             {
-                var course = await _dbContext.Courses.FindAsync(id);
+                var course = await _dbContext.Courses.FindAsync(courseId);
                 if (course == null)
                 {
-                    throw new KeyNotFoundException($"Course with ID {id} not found.");
+                    throw new KeyNotFoundException($"Course with ID {courseId} not found.");
                 }
              
                 course.IsDeleted = true;
@@ -58,7 +58,7 @@ namespace Business.Services
             }
             catch (Exception ex)
             {
-                throw new ApplicationException($"An error occurred while deleting the course with ID {id}.", ex);
+                throw new ApplicationException($"An error occurred while deleting the course with ID {courseId}.", ex);
             }
         }
 
@@ -101,14 +101,14 @@ namespace Business.Services
 
        
        
-        public async Task<CourseDTO> GetCourseById(int id)
+        public async Task<CourseDTO> GetCourseById(int courseId)
         {
             try
             {
-                var course = await _dbContext.Courses.Include(c => c.Users).FirstOrDefaultAsync(c => c.CourseID == id && !c.IsDeleted);
+                var course = await _dbContext.Courses.Include(c => c.Users).FirstOrDefaultAsync(c => c.CourseID == courseId && !c.IsDeleted);
                 if (course == null)
                 {
-                    throw new KeyNotFoundException($"Course with ID {id} not found.");
+                    throw new KeyNotFoundException($"Course with ID {courseId} not found.");
                 }
                 return new CourseDTO
                 {
@@ -127,7 +127,7 @@ namespace Business.Services
             }
             catch (Exception ex)
             {
-                throw new ApplicationException($"An error occurred while retrieving the course with ID {id}.", ex);
+                throw new ApplicationException($"An error occurred while retrieving the course with ID {courseId}.", ex);
             }
         }
 
@@ -154,11 +154,11 @@ namespace Business.Services
             }
         }
 
-        public async Task<UpdateCourseDTO> UpdateCourse(int id, UpdateCourseDTO courseDTO)
+        public async Task<UpdateCourseDTO> UpdateCourse(int courseId, UpdateCourseDTO courseDTO)
         {
             try
             {
-                var course = await _dbContext.Courses.FindAsync(id);
+                var course = await _dbContext.Courses.FindAsync(courseId);
                 if (course != null)
                 {
                     course.SubjectName = courseDTO.SubjectName;
@@ -173,7 +173,7 @@ namespace Business.Services
             }
             catch (Exception ex)
             {
-                throw new ApplicationException($"An error occurred while updating the course with ID {id}.", ex);
+                throw new ApplicationException($"An error occurred while updating the course with ID {courseId}.", ex);
 
             }
         }

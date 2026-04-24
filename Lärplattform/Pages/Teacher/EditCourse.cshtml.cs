@@ -50,7 +50,7 @@ namespace Lärplattform.Pages.Teacher
             };
 
             var client = HttpClientFactory.CreateClient("APIClient");
-            var response = await client.PutAsJsonAsync($"api/Course?id={id}", updateCourseDTO);
+            var response = await client.PutAsJsonAsync($"api/Course/{id}", updateCourseDTO);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToPage("/Teacher/Teacher");
@@ -66,7 +66,7 @@ namespace Lärplattform.Pages.Teacher
         public async Task<IActionResult> OnPostDeleteAsync(int id)
         {
             var client = HttpClientFactory.CreateClient("APIClient");
-            var response = await client.DeleteAsync($"api/Course?id={id}");
+            var response = await client.DeleteAsync($"api/Course/{id}");
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToPage("/Teacher/Teacher");

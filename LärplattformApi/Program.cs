@@ -15,17 +15,21 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<Business.Interfaces.ICourseInterface, Business.Services.CourseService>();
+builder.Services.AddTransient<Business.Interfaces.ICourseInterface, Business.Services.CourseService>();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.UseSwaggerUI(options =>
+
+
+    
+
+app.MapOpenApi();
+    
+
+app.UseSwaggerUI(options =>
    options.SwaggerEndpoint("/openapi/v1.json", "Lärplattform Api"));
-}
+
 
 app.UseHttpsRedirection();
 

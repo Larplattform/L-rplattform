@@ -6,7 +6,7 @@ namespace Data.DTOs
 {
     public class UpdateCourseDTO
     {
-        public int CourseID { get; set; }
+       
         public string SubjectName { get; set; } = string.Empty;
         public int TotalMarks { get; set; }
 
