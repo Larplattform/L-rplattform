@@ -20,88 +20,130 @@ namespace Business.Services
 
         public async Task<CreateCourseDTO> CreateCourse(CreateCourseDTO courseDTO)
         {
-           var course = new Course
+            try
             {
-                
-                SubjectName = courseDTO.SubjectName,
-                TotalMarks = courseDTO.TotalMarks,
-                ClassName = courseDTO.ClassName,
-                TeacherID = courseDTO.TeacherID
-            };
-            _dbContext.Courses.Add(course);
-            await _dbContext.SaveChangesAsync();
-            return courseDTO;
+                var course = new Course
+                {
+
+                    SubjectName = courseDTO.SubjectName,
+                    TotalMarks = courseDTO.TotalMarks,
+                    ClassName = courseDTO.ClassName,
+                    TeacherID = courseDTO.TeacherID
+                };
+                _dbContext.Courses.Add(course);
+                await _dbContext.SaveChangesAsync();
+                return courseDTO;
+            }
+            catch (Exception ex)
+            {
+
+                throw new ApplicationException("An error occurred while creating the course.", ex);
+            }
         }
 
         public async Task DeleteCourse(int id)
         {
-          var course = await _dbContext.Courses.FindAsync(id);
-            if (course != null)
+            try
             {
-                _dbContext.Courses.Remove(course);
+                var course = await _dbContext.Courses.FindAsync(id);
+                if (course == null)
+                {
+                    throw new KeyNotFoundException($"Course with ID {id} not found.");
+                }
+             
+                course.IsDeleted = true;
                 await _dbContext.SaveChangesAsync();
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"An error occurred while deleting the course with ID {id}.", ex);
             }
         }
 
         public async Task<IEnumerable<CourseDTO>> GetAllCourses()
         {
-           var courses = await _dbContext.Courses.Include(c => c.Users).ToListAsync();
-            var courseDTOs = new List<CourseDTO>();
-            foreach (var course in courses)
+            try
             {
-                courseDTOs.Add(new CourseDTO
+                var courses = await _dbContext.Courses.Include(c => c.Users).ToListAsync();
+                var courseDTOs = new List<CourseDTO>();
+                foreach (var course in courses)
                 {
-                    CourseID = course.CourseID,
-                    SubjectName = course.SubjectName,
-                    TotalMarks = course.TotalMarks,
-                    ClassName = course.ClassName,
-                    TeacherID = course.TeacherID,
-                    Users = course.Users.Select(u => new UserDTO
+                    courseDTOs.Add(new CourseDTO
                     {
-                        
-                        FirstName = u.FirstName,
-                        LastName = u.LastName,
-                        City = u.City,
-                        Country = u.Country,
-                        Address = u.Address,
+                        CourseID = course.CourseID,
+                        SubjectName = course.SubjectName,
+                        TotalMarks = course.TotalMarks,
+                        ClassName = course.ClassName,
+                        TeacherID = course.TeacherID,
+                        Users = course.Users.Select(u => new UserDTO
+                        {
 
-                    }).ToList()
+                            FirstName = u.FirstName,
+                            LastName = u.LastName,
+                            City = u.City,
+                            Country = u.Country,
+                            Address = u.Address,
+
+                        }).ToList()
 
 
-                });
+                    });
+                }
+                return courseDTOs;
             }
-            return courseDTOs;
+            catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while retrieving courses.", ex);
+
+            }
         }
 
         public async Task<LinkStudentToCourseDTO> LinkStudentToCourse(LinkStudentToCourseDTO linkDTO)
         {
-            var course = await _dbContext.Courses.Include(x => x.Users).
-                FirstOrDefaultAsync(c => c.CourseID == linkDTO.CourseId);
-
-            var user = await _dbContext.Users.FindAsync(linkDTO.UserId);
-
-            if (!course.Users.Any(u => u.Id == linkDTO.UserId))
+            try
             {
-                course.Users.Add(user);
-                await _dbContext.SaveChangesAsync();
-            }
+                var course = await _dbContext.Courses.Include(x => x.Users).
+                             FirstOrDefaultAsync(c => c.CourseID == linkDTO.CourseId);
 
-            return linkDTO;
+                var user = await _dbContext.Users.FindAsync(linkDTO.UserId);
+
+                if (!course.Users.Any(u => u.Id == linkDTO.UserId))
+                {
+                    course.Users.Add(user);
+                    await _dbContext.SaveChangesAsync();
+                }
+
+                return linkDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"An error occurred while linking student with ID {linkDTO.UserId} to course with ID {linkDTO.CourseId}.", ex);
+            }
         }
 
         public async Task<UpdateCourseDTO> UpdateCourse(int id, UpdateCourseDTO courseDTO)
         {
-            var course = await _dbContext.Courses.FindAsync(id);
-            if (course != null)
+            try
             {
-                course.SubjectName = courseDTO.SubjectName;
-                course.TotalMarks = courseDTO.TotalMarks;
-                course.ClassName = courseDTO.ClassName;
-                course.TeacherID = courseDTO.TeacherID;
-                await _dbContext.SaveChangesAsync();
+                var course = await _dbContext.Courses.FindAsync(id);
+                if (course != null)
+                {
+                    course.SubjectName = courseDTO.SubjectName;
+                    course.TotalMarks = courseDTO.TotalMarks;
+                    course.ClassName = courseDTO.ClassName;
+                    course.TeacherID = courseDTO.TeacherID;
+                    await _dbContext.SaveChangesAsync();
+                }
+                return courseDTO;
+
             }
-            return courseDTO;
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"An error occurred while updating the course with ID {id}.", ex);
+
+            }
         }
-        }
+    }
     }
 

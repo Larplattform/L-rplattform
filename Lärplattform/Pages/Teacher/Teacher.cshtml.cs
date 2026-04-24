@@ -1,4 +1,5 @@
 using Data.DTOs;
+using Lärplattform.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,7 +8,7 @@ namespace Lärplattform.Pages.Teacher
     public class TeacherModel : PageModel
     {
         public readonly IHttpClientFactory httpClientFactory;
-        public List<CourseDTO> Courses { get; set; } = new List<CourseDTO>();
+        public List<CourseViewModel> Courses { get; set; } = new List<CourseViewModel>();
 
         public TeacherModel(IHttpClientFactory httpClientFactory)
         {
@@ -22,7 +23,15 @@ namespace Lärplattform.Pages.Teacher
             var response = await client.GetAsync("api/Course");
             if (response.IsSuccessStatusCode)
             {
-                Courses = await response.Content.ReadFromJsonAsync<List<CourseDTO>>() ?? new List<CourseDTO>();
+                var courseDTOs = await response.Content.ReadFromJsonAsync<List<CourseDTO>>() ?? new List<CourseDTO>();
+                Courses = courseDTOs.Select(dto => new CourseViewModel
+                {
+                    SubjectName = dto.SubjectName,
+                    TotalMarks = dto.TotalMarks,
+                    ClassName = dto.ClassName,
+                    TeacherID = dto.TeacherID,
+                  
+                }).ToList();
                 return Page();
             }
             else

@@ -1,5 +1,6 @@
 using Data.DTOs;
 using Data.Entities;
+using Lärplattform.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -18,30 +19,37 @@ namespace Lärplattform.Pages.Teacher
         }
 
         [BindProperty]
-        public CreateCourseDTO NewCourse { get; set; } = new CreateCourseDTO();
+        public CreateCourseViewModel NewCourse { get; set; } = new CreateCourseViewModel();
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
+          
             var user = await _userManager.GetUserAsync(User);
-            if(user != null)
+            if(user == null)
             {
-                NewCourse.TeacherID = user.Id;
-               
-            }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "User not found.");
+               ModelState.AddModelError(string.Empty, "User not found. Please log in again.");
                 return Page();
             }
-            
-         
+
+           NewCourse.TeacherID = user.Id;
+
+            ModelState.Remove("NewCourse.TeacherID");
+
+            if(!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            var createCourseDTO = new CreateCourseDTO
+            {
+                SubjectName = NewCourse.SubjectName,
+                TotalMarks = NewCourse.TotalMarks,
+                ClassName = NewCourse.ClassName,
+                TeacherID = NewCourse.TeacherID
+            };
 
             var client = HttpClientFactory.CreateClient("APIClient");
-            var response = await client.PostAsJsonAsync("api/Course", NewCourse);
+            var response = await client.PostAsJsonAsync("api/Course", createCourseDTO);
             if (response.IsSuccessStatusCode)
             {
                 return RedirectToPage("/Teacher/Teacher");
