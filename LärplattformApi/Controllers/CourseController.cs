@@ -30,7 +30,7 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpGet("{courseId}")]
+        [HttpGet("{courseId:int}")]
         public async Task<IActionResult> GetCourseById([FromRoute] int courseId)
         {
             try
@@ -83,7 +83,7 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpPut("{courseId}")]
+        [HttpPut("{courseId:int}")]
         public async Task<IActionResult> UpdateCourse([FromRoute] int courseId, [FromBody] UpdateCourseDTO courseDTO)
         {
             try
@@ -102,7 +102,7 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpDelete("{courseId}")]
+        [HttpDelete("{courseId:int}")]
         public async Task<IActionResult> DeleteCourse([FromRoute] int courseId)
         {
             try
