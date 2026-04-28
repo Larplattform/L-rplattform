@@ -16,6 +16,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 builder.Services.AddTransient<Business.Interfaces.ICourseInterface, Business.Services.CourseService>();
+builder.Services.AddTransient<Data.Repositories.ICourseRepository, Data.Repositories.CourseRepository>();
+builder.Services.AddTransient<Data.Repositories.IUserRepository, Data.Repositories.UserRepository>();
 
 var app = builder.Build();
 

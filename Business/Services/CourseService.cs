@@ -2,6 +2,7 @@
 using Data.Context;
 using Data.DTOs;
 using Data.Entities;
+using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,16 @@ namespace Business.Services
 {
     public class CourseService : ICourseInterface
     {
-        private readonly ApplicationDbContext _dbContext;
+        public readonly ICourseRepository _courseRepository;
+        public readonly IUserRepository _userRepository;
 
-        public CourseService(ApplicationDbContext dbContext)
+        public CourseService(ICourseRepository courseRepository, IUserRepository userRepository)
         {
-            _dbContext = dbContext;
+            _courseRepository = courseRepository;
+            _userRepository = userRepository;
         }
 
+        // This method creates a new course based on the provided CreateCourseDTO and saves it to the repository.
         public async Task<CreateCourseDTO> CreateCourse(CreateCourseDTO courseDTO)
         {
             try
@@ -31,9 +35,10 @@ namespace Business.Services
                     Url = courseDTO.Url,
                     TeacherID = courseDTO.TeacherID
                 };
-                _dbContext.Courses.Add(course);
-                await _dbContext.SaveChangesAsync();
-                return courseDTO;
+               
+                await _courseRepository.AddAsync(course);
+                await _courseRepository.SaveChangesAsync();
+             return courseDTO;
             }
             catch (Exception ex)
             {
@@ -42,18 +47,19 @@ namespace Business.Services
             }
         }
 
+        // This method deletes a course with the specified courseId from the repository.
         public async Task DeleteCourse(int courseId)
         {
             try
             {
-                var course = await _dbContext.Courses.FindAsync(courseId);
+              var course = await _courseRepository.DeleteAsync(courseId);
                 if (course == null)
                 {
                     throw new KeyNotFoundException($"Course with ID {courseId} not found.");
                 }
              
-                course.IsDeleted = true;
-                await _dbContext.SaveChangesAsync();
+             
+               await _courseRepository.SaveChangesAsync();
 
             }
             catch (Exception ex)
@@ -62,11 +68,12 @@ namespace Business.Services
             }
         }
 
+        // This method retrieves all courses from the repository and returns them as a collection of CourseDTOs.
         public async Task<IEnumerable<CourseDTO>> GetAllCourses()
         {
             try
             {
-                var courses = await _dbContext.Courses.Include(c => c.Users).Where(c => !c.IsDeleted).ToListAsync();
+                var courses = await _courseRepository.GetAllWithUsersAsync();
                 var courseDTOs = new List<CourseDTO>();
                 foreach (var course in courses)
                 {
@@ -99,13 +106,14 @@ namespace Business.Services
             }
         }
 
-       
-       
+
+        // This method retrieves a course with the specified courseId from the repository and returns it as a CourseDTO.
+
         public async Task<CourseDTO> GetCourseById(int courseId)
         {
             try
             {
-                var course = await _dbContext.Courses.Include(c => c.Users).FirstOrDefaultAsync(c => c.CourseID == courseId && !c.IsDeleted);
+                var course = await _courseRepository.GetByIdAsync(courseId);
                 if (course == null)
                 {
                     throw new KeyNotFoundException($"Course with ID {courseId} not found.");
@@ -131,22 +139,31 @@ namespace Business.Services
             }
         }
 
+        // This method links a student to a course based on the provided LinkStudentToCourseDTO.
         public async Task<LinkStudentToCourseDTO> LinkStudentToCourse(LinkStudentToCourseDTO linkDTO)
         {
             try
             {
-                var course = await _dbContext.Courses.Include(x => x.Users).
-                             FirstOrDefaultAsync(c => c.CourseID == linkDTO.CourseId);
+              
 
-                var user = await _dbContext.Users.FindAsync(linkDTO.UserId);
-
-                if (!course.Users.Any(u => u.Id == linkDTO.UserId))
+                var course = await _courseRepository.GetByIdAsync(linkDTO.CourseId);
+                if (course == null)
                 {
-                    course.Users.Add(user);
-                    await _dbContext.SaveChangesAsync();
+                    throw new KeyNotFoundException($"Course with ID {linkDTO.CourseId} not found.");
                 }
-
+                var user = await _userRepository.GetUserById(linkDTO.UserId);
+                if (user == null)
+                {
+                    throw new KeyNotFoundException($"User with ID {linkDTO.UserId} not found.");
+                }
+                course.Users.Add(user);
+                await _courseRepository.SaveChangesAsync();
                 return linkDTO;
+
+
+
+
+
             }
             catch (Exception ex)
             {
@@ -154,11 +171,12 @@ namespace Business.Services
             }
         }
 
+        // This method updates an existing course with the specified courseId based on the provided UpdateCourseDTO.
         public async Task<UpdateCourseDTO> UpdateCourse(int courseId, UpdateCourseDTO courseDTO)
         {
             try
             {
-                var course = await _dbContext.Courses.FindAsync(courseId);
+                var course = await _courseRepository.GetByIdAsync(courseId);
                 if (course != null)
                 {
                     course.SubjectName = courseDTO.SubjectName;
@@ -166,7 +184,7 @@ namespace Business.Services
                     course.ClassName = courseDTO.ClassName;
                     course.TeacherID = courseDTO.TeacherID;
                     course.Url = courseDTO.Url;
-                    await _dbContext.SaveChangesAsync();
+                    await _courseRepository.SaveChangesAsync();
                 }
                 return courseDTO;
 
