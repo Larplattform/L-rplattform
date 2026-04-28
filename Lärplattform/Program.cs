@@ -18,7 +18,7 @@ public class Program
         builder.Services.AddDbContext<ApplicationDbContexts>(options =>
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-          builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+          builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
                       .AddRoles<IdentityRole<int>>()
 
                       .AddEntityFrameworkStores<ApplicationDbContexts>();
