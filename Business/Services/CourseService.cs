@@ -139,6 +139,40 @@ namespace Business.Services
             }
         }
 
+        public async Task<IEnumerable<CourseDTO>> GetCoursesByTeacherId(int teacherId)
+        {
+            try
+            {
+
+                var courses = await _courseRepository.GetAllTeachersByIdAsync(teacherId);
+                var courseDTOs = new List<CourseDTO>();
+                foreach (var course in courses)
+                {
+                    courseDTOs.Add(new CourseDTO
+                    {
+                        CourseID = course.CourseID,
+                        SubjectName = course.SubjectName,
+                        TotalMarks = course.TotalMarks,
+                        ClassName = course.ClassName,
+                        TeacherID = course.TeacherID,
+                        Url = course.Url,
+                        Users = course.Users.Select(u => new UserDTO
+                        {
+                            FirstName = u.FirstName,
+                            LastName = u.LastName,
+                        }).ToList()
+                    });
+                }
+                return courseDTOs;
+
+
+            }
+            catch (Exception ex)
+            {
+                throw new ApplicationException($"An error occurred while retrieving courses for teacher with ID {teacherId}.", ex);
+            }
+        }
+
         // This method links a student to a course based on the provided LinkStudentToCourseDTO.
         public async Task<LinkStudentToCourseDTO> LinkStudentToCourse(LinkStudentToCourseDTO linkDTO)
         {
@@ -170,6 +204,9 @@ namespace Business.Services
                 throw new ApplicationException($"An error occurred while linking student with ID {linkDTO.UserId} to course with ID {linkDTO.CourseId}.", ex);
             }
         }
+
+
+        
 
         // This method updates an existing course with the specified courseId based on the provided UpdateCourseDTO.
         public async Task<UpdateCourseDTO> UpdateCourse(int courseId, UpdateCourseDTO courseDTO)

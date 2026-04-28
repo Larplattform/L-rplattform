@@ -72,6 +72,17 @@ namespace Data.Repositories
        
             _dbContext.Courses.Update(course);
         }
+
+
+        // It retrieves all courses associated with a specific teacher ID, including their associated users, if they are not marked as deleted.
+
+
+        public async Task<IEnumerable<Course>> GetAllTeachersByIdAsync(int teacherId)
+        {
+            return await _dbContext.Courses.Include(c => c.Users)
+                .Where(c => c.TeacherID == teacherId && !c.IsDeleted)
+                .ToListAsync();
         }
     }
+}
 

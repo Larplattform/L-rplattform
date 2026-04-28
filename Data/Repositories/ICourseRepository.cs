@@ -29,5 +29,8 @@ namespace Data.Repositories
         // Saves changes to the data source asynchronously.
 
         Task SaveChangesAsync();
+
+        // Gets all teachers by their ID asynchronously.
+        Task<IEnumerable<Course>> GetAllTeachersByIdAsync(int teacherId);
     }
 }

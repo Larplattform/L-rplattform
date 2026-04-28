@@ -33,11 +33,13 @@ namespace Lärplattform.Pages.Teacher
             var currentUserId = user.Id; 
 
             var client = httpClientFactory.CreateClient("APIClient");
-            var response = await client.GetAsync("api/Course");
+            
+            var response = await client.GetAsync($"api/Course/teacher/{currentUserId}");
+
             if (response.IsSuccessStatusCode)
             {
                 var courseDTOs = await response.Content.ReadFromJsonAsync<List<CourseDTO>>() ?? new List<CourseDTO>();
-                Courses = courseDTOs.Where(dto => dto.TeacherID == currentUserId).Select(dto => new CourseViewModel
+                Courses = courseDTOs.Select(dto => new CourseViewModel
                 {
                     CourseID = dto.CourseID,
                     SubjectName = dto.SubjectName,

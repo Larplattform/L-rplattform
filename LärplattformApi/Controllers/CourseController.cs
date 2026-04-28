@@ -121,5 +121,19 @@ namespace LärplattformApi.Controllers
             }
 
         }
+
+        [HttpGet("teacher/{teacherId:int}")]
+        public async Task<IActionResult> GetCoursesByTeacherId([FromRoute] int teacherId)
+        {
+            try
+            {
+                var courses = await CourseService.GetCoursesByTeacherId(teacherId);
+                return Ok(courses);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }
