@@ -9,9 +9,9 @@ namespace Data.Repositories
 {
     public class CourseRepository : ICourseRepository
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ApplicationDbContexts _dbContext;
 
-        public CourseRepository(ApplicationDbContext dbContext)
+        public CourseRepository(ApplicationDbContexts dbContext)
         {
             _dbContext = dbContext;
         }

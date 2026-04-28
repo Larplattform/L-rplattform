@@ -10,7 +10,7 @@ namespace Data.Context
     /// </summary>
     /// <param name="dbContext">The database to seed for.</param>
     /// <param name="userManager">The manager to seed users.</param>
-    public class DataInitializer(ApplicationDbContext dbContext, UserManager<User> userManager)
+    public class DataInitializer(ApplicationDbContexts dbContext, UserManager<User> userManager)
     {
         /// <summary>
         /// Seeds initial data asynchronously.

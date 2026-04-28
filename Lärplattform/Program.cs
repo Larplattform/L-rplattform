@@ -4,7 +4,6 @@ using Data.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Data;
-using ApplicationDbContext = Data.Context.ApplicationDbContext;
 
 namespace MainApp;
 
@@ -16,12 +15,13 @@ public class Program
 
         // Add services to the container.
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+        builder.Services.AddDbContext<ApplicationDbContexts>(options =>
             options.UseSqlServer(connectionString));
         builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-        builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
+          builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
                       .AddRoles<IdentityRole<int>>()
-                      .AddEntityFrameworkStores<ApplicationDbContext>();
+
+                      .AddEntityFrameworkStores<ApplicationDbContexts>();
 
 
         builder .Services.AddHttpClient("APIClient", client =>

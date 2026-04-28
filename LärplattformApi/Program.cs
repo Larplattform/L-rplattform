@@ -1,4 +1,9 @@
+using Business.Interfaces;
+using Business.Services;
 using Data.Context;
+using Data.Entities;
+using Data.Repositories;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,13 +16,22 @@ builder.Services.AddOpenApi();
 
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
+builder.Services.AddDbContext<ApplicationDbContexts>(options =>
     options.UseSqlServer(connectionString));
 
-builder.Services.AddTransient<Business.Interfaces.ICourseInterface, Business.Services.CourseService>();
-builder.Services.AddTransient<Data.Repositories.ICourseRepository, Data.Repositories.CourseRepository>();
-builder.Services.AddTransient<Data.Repositories.IUserRepository, Data.Repositories.UserRepository>();
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddRoles<IdentityRole<int>>()
+    .AddEntityFrameworkStores<ApplicationDbContexts>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI();
+
+
+
+
+builder.Services.AddScoped<ICourseInterface, CourseService>();
+builder.Services.AddScoped<ICourseRepository, CourseRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserInterface, UserService>();
 
 var app = builder.Build();
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class InitialFix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -68,7 +68,9 @@ namespace Data.Migrations
                     SubjectName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TotalMarks = table.Column<int>(type: "int", nullable: false),
                     ClassName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TeacherID = table.Column<int>(type: "int", nullable: false)
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TeacherID = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -236,7 +238,8 @@ namespace Data.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CourseID = table.Column<int>(type: "int", nullable: false)
+                    CourseID = table.Column<int>(type: "int", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -259,7 +262,8 @@ namespace Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Marks = table.Column<int>(type: "int", nullable: false),
                     LessonID = table.Column<int>(type: "int", nullable: false),
-                    IsPublished = table.Column<bool>(type: "bit", nullable: false)
+                    IsPublished = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -283,7 +287,8 @@ namespace Data.Migrations
                     Feedback = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     AssigmentId = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false)
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {

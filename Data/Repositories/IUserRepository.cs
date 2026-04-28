@@ -7,6 +7,9 @@ namespace Data.Repositories
 {
     public interface IUserRepository
     {
-        Task<User?> GetUserById (int id);
+        Task<User?> GetUserByIdAsync(int id);
+
+        Task<IEnumerable<User>> GetAllTeachersAsync();
+        
     }
 }

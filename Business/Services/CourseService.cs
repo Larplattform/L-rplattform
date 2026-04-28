@@ -185,7 +185,7 @@ namespace Business.Services
                 {
                     throw new KeyNotFoundException($"Course with ID {linkDTO.CourseId} not found.");
                 }
-                var user = await _userRepository.GetUserById(linkDTO.UserId);
+                var user = await _userRepository.GetUserByIdAsync(linkDTO.UserId);
                 if (user == null)
                 {
                     throw new KeyNotFoundException($"User with ID {linkDTO.UserId} not found.");

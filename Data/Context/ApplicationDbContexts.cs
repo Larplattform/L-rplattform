@@ -9,7 +9,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace Data.Context
 {
-    public partial class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+    public partial class ApplicationDbContexts(DbContextOptions<ApplicationDbContexts> options)
        : IdentityDbContext<User, IdentityRole<int>, int>(options)
     {
         /// <summary>
