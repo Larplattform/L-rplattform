@@ -7,17 +7,25 @@ namespace Data.Repositories
 {
     public interface ILessonRepository
     {
-       Task<IEnumerable<Lesson>> AllLessonsWithCoursesAsync();
+        //Gets all Lessons with their associated Courses asynchronously.
+        Task<IEnumerable<Lesson>> AllLessonsWithCoursesAsync();
 
+        // Gets a Lesson by its ID along with its associated course asynchronously.
         Task<IEnumerable<Lesson>> GetByCourseIdAsync(int id, string userId);
 
+        // Gets a lesson by its ID asynchronously.
         Task<Lesson?> GetByIdAsync(int courseID);
 
-        Task <Lesson> AddLessonAsync(Lesson lesson);
+        // Create a lesson  asynchronously.
+        Task<Lesson> AddLessonAsync(Lesson lesson);
 
-        void UpdateLessonAsync(Lesson lesson );
+        // Update a lesson.
+        void UpdateLesson(Lesson lesson );
 
-        Task<Lesson?> Delete(int id);
+        // Delete a lesson  asynchronously.
+        Task<Lesson?> DeleteAsync(int id);
+
+        // Save changes asynchronously.
 
         Task SaveChangesAsync();
     }

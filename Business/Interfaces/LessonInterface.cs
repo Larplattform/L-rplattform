@@ -7,8 +7,8 @@ namespace Business.Interfaces
 {
     public interface LessonInterface
     {
-
-       public Task<CreateLessonDTO> CreateLessonAsync( CreateLessonDTO createLessonDTO);
+      
+        public Task<CreateLessonDTO> CreateLessonAsync( CreateLessonDTO createLessonDTO);
         public Task<IEnumerable<LessonDTO>> GetAllLessons();
 
         public Task<IEnumerable<LessonDTO>> GetLessonsbyCourseId(int courseId);

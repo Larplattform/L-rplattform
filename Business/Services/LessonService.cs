@@ -17,6 +17,8 @@ namespace Business.Services
             _LessonRepository = LessonRepository;
 
         }
+
+        // This method creates a new lesson based on the provided CreatelessonDTO and saves it to the repository.
         public async Task<CreateLessonDTO> CreateLessonAsync(CreateLessonDTO createLessonDTO)
         {
             try
@@ -42,11 +44,13 @@ namespace Business.Services
             }
         }
 
+        // This method deletes a lesson with the specified Id from the repository.
+
         public async Task DeleteAsync(int id)
         {
             try
             {
-                var Lesson = await _LessonRepository.Delete(id);
+                var Lesson = await _LessonRepository.DeleteAsync(id);
                 if (Lesson == null)
                 {
                     throw new KeyNotFoundException($"lessons with ID {id} not found.");
@@ -58,6 +62,7 @@ namespace Business.Services
             }
         }
 
+        // This method retrieves all lessons from the repository and returns them as a collection of lessonDTOs.
         public async Task<IEnumerable<LessonDTO>> GetAllLessons()
         {
             try
@@ -86,6 +91,8 @@ namespace Business.Services
             }
         }
 
+        // This method retrieves a lesson with the specified Id from the repository and returns it as a lessonDTO.
+
         public async Task<LessonDTO> GetLessonById(int id)
         {
             try
@@ -113,6 +120,8 @@ namespace Business.Services
                 throw new ApplicationException($"An error occurred while retrieving the Lesson with ID {id}.", ex);
             }
         }
+
+        // This method retrieves a lessons with the specified courseId associated with the course and returns it as a lessonDTO.
 
         public async Task<IEnumerable<LessonDTO>> GetLessonsbyCourseId(int courseId)
         {
@@ -145,6 +154,8 @@ namespace Business.Services
             }
            
         }
+
+        // This method updates an existing lesson with the specified Id based on the provided UpdatelessonDTO.
 
         public async Task<UpdateLessonDTO> UpdateLessonAsync(int UpdateLesson,UpdateLessonDTO updatelessonDTO)
         {
