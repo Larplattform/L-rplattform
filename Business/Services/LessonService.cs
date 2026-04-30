@@ -63,24 +63,23 @@ namespace Business.Services
             try
             {
                 var GetAllesson = await _LessonRepository.AllLessonsWithCoursesAsync();
-                
-                var lessonDtos = new List<LessonDTO>();
-               
-                foreach (var lesson in GetAllesson)
+
+
+                return GetAllesson.Select(x => new LessonDTO
                 {
-                    lessonDtos.Add(new LessonDTO
-                    {
-                        LessonID = lesson.LessonID,
-                        Content = lesson.Content,
-                        Description = lesson.Description,
-                        Title = lesson.Title,
-                        CourseID = lesson.CourseID,
+                    LessonID = x.LessonID,
+                    Title = x.Title,
+                    Description = x.Description,
+                    Content = x.Content,
+                    CourseID = x.CourseID,
+                    CourseName = x.Course?.SubjectName ?? "No CourseName",
+                    CourseTotalMark = x.Course?.TotalMarks.ToString() ?? "no Total Marks",
 
-                    });
-
-                }
+                }).ToList();
                 
-                return lessonDtos;
+                
+                
+              
             }catch(Exception ex)
             {
                 throw new ApplicationException("An error occurred while retrieving Lessons.", ex);
@@ -105,6 +104,8 @@ namespace Business.Services
                     Title = lesson.Title,
                     Description = lesson.Description,
                     CourseID = lesson.CourseID,
+                    CourseName = lesson.Course?.SubjectName ?? "No CourseName",
+                    CourseTotalMark = lesson.Course?.TotalMarks.ToString() ?? "no Total Marks",
 
                 };
             }catch(Exception ex)

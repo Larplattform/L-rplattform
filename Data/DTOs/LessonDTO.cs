@@ -16,9 +16,10 @@ namespace Data.DTOs
         public string Content { get; set; } = string.Empty;
 
         public int CourseID { get; set; }
+        public string CourseName { get; set; } = string.Empty;
 
-        public CourseDTO Course { get; set; } = null!;
+        public string CourseTotalMark {  get; set; } = string.Empty;
 
-        public bool IsDeleted { get; set; }
+      
     }
 }
