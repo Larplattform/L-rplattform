@@ -17,5 +17,7 @@ namespace Data.Entities
         public int CourseID { get; set; }
 
         public Course Course { get; set; } = null!;
+
+        public bool IsDeleted { get; set; }
     }
 }
