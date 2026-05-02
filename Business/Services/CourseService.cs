@@ -126,10 +126,13 @@ namespace Business.Services
                     ClassName = course.ClassName,
                     TeacherID = course.TeacherID,
                     Url = course.Url,
-                    Users = course.Users.Select(u => new UserDTO
+                    Users = course.Users.
+                    GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
+                    Where(g => g.Key.Id != course.TeacherID).
+                    Select(g => new UserDTO
                     {
-                        FirstName = u.FirstName,
-                        LastName = u.LastName,
+                        FirstName = g.Key.FirstName,
+                        LastName = g.Key.LastName,
                     }).ToList()
                 };
             }
@@ -157,7 +160,8 @@ namespace Business.Services
                         TeacherID = course.TeacherID,
                         Url = course.Url,
                         Users = course.Users.
-                        GroupBy(u => new { u.FirstName, u.LastName }).
+                        GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
+                        Where(g => g.Key.Id != course.TeacherID).
                         Select(g => new UserDTO
                         {
                             FirstName = g.Key.FirstName,

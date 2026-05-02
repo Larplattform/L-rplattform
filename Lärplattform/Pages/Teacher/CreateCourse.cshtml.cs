@@ -45,7 +45,7 @@ namespace Lärplattform.Pages.Teacher
                 SubjectName = NewCourse.SubjectName,
                 TotalMarks = NewCourse.TotalMarks,
                 ClassName = NewCourse.ClassName,
-                TeacherID = NewCourse.TeacherID
+                TeacherID = user.Id,
             };
 
             var client = HttpClientFactory.CreateClient("APIClient");
