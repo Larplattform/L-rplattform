@@ -26,6 +26,7 @@ namespace Business.Services
         {
             try
             {
+                var teacher = await _userRepository.GetUserByIdAsync(courseDTO.TeacherID);
                 var course = new Course
                 {
 
@@ -33,12 +34,20 @@ namespace Business.Services
                     TotalMarks = courseDTO.TotalMarks,
                     ClassName = courseDTO.ClassName,
                     Url = courseDTO.Url,
-                    TeacherID = courseDTO.TeacherID
+                    TeacherID = courseDTO.TeacherID,
+                    Users = new List<User> { teacher! }
                 };
-               
+
+                if(teacher != null)
+                {
+                    courseDTO.TeacherName = $"{teacher.FirstName} {teacher.LastName}";
+                }
+
                 await _courseRepository.AddAsync(course);
                 await _courseRepository.SaveChangesAsync();
-             return courseDTO;
+
+                courseDTO.CourseID = course.CourseID;
+                return courseDTO;
             }
             catch (Exception ex)
             {
@@ -74,9 +83,12 @@ namespace Business.Services
             try
             {
                 var courses = await _courseRepository.GetAllWithUsersAsync();
+                var allTeachers = await _userRepository.GetAllTeachersAsync();
+
                 var courseDTOs = new List<CourseDTO>();
                 foreach (var course in courses)
                 {
+                 
                     courseDTOs.Add(new CourseDTO
                     {
                         CourseID = course.CourseID,
@@ -85,16 +97,15 @@ namespace Business.Services
                         ClassName = course.ClassName,
                         TeacherID = course.TeacherID,
                         Url = course.Url,
-                        Users = course.Users.Select(u => new UserDTO
+                        TeacherName = allTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
+                        Users = course.Users.
+                        GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
+                        Where(g => g.Key.Id != course.TeacherID).
+                        Select(g => new UserDTO
                         {
-
-                            FirstName = u.FirstName,
-                            LastName = u.LastName,
-                          
-
+                            FirstName = g.Key.FirstName,
+                            LastName = g.Key.LastName,
                         }).ToList()
-
-
                     });
                 }
                 return courseDTOs;
@@ -114,6 +125,7 @@ namespace Business.Services
             try
             {
                 var course = await _courseRepository.GetByIdAsync(courseId);
+                var allTeachers = await _userRepository.GetAllTeachersAsync();
                 if (course == null)
                 {
                     throw new KeyNotFoundException($"Course with ID {courseId} not found.");
@@ -126,6 +138,7 @@ namespace Business.Services
                     ClassName = course.ClassName,
                     TeacherID = course.TeacherID,
                     Url = course.Url,
+                    TeacherName = allTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
                     Users = course.Users.
                     GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
                     Where(g => g.Key.Id != course.TeacherID).
@@ -148,6 +161,7 @@ namespace Business.Services
             {
 
                 var courses = await _courseRepository.GetAllTeachersByIdAsync(teacherId);
+                var allTeachers = await _userRepository.GetAllTeachersAsync();
                 var courseDTOs = new List<CourseDTO>();
                 foreach (var course in courses)
                 {
@@ -158,6 +172,7 @@ namespace Business.Services
                         TotalMarks = course.TotalMarks,
                         ClassName = course.ClassName,
                         TeacherID = course.TeacherID,
+                      TeacherName = allTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
                         Url = course.Url,
                         Users = course.Users.
                         GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
