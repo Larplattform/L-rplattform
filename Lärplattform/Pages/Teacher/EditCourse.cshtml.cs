@@ -40,7 +40,7 @@ namespace Lärplattform.Pages.Teacher
                 return Page();
             }
 
-            var updateCourseDTO = new UpdateCourseDTO 
+            var updateCourseDTO = new UpdateCourseDTO
             {
 
                 SubjectName = NewCourse.SubjectName,

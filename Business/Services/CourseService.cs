@@ -156,10 +156,12 @@ namespace Business.Services
                         ClassName = course.ClassName,
                         TeacherID = course.TeacherID,
                         Url = course.Url,
-                        Users = course.Users.Select(u => new UserDTO
+                        Users = course.Users.
+                        GroupBy(u => new { u.FirstName, u.LastName }).
+                        Select(g => new UserDTO
                         {
-                            FirstName = u.FirstName,
-                            LastName = u.LastName,
+                            FirstName = g.Key.FirstName,
+                            LastName = g.Key.LastName,
                         }).ToList()
                     });
                 }
