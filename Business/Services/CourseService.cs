@@ -35,18 +35,15 @@ namespace Business.Services
                     ClassName = courseDTO.ClassName,
                     Url = courseDTO.Url,
                     TeacherID = courseDTO.TeacherID,
-                    Users = new List<User> { teacher! }
+                  
                 };
 
-                if(teacher != null)
-                {
-                    courseDTO.TeacherName = $"{teacher.FirstName} {teacher.LastName}";
-                }
+                
 
                 await _courseRepository.AddAsync(course);
                 await _courseRepository.SaveChangesAsync();
 
-                courseDTO.CourseID = course.CourseID;
+              
                 return courseDTO;
             }
             catch (Exception ex)

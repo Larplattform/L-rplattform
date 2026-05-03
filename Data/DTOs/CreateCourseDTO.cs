@@ -8,9 +8,7 @@ namespace Data.DTOs
 {
     public class CreateCourseDTO
     {
-        [JsonIgnore] 
-
-        public int CourseID { get; set; }
+      
         public string SubjectName { get; set; } = string.Empty;
         public int TotalMarks { get; set; }
 
@@ -19,10 +17,6 @@ namespace Data.DTOs
         public string ClassName { get; set; } = string.Empty;
         public int TeacherID { get; set; }
 
-        [JsonIgnore]
-        public string TeacherName { get; set; } = string.Empty;
-
-        [JsonIgnore]
-        public IEnumerable<CreateUserDTO> Users { get; set; } = new List<CreateUserDTO>();
+       
     }
 }
