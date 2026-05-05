@@ -19,6 +19,7 @@ namespace Data.Repositories
         // It adds a new schedule to the database context and returns the added schedule.
         public async Task<Schedule> AddScheduleAsync(Schedule schedule)
         {
+           
             var course = _dbContext.Courses.Include(c => c.Users).FirstOrDefault(c => c.CourseID == schedule.CourseID);
             if(course != null)
             {
@@ -27,6 +28,12 @@ namespace Data.Repositories
                 {
                     course.Users.Add(teacher);
                 }
+            }
+
+            var IsOcopied = await _dbContext.Schedules.AnyAsync(s => s.Location == schedule.Location && schedule.StartDate < s.EndDate && schedule.EndDate > s.StartDate);
+            if (IsOcopied)
+            {
+                throw new InvalidOperationException("The schedule overlaps with an existing schedule at the same location.");
             }
             await _dbContext.Schedules.AddAsync(schedule);
           
@@ -71,6 +78,21 @@ namespace Data.Repositories
         // It updates an existing schedule in the database context and returns the updated schedule.
         public async Task<Schedule> UpdateScheduleAsync(Schedule schedule)
         {
+            var course = _dbContext.Courses.Include(c => c.Users).FirstOrDefault(c => c.CourseID == schedule.CourseID);
+            if (course != null)
+            {
+                var teacher = _dbContext.Users.FirstOrDefault(u => u.Id == course.TeacherID);
+                if (teacher != null && !course.Users.Any(x => x.Id == teacher.Id))
+                {
+                    course.Users.Add(teacher);
+                }
+            }
+                var IsOcopied = await _dbContext.Schedules.AnyAsync(s => s.ScheduleID != schedule.ScheduleID && s.Location == schedule.Location && schedule.StartDate < s.EndDate && schedule.EndDate > s.StartDate);
+            if(IsOcopied)
+            {
+                throw new InvalidOperationException("The schedule overlaps with an existing schedule at the same location.");
+            }
+
             _dbContext.Schedules.Update(schedule);
             return schedule;
         }

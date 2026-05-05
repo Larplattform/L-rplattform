@@ -65,7 +65,7 @@
                         <th scope="col">Start</th>
                         <th scope="col">End</th>
                         <th scope="col">Subject</th>
-                     
+                         <th scope="col">Edit</th>
                         <th scope="col">Location</th>
                     </tr>
                 </thead>
@@ -76,7 +76,7 @@
                             <td>@entry.StartDate</td>
                             <td>@entry.EndDate</td>
                             <td>@entry.Course.SubjectName</td>
-                           
+                             <td><a asp-page="/Teacher/EditSchedule" asp-route-ScheduleID="@entry.ScheduleID" class="btn btn-primary">Edit</a></td>
                             <td>@entry.Location</td>
                         </tr>
                     }
@@ -99,6 +99,7 @@
             </nav>
 
             <a  asp-page="/Teacher/CreateSchedule"  class="btn btn-primary">Create New Schedule</a>
+            
         </div>
     }
     else
