@@ -29,6 +29,12 @@ namespace Data.Repositories
         // Save changes to the database
         public Task SaveChangesAsync();
 
+        // Get schedules within a specific date range
+        public Task<IEnumerable<Schedule>> GetAllSchedulesByDateRangeAsync(DateTime startDate, DateTime endDate);
+
+        // Get schedules paginated by page number and page size
+        public Task<IEnumerable<Schedule>> GetSchedulePagesAsync(int pageNumber, int pageSize);
+
 
     }
 }
