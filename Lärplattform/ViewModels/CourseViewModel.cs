@@ -12,7 +12,7 @@ namespace Lärplattform.ViewModels
         public string ClassName { get; set; } = string.Empty;
         public int TeacherID { get; set; }
 
-       
+
 
         public IEnumerable<UserViewModel> Users { get; set; } = new List<UserViewModel>();
     }

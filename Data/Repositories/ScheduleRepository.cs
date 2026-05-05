@@ -19,8 +19,17 @@ namespace Data.Repositories
         // It adds a new schedule to the database context and returns the added schedule.
         public async Task<Schedule> AddScheduleAsync(Schedule schedule)
         {
-            _dbContext.Schedules.Add(schedule);
-           
+            var course = _dbContext.Courses.Include(c => c.Users).FirstOrDefault(c => c.CourseID == schedule.CourseID);
+            if(course != null)
+            {
+               var teacher = _dbContext.Users.FirstOrDefault(u => u.Id == course.TeacherID);
+                if(teacher != null && !course.Users.Any(x => x.Id == teacher.Id))
+                {
+                    course.Users.Add(teacher);
+                }
+            }
+            await _dbContext.Schedules.AddAsync(schedule);
+          
             return schedule;
         }
         // It marks a schedule as deleted by setting the IsDeleted property to true, instead of actually removing it from the database.

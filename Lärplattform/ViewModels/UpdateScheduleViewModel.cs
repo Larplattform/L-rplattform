@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Data.DTOs
+﻿namespace Lärplattform.ViewModels
 {
-    public class CreateScheduleDTO
+    public class UpdateScheduleViewModel
     {
-      
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
         public string Location { get; set; } = string.Empty;
 
         public int CourseID { get; set; }
-
-     
     }
 }
