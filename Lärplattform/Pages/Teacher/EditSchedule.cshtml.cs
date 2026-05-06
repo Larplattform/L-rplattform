@@ -2,6 +2,7 @@ using Data.Entities;
 using Lärplattform.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Lärplattform.Pages.Teacher
 {
@@ -14,83 +15,142 @@ namespace Lärplattform.Pages.Teacher
             HttpClientFactory = httpClientFactory;
         }
 
-
-
         [BindProperty]
-
         public UpdateScheduleViewModel UpdateSchedule { get; set; } = new UpdateScheduleViewModel();
-        public List<CourseViewModel> Courses { get; set; } = new List<CourseViewModel>();
+        public SelectList CourseSelectList { get; set; } = new SelectList( new List<CourseViewModel>(), "CourseID", "SubjectName");
 
         [BindProperty(SupportsGet = true)]
         public int ScheduleID { get; set; }
 
+        public SelectList Location { get; set; } = new SelectList( new List<dynamic>(), "Text", "Value");
+
         public async Task<IActionResult> OnGetAsync()
         {
-            var httpClient = HttpClientFactory.CreateClient("APIClient");
-           
-            var response = await httpClient.GetAsync($"api/Schedule/{ScheduleID}");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                var schedule = await response.Content.ReadFromJsonAsync<ScheduleViewModel>();
-                if (schedule != null)
+                if (UpdateSchedule == null)
                 {
-                  
-                    UpdateSchedule.StartDate = schedule.StartDate;
-                    UpdateSchedule.EndDate = schedule.EndDate;
-                    UpdateSchedule.Location = schedule.Location;
-                    UpdateSchedule.CourseID = schedule.CourseID;
+                    ModelState.AddModelError(string.Empty, "Schedule not found.");
+                    return Page();
                 }
+
+
+                var httpClient = HttpClientFactory.CreateClient("APIClient");
+
+                var response = await httpClient.GetAsync($"api/Schedule/{ScheduleID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var schedule = await response.Content.ReadFromJsonAsync<ScheduleViewModel>();
+                    if (schedule != null)
+                    {
+                        UpdateSchedule.StartDate = schedule.StartDate;
+                        UpdateSchedule.EndDate = schedule.EndDate;
+                        UpdateSchedule.Location = (LocationEnumUpdateViewModel)schedule.Location;
+                        UpdateSchedule.CourseID = schedule.CourseID;
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to fetch schedule details.");
+                }
+
+              
+
+                await PopulateDropdown();
             }
-            var coursesResponse = await httpClient.GetAsync("api/Course");
-            if (coursesResponse.IsSuccessStatusCode)
+            catch (Exception ex)
             {
-                Courses = await coursesResponse.Content.ReadFromJsonAsync<List<CourseViewModel>>() ?? new List<CourseViewModel>();
+                ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
             }
+
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync( int Duration)
+        public async Task<IActionResult> OnPostAsync(int Duration)
         {
             if (!ModelState.IsValid)
             {
+                await PopulateDropdown();
                 return Page();
             }
-            UpdateSchedule.EndDate = UpdateSchedule.StartDate.AddHours(Duration);
-            var httpClient = HttpClientFactory.CreateClient("APIClient");
-            var response = await httpClient.PutAsJsonAsync($"api/Schedule/{ScheduleID}", UpdateSchedule);
-            if (response.IsSuccessStatusCode)
-            {
-                return RedirectToPage("/Teacher/Schedule");
-            }
-            else
-            {
-                var errorMessage = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, $"An error occurred while updating the schedule: {errorMessage}");
 
-                var coursesResponse = await httpClient.GetAsync("api/Course");
-                if (coursesResponse.IsSuccessStatusCode)
+            try
+            {
+                UpdateSchedule.EndDate = UpdateSchedule.StartDate.AddHours(Duration);
+                var httpClient = HttpClientFactory.CreateClient("APIClient");
+                var response = await httpClient.PutAsJsonAsync($"api/Schedule/{ScheduleID}", UpdateSchedule);
+                if (response.IsSuccessStatusCode)
                 {
-                    Courses = await coursesResponse.Content.ReadFromJsonAsync<List<CourseViewModel>>() ?? new List<CourseViewModel>();
+                    return RedirectToPage("/Teacher/Schedule");
                 }
-
-                return Page();
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError(string.Empty, $"An error occurred while updating the schedule: {errorMessage}");
+                }
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
             }
 
+            await PopulateDropdown();
+            return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync()
         {
-            var httpClient = HttpClientFactory.CreateClient("APIClient");
-            var response = await httpClient.DeleteAsync($"api/Schedule/{ScheduleID}");
-            if (response.IsSuccessStatusCode)
+            try
             {
-                return RedirectToPage("/Teacher/Schedule");
+                var httpClient = HttpClientFactory.CreateClient("APIClient");
+                var response = await httpClient.DeleteAsync($"api/Schedule/{ScheduleID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    return RedirectToPage("/Teacher/Schedule");
+                }
+                else
+                {
+                    var errorMessage = await response.Content.ReadAsStringAsync();
+                    ModelState.AddModelError(string.Empty, $"An error occurred while deleting the schedule: {errorMessage}");
+                }
             }
-            else
+            catch (Exception ex)
             {
-               var errorMessage = await response.Content.ReadAsStringAsync();
-                ModelState.AddModelError(string.Empty, $"An error occurred while deleting the schedule: {errorMessage}");
-                return Page();
+                ModelState.AddModelError(string.Empty, $"An error occurred: {ex.Message}");
+            }
+
+            await PopulateDropdown();
+            return Page();
+        }
+
+        public async Task PopulateDropdown()
+        {
+            try
+            {
+                var httpClient = HttpClientFactory.CreateClient("APIClient");
+                var response = await httpClient.GetAsync("api/Course");
+                if (response.IsSuccessStatusCode)
+                {
+                    var courses = await response.Content.ReadFromJsonAsync<List<CourseViewModel>>();
+                    if (courses != null)
+                    {
+                        CourseSelectList = new SelectList(courses, "CourseID", "SubjectName");
+                    }
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Failed to fetch courses.");
+                }
+
+                var locationValues = Enum.GetValues(typeof(LocationEnumUpdateViewModel))
+                    .Cast<LocationEnumUpdateViewModel>()
+                    .Select(e => new { Value = (int)e, Text = e.ToString() })
+                    .ToList();
+                Location = new SelectList(locationValues, "Value", "Text");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, $"An error occurred while populating dropdowns: {ex.Message}");
             }
         }
     }

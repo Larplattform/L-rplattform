@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Data.Entities;
 using Microsoft.EntityFrameworkCore;
+using Data.Enums;
 
 
 namespace Data.Context
@@ -112,7 +113,7 @@ namespace Data.Context
                 CourseID = MathematicsCourse.CourseID,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddMonths(3),
-              
+                Location = LocationEnum.Gym,
                 Course = MathematicsCourse
 
             };

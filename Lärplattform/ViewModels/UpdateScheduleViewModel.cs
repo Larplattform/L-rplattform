@@ -1,11 +1,13 @@
-﻿namespace Lärplattform.ViewModels
+﻿using Data.DTOs;
+
+namespace Lärplattform.ViewModels
 {
     public class UpdateScheduleViewModel
     {
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public string Location { get; set; } = string.Empty;
+        public LocationEnumUpdateViewModel Location { get; set; }
 
         public int CourseID { get; set; }
     }

@@ -25,12 +25,9 @@
                         <form method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <label asp-for="Schedule.CourseID" class="form-label">Course</label>
-                            <select asp-for="Schedule.CourseID" class="form-control" >
+                            <select asp-for="Schedule.CourseID" class="form-control" asp-items="Model.Courses" )">
                                 <option value="">-- Select Course --</option>
-                                @foreach (var course in Model.Courses)
-                                {
-                                    <option value="@course.CourseID">@course.SubjectName - @course.ClassName</option>
-                                }
+                                
                             </select>
                             <div class="form-group mb-3">
                                 <label asp-for="Schedule.StartDate" class="form-label">Start Date</label>
@@ -47,7 +44,10 @@
                             </div>
                             <div class="form-group mb-3">
                                 <label asp-for="Schedule.Location" class="form-label">Location</label>
-                                <input asp-for="Schedule.Location" class="form-control" placeholder="e.g. Room 101" />
+                                <select asp-for="Schedule.Location" class="form-control" asp-items="Model.Location">
+                                    <option value="">-- Select Location --</option>
+                                  
+                                </select>
                                 <span asp-validation-for="Schedule.Location" class="text-danger"></span>
                             </div>
                             <div class="form-group mb-3">

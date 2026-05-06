@@ -3,6 +3,7 @@ using Lärplattform.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Lärplattform.Pages.Teacher
 {
@@ -20,14 +21,16 @@ namespace Lärplattform.Pages.Teacher
         [BindProperty]
         public CreateScheduleViewModel Schedule { get; set; } = new CreateScheduleViewModel();
 
-        public List<CourseViewModel> Courses { get; set; } = new List<CourseViewModel>();
+        public SelectList Courses { get; set; } = new SelectList( new List<CourseViewModel>(), "CourseID", "SubjectName");
 
+        public SelectList Location = new SelectList(new List<dynamic>(), "Text", "Value");
         public async Task OnGetAsync()
         {
            Schedule.StartDate = DateTime.Now;
             Schedule.EndDate = DateTime.Now.AddHours(1);
 
             var UserId = _userManager.GetUserId(User);
+           
             var httpClient = HttpClientFactory.CreateClient("APIClient");
             var response = await httpClient.GetAsync("api/Course");
             if (response.IsSuccessStatusCode)
@@ -35,12 +38,19 @@ namespace Lärplattform.Pages.Teacher
                 var courses = await response.Content.ReadFromJsonAsync<List<CourseViewModel>>();
                 if (courses != null && UserId != null)
                 {
-                    
-                    Courses = courses.Where(c => c.TeacherID.ToString() == UserId).ToList();
+
+                    var teacherCourses = courses.Where(c => c.TeacherID.ToString() == UserId).ToList();
+                    Courses = new SelectList(teacherCourses, "CourseID", "SubjectName");
 
                 }
+                else
+                {
+                    throw new ApplicationException("Failed to retrieve courses from the API.");
+                } 
+                await PopulateDropDown();
+
             }
-        }
+            }
        
         public async Task<IActionResult> OnPostAsync(int Duration)
         {
@@ -48,6 +58,7 @@ namespace Lärplattform.Pages.Teacher
             {
                 return Page();
             }
+
 
          
 
@@ -62,9 +73,9 @@ namespace Lärplattform.Pages.Teacher
                 CourseID = Schedule.CourseID,
                 EndDate = end,
                 StartDate = start,
-                Location = Schedule.Location,
-               
-                
+                Location = (Data.DTOs.LocationEnumCreateDTO)Schedule.Location
+
+
 
             };
 
@@ -73,8 +84,44 @@ namespace Lärplattform.Pages.Teacher
             {
                 return RedirectToPage("/Teacher/Schedule");
             }
-
+            await PopulateDropDown();
             return Page();
+        }
+
+        public async Task PopulateDropDown()
+        {
+            try
+            {
+                var UserId = _userManager.GetUserId(User);
+                var httpClient = HttpClientFactory.CreateClient("APIClient");
+                var response = await httpClient.GetAsync("api/Course");
+                if (response.IsSuccessStatusCode)
+                {
+                    var courses = await response.Content.ReadFromJsonAsync<List<CourseViewModel>>();
+                    if (courses != null && UserId != null)
+                    {
+                        var teacherCourses = courses.Where(c => c.TeacherID.ToString() == UserId).ToList();
+                        Courses = new SelectList(teacherCourses, "CourseID", "SubjectName");
+                    }
+
+                }
+                else
+                {
+                    throw new ApplicationException("Failed to retrieve courses from the API.");
+                }
+
+                var locationValues = Enum.GetValues(typeof(LocationEnumCreateViewModel))
+                   .Cast<LocationEnumCreateViewModel>()
+                   .Select(e => new { Value = (int)e, Text = e.ToString() })
+                   .ToList();
+                Location = new SelectList(locationValues, "Value", "Text");
+
+
+            } catch (Exception ex)
+            {
+                throw new ApplicationException("An error occurred while populating the dropdown.", ex);
+            }
+
         }
     }
 }

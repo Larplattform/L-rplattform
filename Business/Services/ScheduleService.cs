@@ -1,6 +1,7 @@
 ﻿using Business.Interfaces;
 using Data.DTOs;
 using Data.Entities;
+using Data.Enums;
 using Data.Repositories;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ namespace Business.Services
                 {
                     StartDate = schedule.StartDate,
                     EndDate = schedule.EndDate,
-                 
+                   Location = (LocationEnum)schedule.Location,
                     CourseID = schedule.CourseID
 
                 };
@@ -88,7 +89,7 @@ namespace Business.Services
                         ScheduleID = schedule.ScheduleID,
                         StartDate = schedule.StartDate,
                         EndDate = schedule.EndDate,
-                  
+                   Location = (LocationEnumDTO)schedule.Location,
                         CourseID = schedule.CourseID,
                         Course = new CourseDTO
                         {
@@ -136,7 +137,7 @@ namespace Business.Services
                         ScheduleID = schedule.ScheduleID,
                         StartDate = schedule.StartDate,
                         EndDate = schedule.EndDate,
-                    
+                      Location = (LocationEnumDTO)schedule.Location,
                         CourseID = schedule.CourseID,
                         Course = new CourseDTO
                         {
@@ -184,7 +185,7 @@ namespace Business.Services
                         ScheduleID = schedule.ScheduleID,
                         StartDate = schedule.StartDate,
                         EndDate = schedule.EndDate,
-                       
+                        Location = (LocationEnumDTO)schedule.Location,
                         CourseID = schedule.CourseID,
                         Course = new CourseDTO
                         {
@@ -229,7 +230,7 @@ namespace Business.Services
                     ScheduleID = schedule.ScheduleID,
                     StartDate = schedule.StartDate,
                     EndDate = schedule.EndDate,
-               
+                  Location = (LocationEnumDTO)schedule.Location,
                     CourseID = schedule.CourseID,
                     Course = new CourseDTO
                     {
@@ -275,7 +276,7 @@ namespace Business.Services
                         ScheduleID = schedule.ScheduleID,
                         StartDate = schedule.StartDate,
                         EndDate = schedule.EndDate,
-                      
+                       Location = (LocationEnumDTO)schedule.Location,
                         CourseID = schedule.CourseID,
                         Course = new CourseDTO
                         {
@@ -322,7 +323,7 @@ namespace Business.Services
                 }
                 scheduleid.StartDate = schedule.StartDate;
                 scheduleid.EndDate = schedule.EndDate;
-               
+                scheduleid.Location = (LocationEnum)schedule.Location;
                 scheduleid.CourseID = schedule.CourseID;
                 await _scheduleRepository.UpdateScheduleAsync(scheduleid);
                 await _scheduleRepository.SaveChangesAsync();
