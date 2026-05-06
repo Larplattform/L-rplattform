@@ -23,7 +23,7 @@ namespace Lärplattform.Pages.Teacher
 
         public SelectList Courses { get; set; } = new SelectList( new List<CourseViewModel>(), "CourseID", "SubjectName");
 
-        public SelectList Location = new SelectList(new List<dynamic>(), "Text", "Value");
+        public SelectList Location = new SelectList(new List<dynamic>(), "Value", "Text");
         public async Task OnGetAsync()
         {
            Schedule.StartDate = DateTime.Now;
@@ -56,6 +56,7 @@ namespace Lärplattform.Pages.Teacher
         {
             if (!ModelState.IsValid)
             {
+                    await PopulateDropDown();
                 return Page();
             }
 
@@ -84,6 +85,7 @@ namespace Lärplattform.Pages.Teacher
             {
                 return RedirectToPage("/Teacher/Schedule");
             }
+            ModelState.AddModelError(string.Empty, "An error occurred while creating the schedule. Please try again.");
             await PopulateDropDown();
             return Page();
         }

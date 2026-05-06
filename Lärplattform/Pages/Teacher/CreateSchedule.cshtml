@@ -31,7 +31,7 @@
                             </select>
                             <div class="form-group mb-3">
                                 <label asp-for="Schedule.StartDate" class="form-label">Start Date</label>
-                                <input asp-for="Schedule.StartDate" class="form-control" type="datetime-local" />
+                                <input asp-for="Schedule.StartDate" class="form-control" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" />
                                 <span asp-validation-for="Schedule.StartDate" class="text-danger"></span>
                             </div>
                             <div class="form-group mb-3">
