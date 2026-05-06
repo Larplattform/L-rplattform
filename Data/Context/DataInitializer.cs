@@ -112,7 +112,7 @@ namespace Data.Context
                 CourseID = MathematicsCourse.CourseID,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddMonths(3),
-                Location = "Online",
+              
                 Course = MathematicsCourse
 
             };

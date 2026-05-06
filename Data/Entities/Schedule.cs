@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,7 +11,7 @@ namespace Data.Entities
         public DateTime StartDate { get; set; }
        public  DateTime EndDate { get; set; }
 
-        public string Location { get; set; } = string.Empty;    
+        public LocationEnum Location { get; set; }  
 
         public int CourseID { get; set; }
 
