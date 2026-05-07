@@ -18,8 +18,22 @@ namespace Data.Repositories
         public async Task<Lesson> AddLessonAsync(Lesson lesson)
         {
            
-             await _dbContext.Lessons.AddAsync(lesson);
-            return lesson;
+
+            await _dbContext.Lessons.AddAsync(lesson);
+
+           var course = await _dbContext.Courses.FirstOrDefaultAsync(c => c.CourseID == lesson.CourseID);
+
+            if(course != null)
+            {
+                lesson.Course = course;
+
+                var teacher = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == course.TeacherID);
+                if(teacher != null)
+                {
+                    course.Users.Add(teacher);
+                }
+            }
+            return  lesson;
         }
 
 
@@ -27,7 +41,7 @@ namespace Data.Repositories
         public async Task<IEnumerable<Lesson>> AllLessonsWithCoursesAsync()
         {
 
-            return await _dbContext.Lessons.Include(c => c.Course).Where(c => !c.IsDeleted).ToListAsync();
+            return await _dbContext.Lessons.Include(c => c.Course).ThenInclude(c => c.Users).Where(c => !c.IsDeleted).ToListAsync();
         }
 
         // It deletes the lesson by setting the IsDeleted property to true instead of removing it from the database.
@@ -45,7 +59,7 @@ namespace Data.Repositories
         // It retrieves all lessons associated with a specific course ID, including their associated courses, if they are not marked as deleted.
         public async Task<IEnumerable<Lesson>> GetByCourseIdAsync(int id , string userid)
         {
-            return await _dbContext.Lessons.Include(c => c.Course)
+            return await _dbContext.Lessons.Include(c => c.Course).ThenInclude(c => c.Users)
                 .Where(l => l.CourseID == id && l.Course.TeacherID.ToString() == userid && !l.IsDeleted).ToListAsync();
         }
 
@@ -53,7 +67,7 @@ namespace Data.Repositories
 
         public async Task<Lesson?> GetByIdAsync(int courseID)
         {
-            return await _dbContext.Lessons.Include(c => c.Course).FirstOrDefaultAsync(c => c.LessonID == courseID && !c.IsDeleted);
+            return await _dbContext.Lessons.Include(c => c.Course).ThenInclude(c => c.Users).FirstOrDefaultAsync(c => c.LessonID == courseID && !c.IsDeleted);
         }
 
         // It saves the changes made to the database context asynchronously.

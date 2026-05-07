@@ -34,10 +34,12 @@ namespace Business.Services
                 };
 
 
-                await _LessonRepository.AddLessonAsync(newLesson);
+               await _LessonRepository.AddLessonAsync(newLesson);
                 await _LessonRepository.SaveChangesAsync();
+
                 return createLessonDTO;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
 
                 throw new ApplicationException("An error occurred while creating the Lesson.", ex);
@@ -79,6 +81,8 @@ namespace Business.Services
                     CourseID = x.CourseID,
                     CourseName = x.Course?.SubjectName ?? "No CourseName",
                     CourseTotalMark = x.Course?.TotalMarks.ToString() ?? "no Total Marks",
+                    TeacherID = x.Course?.TeacherID ?? 0,
+                    TeacherName = x.Course?.Users.Where(u => u.Id == x.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher"
 
                 }).ToList();
                 
@@ -113,6 +117,8 @@ namespace Business.Services
                     CourseID = lesson.CourseID,
                     CourseName = lesson.Course?.SubjectName ?? "No CourseName",
                     CourseTotalMark = lesson.Course?.TotalMarks.ToString() ?? "no Total Marks",
+                    TeacherID = lesson.Course?.TeacherID ?? 0,
+                    TeacherName = lesson.Course?.Users.Where(u => u.Id == lesson.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher"
 
                 };
             }catch(Exception ex)
@@ -142,6 +148,8 @@ namespace Business.Services
                         Description = lesson.Description,
                         Title = lesson.Title,
                         CourseID = lesson.CourseID,
+                        TeacherName = lesson.Course?.Users.Where(u => u.Id == lesson.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher",
+                        TeacherID = lesson.Course?.TeacherID ?? 0,
 
                     });
 

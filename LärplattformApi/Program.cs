@@ -36,6 +36,8 @@ builder.Services.AddScoped<ILessonRepository, LessonRepository>();
 builder.Services.AddScoped<LessonInterface, LessonService>();
 builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<ScheduleInterface, ScheduleService>();
+builder.Services.AddScoped<IAssigmentsRepository, AssigmentsRepository>();
+builder.Services.AddScoped<AssigmentsInterface, AssigmentsService>();
 
 var app = builder.Build();
 
