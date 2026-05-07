@@ -1,0 +1,63 @@
+﻿@page
+@model Lärplattform.Pages.Teacher.CreateAssigmentModel
+@{
+    Layout = "~/Pages/Shared/Dashboard.cshtml";
+}
+
+<div id="content" style="background-color:#3F6E2F">
+
+    <div id="Img-Dashboard" class="rounded shadow-sm mb-4 d-flex align-items-center">
+        <div class="pl-5">
+            <h1 class="text-dark font-weight-bold">Welcome Teacher! </h1>
+           
+        </div>
+    </div>
+
+
+
+    <div class="container mt-5">
+        <div class=" row justify-content-center ">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Create New Assignment</h3>
+                    </div>
+                    <div class="card-body">
+       
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Assigment.Title" class="form-label">Subject Name</label>
+                                <input asp-for="Assigment.Title" class="form-control" placeholder="e.g. Matematik 101" />
+                                <span asp-validation-for="Assigment.Title" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Assigment.Description" class="form-label">Description</label>
+                                <input asp-for="Assigment.Description" class="form-control" placeholder="e.g. This is a description" />
+                                <span asp-validation-for="Assigment.Description" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Assigment.Marks" class="form-label">Marks</label>
+                                <input asp-for="Assigment.Marks" class="form-control" placeholder="e.g. 100" />
+                                <span asp-validation-for="Assigment.Marks" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Assigment.LessonID" class="form-label">Lesson</label>
+                                <select asp-for="Assigment.LessonID" class="form-control" asp-items="Model.Lessons">
+                                    <option value="">Select a lesson</option>
+                                </select>
+                                <span asp-validation-for="Assigment.LessonID" class="text-danger"></span>
+                            </div>
+                            
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success">Create Course</button>
+                                <a asp-page="/Teacher/Teacher" class="btn btn-secondary">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

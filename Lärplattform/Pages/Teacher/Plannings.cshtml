@@ -14,82 +14,75 @@
     </div>
 
 
-    <div class="container py-5">
-    <div class="row justify-content-center">
+    
         <!-- Card 1 -->
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-4 d-flex justify-content-center">
-            <div class="card border-0 shadow-lg h-100 w-100" style="border-radius: 15px; overflow: hidden; max-width: 350px;">
-                <img src="~/Math.jpg" class="card-img-top" alt="Math" style="height: 180px; object-fit: cover;">
-                <div class="card-body bg-white p-4 d-flex flex-column">
-                    <h4 class="font-weight-bold mb-1 text-dark">Math Assignments</h4>
-                    <p class="text-muted small">Manage Assignment</p>
-                    <div class="mt-auto pt-3 border-top d-flex align-items-center">
-                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mr-3" style="width: 45px; height: 45px; border: 1px solid #eee;">
-                            <i class="far fa-user text-muted"></i>
-                        </div>
-                        <a href="#" class="text-dark font-weight-bold text-decoration-none">View Submissions</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+        
 
-        <!-- Card 2 -->
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-4 d-flex justify-content-center">
-            <div class="card border-0 shadow-lg h-100 w-100" style="border-radius: 15px; overflow: hidden; max-width: 350px;">
-                <img src="https://images.unsplash.com/photo-1543109740-4bdb38fda756?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="English" style="height: 180px; object-fit: cover;">
-                <div class="card-body bg-white p-4 d-flex flex-column">
-                    <h4 class="font-weight-bold mb-1 text-dark">English Assignments</h4>
-                    <p class="text-muted small">Manage Assignment</p>
-                    <div class="mt-auto pt-3 border-top d-flex align-items-center">
-                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mr-3" style="width: 45px; height: 45px; border: 1px solid #eee;">
-                            <i class="far fa-user text-muted"></i>
-                        </div>
-                        <a href="#" class="text-dark font-weight-bold text-decoration-none">View Submissions</a>
-                    </div>
+            @if (Model.Assigements != null && Model.Assigements.Any())
+            {
+                <div class="text-center mt-4 pb-5">
+                    <a class="btn btn-primary px-5 py-2 shadow-sm font-weight-bold rounded-pill"  asp-page="/Teacher/CreateAssigment">
+                        <i class="fas fa-plus mr-2"></i> Add Assignment
+                    </a>
                 </div>
-            </div>
-        </div>
+                <div id="assignmentCarousel" class="carousel slide" data-ride="false">
+                    <div class="carousel-inner">
+                        @{
+                            var first = true;
+                        }
+                        @foreach (var assigement in Model.Assigements)
+                        {
+                            <div class="carousel-item @(first ? "active" : "")">
+                                <div class="d-flex justify-content-center">
+                                    <div class="card border-0 shadow-lg mb-4" style="border-radius: 15px; overflow: hidden; width: 350px;">
+                                        <img src="" class="card-img-top" alt="Assignment Image" style="height: 180px; object-fit: cover;">
+                                        <div class="card-body bg-white p-4">
+                                            <h4 class="font-weight-bold mb-1 text-dark">@assigement.Title</h4>
+                                            
+                                            <p class="text-muted small">@assigement.Description</p>
+                                            
+                                            <div class="d-flex align-items-center mt-4 pt-3 border-top">
+                                                <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mr-3" style="width: 45px; height: 45px; border: 1px solid #eee;">
+                                                    <i class="far fa-user text-muted"></i>
+                                                </div>
+                                        <a  href="#" class="text-dark font-weight-bold text-decoration-none">View Lessons</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            first = false;
+                        }
 
-        <!-- Card 3 -->
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-4 d-flex justify-content-center">
-            <div class="card border-0 shadow-lg h-100 w-100" style="border-radius: 15px; overflow: hidden; max-width: 350px;">
-                <img src="https://images.unsplash.com/photo-1669046239690-83852fbbf355?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="PE" style="height: 180px; object-fit: cover;">
-                <div class="card-body bg-white p-4 d-flex flex-column">
-                    <h4 class="font-weight-bold mb-1 text-dark">PE Assignments</h4>
-                    <p class="text-muted small">Manage Assignment</p>
-                    <div class="mt-auto pt-3 border-top d-flex align-items-center">
-                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mr-3" style="width: 45px; height: 45px; border: 1px solid #eee;">
-                            <i class="far fa-user text-muted"></i>
-                        </div>
-                        <a href="#" class="text-dark font-weight-bold text-decoration-none">View Submissions</a>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <!-- Card 4 -->
-        <div class="col-md-6 col-lg-4 col-xl-3 mb-4 d-flex justify-content-center">
-            <div class="card border-0 shadow-lg h-100 w-100" style="border-radius: 15px; overflow: hidden; max-width: 350px;">
-                <img src="https://images.unsplash.com/photo-1628863353691-0071c8c1874c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" class="card-img-top" alt="Chemistry" style="height: 180px; object-fit: cover;">
-                <div class="card-body bg-white p-4 d-flex flex-column">
-                    <h4 class="font-weight-bold mb-1 text-dark">Chemistry Assignments</h4>
-                    <p class="text-muted small">Manage Assignment</p>
-                    <div class="mt-auto pt-3 border-top d-flex align-items-center">
-                        <div class="rounded-circle bg-light d-flex align-items-center justify-content-center mr-3" style="width: 45px; height: 45px; border: 1px solid #eee;">
-                            <i class="far fa-user text-muted"></i>
-                        </div>
-                        <a href="#" class="text-dark font-weight-bold text-decoration-none">View Submissions</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+                    <a class="carousel-control-prev" href="#assignmentCarousel" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#assignmentCarousel" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon bg-dark rounded-circle" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
 
-        <!-- Add Course Button -->
-        <div class="row justify-content-center mt-4">
-            <a href="#" class="btn btn-primary px-5 py-2 shadow-sm font-weight-bold d-flex align-items-center rounded-pill">
-                <i class="fas fa-plus mr-2 text-white"></i>
-                <span>Add Assigments</span>
-            </a>
-        </div>
+            
+            
+
+                </div>
+       
+            }
+            else
+            {
+                <div class="text-center  pu-5">
+                    <h3 class="text-dark font-weight-bold mb-4">No assignments found. Please add an assignment to get started.</h3>
+                    <a class="btn btn-primary btn-lg px-5  shadow-sm font-weight-bold rounded-pill" asp-page="/Teacher/CreateAssigment">
+                        <i class="fas fa-plus mr-2"></i> Add Assignment
+                    </a>
+
+                </div>
+            }
+
+            <!-- Add Course Button -->
+        
     </div>
-</div>
+
