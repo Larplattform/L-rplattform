@@ -15,6 +15,10 @@ namespace Data.DTOs
 
         public int Marks { get; set; }
 
+        public DateTime DueDate { get; set; }
+
+        public string Url { get; set; } = string.Empty;
+
          public int CourseID { get; set; }
 
         public CourseDTO Course { get; set; } = null!;

@@ -46,6 +46,8 @@ namespace Lärplattform.Pages.Teacher
                     TotalMarks = dto.TotalMarks,
                     ClassName = dto.ClassName,
                     TeacherID = dto.TeacherID,
+                    StartDate = dto.StartDate,
+                    EndDate = dto.EndDate,
                     Url = dto.Url,
 
                 }).ToList();

@@ -81,12 +81,12 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpGet("lessons")]
-        public async Task<IActionResult> GetAllAssigmentsWithLessons()
+        [HttpGet("Courses")]
+        public async Task<IActionResult> GetAllAssigmentsWithCourses()
         {
             try
             {
-                var assigments = await AssigmentsInterface.GetAllAssigmentsWithLessonsAsync();
+                var assigments = await AssigmentsInterface.GetAllAssigmentsWithCoursesAsync();
                 return Ok(assigments);
             }
             catch (Exception ex)

@@ -42,16 +42,29 @@
                                 <span asp-validation-for="Assigment.Marks" class="text-danger"></span>
                             </div>
                             <div class="form-group mb-3">
-                                <label asp-for="Assigment.LessonID" class="form-label">Lesson</label>
-                                <select asp-for="Assigment.LessonID" class="form-control" asp-items="Model.Lessons">
-                                    <option value="">Select a lesson</option>
+                                <label asp-for="Assigment.Url" class="form-label">Url</label>
+                                <input asp-for="Assigment.Url" class="form-control" placeholder="e.g. Math jpeg" />
+                                <span asp-validation-for="Assigment.Url" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Duration</label>
+                                <select name="duration" class="form-control">
+                                    <option value="1">1 months</option>
+                                    <option value="2">2 months</option>
+                                    <option value="3">3 months</option>
                                 </select>
-                                <span asp-validation-for="Assigment.LessonID" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="Assigment.CourseID" class="form-label">Course</label>
+                                <select asp-for="Assigment.CourseID" class="form-control" asp-items="Model.Courses">
+                                    <option value="">Select a Course</option>
+                                </select>
+                                <span asp-validation-for="Assigment.CourseID" class="text-danger"></span>
                             </div>
                             
 
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success">Create Course</button>
+                                <button type="submit" class="btn btn-success">Create Assigment</button>
                                 <a asp-page="/Teacher/Teacher" class="btn btn-secondary">Cancel</a>
                             </div>
                         </form>

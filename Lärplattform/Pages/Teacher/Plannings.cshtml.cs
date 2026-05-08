@@ -47,6 +47,7 @@ namespace Lärplattform.Pages.Teacher
                        Description = a.Description,
                        Marks = a.Marks,
                       CourseID = a.CourseID,
+                      Url = a.Url,
 
 
                        IsPublished = a.IsPublished

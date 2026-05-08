@@ -25,7 +25,7 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Assigment>> GetAllAssigmentsByCourseIdAsync(int courseId)
         {
-            return await _dbContext.Assigments.Include(c => c.Course).Where(c => c.CourseID == courseId && !c.IsDeleted).ToListAsync();
+            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.Users).Where(c => c.CourseID == courseId && !c.IsDeleted).ToListAsync();
         }
 
         public async Task<IEnumerable<Assigment>> GetAllAssigmentsByTeacherIdAsync(int teacherId)

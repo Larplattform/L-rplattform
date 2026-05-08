@@ -39,7 +39,7 @@ namespace Lärplattform.Pages.Teacher
             {
                 return Page();
             }
-            var start = DateTime.Now;
+            var start = NewCourse.StartDate ?? DateTime.Now;
             var end = NewCourse.EndDate ?? DateTime.Now.AddMonths(Duration);
             var updateCourseDTO = new UpdateCourseDTO
             {
@@ -47,7 +47,10 @@ namespace Lärplattform.Pages.Teacher
                 SubjectName = NewCourse.SubjectName,
                 TotalMarks = NewCourse.TotalMarks,
                 ClassName = NewCourse.ClassName,
-                TeacherID = NewCourse.TeacherID
+                TeacherID = NewCourse.TeacherID,
+                Url = NewCourse.Url,
+                EndDate = end,
+                StartDate = start,
             };
 
             var client = HttpClientFactory.CreateClient("APIClient");

@@ -18,6 +18,10 @@ namespace Data.DTOs
 
         public int CourseID { get; set; }
 
+        public DateTime DueDate { get; set; }
+
+        
+
 
 
     }

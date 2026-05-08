@@ -27,6 +27,8 @@ namespace Business.Services
                     Marks = assigment.Marks,
                     Url = assigment.Url,
                     CourseID = assigment.CourseID,
+                    DueDate = assigment.DueDate,
+                    
                 };
 
                 await AssigmentsRepository.CreateAssigmentAsync(creaeatedAssigment);
@@ -57,6 +59,9 @@ namespace Business.Services
                         Description = assigment.Description,
                         Marks = assigment.Marks,
                          CourseID = assigment.CourseID,
+                         Url = assigment.Url,
+                         DueDate= assigment.DueDate,
+                         
                          Course = new CourseDTO
                          {
                              CourseID = assigment.Course.CourseID,
@@ -66,7 +71,8 @@ namespace Business.Services
                              EndDate = assigment.Course.EndDate,
                              Url = assigment.Course.Url,
                              ClassName = assigment.Course.ClassName,
-                             TeacherID = assigment.Course.TeacherID
+                             TeacherID = assigment.Course.TeacherID,
+                             TeacherName = assigment.Course?.Users.Where(u => u.Id == assigment.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher"
                          }
                     });
                 }
@@ -98,6 +104,8 @@ namespace Business.Services
                         Description = assigment.Description,
                         Marks = assigment.Marks,
                         CourseID = assigment.Course.CourseID,
+                        DueDate = assigment.DueDate,
+                        Url = assigment.Url,
                         Course = new CourseDTO
                         {
                             CourseID = assigment.Course.CourseID,
@@ -107,7 +115,8 @@ namespace Business.Services
                             EndDate = assigment.Course.EndDate,
                             Url = assigment.Course.Url,
                             ClassName = assigment.Course.ClassName,
-                            TeacherID = assigment.Course.TeacherID
+                            TeacherID = assigment.Course.TeacherID,
+                            TeacherName = assigment.Course?.Users.Where(u => u.Id == assigment.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher"
                         }
                     });
                 }
@@ -119,7 +128,7 @@ namespace Business.Services
             }
         }
 
-        public async Task<IEnumerable<AssigmentsDTO>> GetAllAssigmentsWithLessonsAsync()
+        public async Task<IEnumerable<AssigmentsDTO>> GetAllAssigmentsWithCoursesAsync()
         {
             try
             {
@@ -138,6 +147,8 @@ namespace Business.Services
                         Description = assigment.Description,
                         Marks = assigment.Marks,
                        CourseID = assigment.Course.CourseID,
+                       DueDate = assigment.DueDate,
+                       Url = assigment.Url,
                        Course = new CourseDTO
                        {
                            CourseID = assigment.Course.CourseID,
@@ -147,7 +158,8 @@ namespace Business.Services
                            EndDate = assigment.Course.EndDate,
                            Url = assigment.Course.Url,
                            ClassName = assigment.Course.ClassName,
-                           TeacherID = assigment.Course.TeacherID
+                           TeacherID = assigment.Course.TeacherID,
+                           TeacherName = assigment.Course?.Users.Where(u => u.Id == assigment.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher"
                        }
 
                     });
@@ -177,6 +189,8 @@ namespace Business.Services
                     Description = assigment.Description,
                     Marks = assigment.Marks,
                     CourseID = assigment.CourseID,
+                    DueDate = assigment.DueDate,
+                    Url = assigment.Url,
                         Course = new CourseDTO
                         {
                             CourseID = assigment.Course.CourseID,
@@ -186,7 +200,8 @@ namespace Business.Services
                             EndDate = assigment.Course.EndDate,
                             Url = assigment.Course.Url,
                             ClassName = assigment.Course.ClassName,
-                            TeacherID = assigment.Course.TeacherID
+                            TeacherID = assigment.Course.TeacherID,
+                            TeacherName = assigment.Course?.Users.Where(u => u.Id == assigment.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher"
                         }
 
                 };

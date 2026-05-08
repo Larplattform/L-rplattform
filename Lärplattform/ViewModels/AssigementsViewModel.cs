@@ -14,7 +14,7 @@ namespace Lärplattform.ViewModels
 
         public string Url { get; set; } = string.Empty;
 
-        public DateTime DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
        
 
