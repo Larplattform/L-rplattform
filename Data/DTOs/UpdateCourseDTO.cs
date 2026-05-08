@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Data.DTOs
 {
@@ -13,8 +14,15 @@ namespace Data.DTOs
         public string? Url { get; set; }
 
         public string ClassName { get; set; } = string.Empty;
+
+
         public int TeacherID { get; set; }
 
-       
+        public DateTime StartDate { get; set; }
+
+        
+        public DateTime EndDate { get; set; }
+
+
     }
 }

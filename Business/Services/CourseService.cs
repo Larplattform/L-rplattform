@@ -35,7 +35,9 @@ namespace Business.Services
                     ClassName = courseDTO.ClassName,
                     Url = courseDTO.Url,
                     TeacherID = courseDTO.TeacherID,
-                  
+                    StartDate = courseDTO.StartDate,
+                    EndDate = courseDTO.EndDate,
+
                 };
 
                 
@@ -94,6 +96,8 @@ namespace Business.Services
                         ClassName = course.ClassName,
                         TeacherID = course.TeacherID,
                         Url = course.Url,
+                        StartDate = course.StartDate,
+                        EndDate = course.EndDate,
                         TeacherName = allTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
                         Users = course.Users.
                         GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
@@ -135,6 +139,8 @@ namespace Business.Services
                     ClassName = course.ClassName,
                     TeacherID = course.TeacherID,
                     Url = course.Url,
+                    StartDate = course.StartDate,
+                    EndDate = course.EndDate,
                     TeacherName = allTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
                     Users = course.Users.
                     GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
@@ -171,6 +177,8 @@ namespace Business.Services
                         TeacherID = course.TeacherID,
                       TeacherName = allTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
                         Url = course.Url,
+                        StartDate = course.StartDate,
+                        EndDate = course.EndDate,
                         Users = course.Users.
                         GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
                         Where(g => g.Key.Id != course.TeacherID).
@@ -239,6 +247,8 @@ namespace Business.Services
                     course.ClassName = courseDTO.ClassName;
                     course.TeacherID = courseDTO.TeacherID;
                     course.Url = courseDTO.Url;
+                    course.StartDate = courseDTO.StartDate;
+                    course.EndDate = courseDTO.EndDate;
                     await _courseRepository.SaveChangesAsync();
                 }
                 return courseDTO;

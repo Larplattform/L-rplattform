@@ -72,6 +72,8 @@ namespace Data.Context
                 SubjectName = "Matematik 101",
                 TotalMarks = 100,
                 ClassName = "MatteA",
+                StartDate = DateTime.Now,
+                EndDate = DateTime.Now.AddMonths(3),
                 TeacherID = teacher.Id,
                 Users = new List<User> { teacher, student! }
 
@@ -99,13 +101,28 @@ namespace Data.Context
             {
                 Title = "Algebra Uppgift 1",
                 Description = "Lös följande ekvationer: 2x + 3 = 7, x^2 - 4 = 0",
+                Url = "https://example.com/assignments/algebra1",
                 Marks = 20,
-                LessonID = Mathlesson.LessonID,
+                DueDate = DateTime.Now.AddDays(7),
+                CourseID = MathematicsCourse.CourseID,
                 IsPublished = true
 
             };
 
             await dbContext.Assigments.AddAsync(MathAssignment);
+            await dbContext.SaveChangesAsync();
+
+            var submission = new Submission
+            {
+                Content = "Lösning: x = 2, x = -2",
+                Feedback = "Bra jobbat! Du löste ekvationerna korrekt.",
+                Grade = GradeEnum.A,
+                UserId = student!.Id,
+                AssigmentId = MathAssignment.AssigmentID,
+                Status = true
+            };
+
+            await dbContext.Submissions.AddAsync(submission);
             await dbContext.SaveChangesAsync();
 
             var Schedule = new Schedule

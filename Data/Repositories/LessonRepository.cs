@@ -21,18 +21,7 @@ namespace Data.Repositories
 
             await _dbContext.Lessons.AddAsync(lesson);
 
-           var course = await _dbContext.Courses.FirstOrDefaultAsync(c => c.CourseID == lesson.CourseID);
-
-            if(course != null)
-            {
-                lesson.Course = course;
-
-                var teacher = await _dbContext.Users.FirstOrDefaultAsync(u => u.Id == course.TeacherID);
-                if(teacher != null)
-                {
-                    course.Users.Add(teacher);
-                }
-            }
+          
             return  lesson;
         }
 

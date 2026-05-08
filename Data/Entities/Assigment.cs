@@ -12,12 +12,15 @@ namespace Data.Entities
 
         public string Description { get; set; } = string.Empty;
 
+        public string Url { get; set; } = string.Empty;
+
+        public DateTime DueDate { get; set; }
+
         public int Marks { get; set; }
 
-        public int LessonID { get; set; }
+       public int CourseID { get; set; }
 
-        public Lesson Lesson { get; set; } = null!;
-
+        public Course Course { get; set; } = null!;
         public bool IsPublished { get; set; }
 
         public bool IsDeleted { get; set; }

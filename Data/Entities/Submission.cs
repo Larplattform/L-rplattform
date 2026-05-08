@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,11 +9,13 @@ namespace Data.Entities
     {
         public int SubmissionID { get; set; }
 
-        public DateTime DueDate { get; set; }
+       
 
         public string Content { get; set; } = string.Empty;
 
         public string Feedback { get; set; } = string.Empty;
+
+        public GradeEnum Grade { get; set; }
 
         public int UserId { get; set; } 
 

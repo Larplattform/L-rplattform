@@ -12,6 +12,10 @@ namespace Data.Entities
 
         public string ClassName { get; set; } = string.Empty;
 
+        public DateTime StartDate { get; set; }
+
+        public DateTime EndDate { get; set; }
+
         public string? Url { get; set; }
         public int TeacherID { get; set; }
 

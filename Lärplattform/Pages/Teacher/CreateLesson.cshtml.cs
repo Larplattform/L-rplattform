@@ -14,13 +14,19 @@ namespace Lärplattform.Pages.Teacher
         }
         [BindProperty]
         public CreateLessonViewModel NewLesson { get; set; } = new CreateLessonViewModel();
-        public void OnGet(int courseID)
+
+        public void OnGet(int courseId)
         {
-            NewLesson.CourseID = courseID;
+            NewLesson.CourseID = courseId;
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if(NewLesson.CourseID == 0)
+            {
+                ModelState.AddModelError(string.Empty, "CourseID couldnt be found");
+                return Page();
+            }
             if (!ModelState.IsValid)
             {
                 return Page();

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContexts))]
-    [Migration("20260506072755_InitialCreate")]
+    [Migration("20260508071743_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -48,18 +48,21 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AssigmentID"));
 
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DueDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsPublished")
                         .HasColumnType("bit");
-
-                    b.Property<int>("LessonID")
-                        .HasColumnType("int");
 
                     b.Property<int>("Marks")
                         .HasColumnType("int");
@@ -68,9 +71,13 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("AssigmentID");
 
-                    b.HasIndex("LessonID");
+                    b.HasIndex("CourseID");
 
                     b.ToTable("Assigments");
                 });
@@ -87,8 +94,14 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("SubjectName")
                         .IsRequired()
@@ -186,12 +199,12 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Feedback")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Grade")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -460,13 +473,13 @@ namespace Data.Migrations
 
             modelBuilder.Entity("Data.Entities.Assigment", b =>
                 {
-                    b.HasOne("Data.Entities.Lesson", "Lesson")
+                    b.HasOne("Data.Entities.Course", "Course")
                         .WithMany()
-                        .HasForeignKey("LessonID")
+                        .HasForeignKey("CourseID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Lesson");
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Data.Entities.Lesson", b =>

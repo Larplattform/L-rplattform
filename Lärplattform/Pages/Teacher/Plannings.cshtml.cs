@@ -46,9 +46,9 @@ namespace Lärplattform.Pages.Teacher
                        Title = a.Title,
                        Description = a.Description,
                        Marks = a.Marks,
-                       LessonID = a.LessonID,
-                      
-                   
+                      CourseID = a.CourseID,
+
+
                        IsPublished = a.IsPublished
                    }).ToList();
                 }

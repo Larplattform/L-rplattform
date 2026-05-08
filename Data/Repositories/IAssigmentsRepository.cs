@@ -11,7 +11,7 @@ namespace Data.Repositories
 
        public Task<Assigment?> GetAssigmentByIdAsync(int id);
 
-        public Task<IEnumerable<Assigment>> GetAllAssigmentsWithLessonsAsync();
+        public Task<IEnumerable<Assigment>> GetAllAssigmentsWithCourseAsync();
 
             public Task<IEnumerable<Assigment>> GetAllAssigmentsByTeacherIdAsync(int teacherId);
 

@@ -25,7 +25,8 @@ namespace Business.Services
                     Title = assigment.Title,
                     Description = assigment.Description,
                     Marks = assigment.Marks,
-                    LessonID = assigment.LessonID
+                    Url = assigment.Url,
+                    CourseID = assigment.CourseID,
                 };
 
                 await AssigmentsRepository.CreateAssigmentAsync(creaeatedAssigment);
@@ -55,21 +56,17 @@ namespace Business.Services
                         Title = assigment.Title,
                         Description = assigment.Description,
                         Marks = assigment.Marks,
-                        LessonID = assigment.LessonID,
-                         Lesson = new LessonDTO
+                         CourseID = assigment.CourseID,
+                         Course = new CourseDTO
                          {
-                              
-                                LessonID = assigment.Lesson.LessonID,
-                                Title = assigment.Lesson.Title,
-                                Description = assigment.Lesson.Description,
-                                Content = assigment.Lesson.Content,
-                                CourseID = assigment.Lesson.CourseID,
-                                CourseName = assigment.Lesson.Course?.SubjectName ?? "No CourseName",
-                                TeacherName = assigment.Lesson.Course?.Users.Where(u => u.Id == assigment.Lesson.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher",
-                                TeacherID = assigment.Lesson.Course?.TeacherID ?? 0,
-                                CourseTotalMark = assigment.Lesson.Course?.TotalMarks.ToString() ?? "0"
-
-
+                             CourseID = assigment.Course.CourseID,
+                             SubjectName = assigment.Course.SubjectName,
+                             TotalMarks = assigment.Course.TotalMarks,
+                             StartDate = assigment.Course.StartDate,
+                             EndDate = assigment.Course.EndDate,
+                             Url = assigment.Course.Url,
+                             ClassName = assigment.Course.ClassName,
+                             TeacherID = assigment.Course.TeacherID
                          }
                     });
                 }
@@ -100,19 +97,17 @@ namespace Business.Services
                         Title = assigment.Title,
                         Description = assigment.Description,
                         Marks = assigment.Marks,
-                        LessonID = assigment.LessonID,
-                        Lesson = new LessonDTO
+                        CourseID = assigment.Course.CourseID,
+                        Course = new CourseDTO
                         {
-                            LessonID = assigment.Lesson.LessonID,
-                            Title = assigment.Lesson.Title,
-                            Description = assigment.Lesson.Description,
-                            Content = assigment.Lesson.Content,
-                            CourseID = assigment.Lesson.CourseID,
-                            CourseName = assigment.Lesson.Course?.SubjectName ?? "No CourseName",
-                            TeacherID = assigment.Lesson.Course?.TeacherID ?? 0,
-                            TeacherName = assigment.Lesson.Course?.Users.Where(u => u.Id == assigment.Lesson.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher",
-                            CourseTotalMark = assigment.Lesson.Course?.TotalMarks.ToString() ?? "0"
-
+                            CourseID = assigment.Course.CourseID,
+                            SubjectName = assigment.Course.SubjectName,
+                            TotalMarks = assigment.Course.TotalMarks,
+                            StartDate = assigment.Course.StartDate,
+                            EndDate = assigment.Course.EndDate,
+                            Url = assigment.Course.Url,
+                            ClassName = assigment.Course.ClassName,
+                            TeacherID = assigment.Course.TeacherID
                         }
                     });
                 }
@@ -128,7 +123,7 @@ namespace Business.Services
         {
             try
             {
-                var assigments = await AssigmentsRepository.GetAllAssigmentsWithLessonsAsync();
+                var assigments = await AssigmentsRepository.GetAllAssigmentsWithCourseAsync();
                 if (assigments == null)
                 {
                     throw new Exception("No assigments found.");
@@ -142,21 +137,19 @@ namespace Business.Services
                         Title = assigment.Title,
                         Description = assigment.Description,
                         Marks = assigment.Marks,
-                        LessonID = assigment.LessonID,
-                        Lesson = new LessonDTO
-                        {
-                            LessonID = assigment.Lesson.LessonID,
-                            Title = assigment.Lesson.Title,
-                            Description = assigment.Lesson.Description,
-                            Content = assigment.Lesson.Content,
-                            CourseID = assigment.Lesson.CourseID,
-                            CourseName = assigment.Lesson.Course?.SubjectName ?? "No CourseName",
-                            TeacherName = assigment.Lesson.Course?.Users.Where(u => u.Id == assigment.Lesson.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher",
-                            TeacherID = assigment.Lesson.Course?.TeacherID ?? 0,
-                            CourseTotalMark = assigment.Lesson.Course?.TotalMarks.ToString() ?? "0"
+                       CourseID = assigment.Course.CourseID,
+                       Course = new CourseDTO
+                       {
+                           CourseID = assigment.Course.CourseID,
+                           SubjectName = assigment.Course.SubjectName,
+                           TotalMarks = assigment.Course.TotalMarks,
+                           StartDate = assigment.Course.StartDate,
+                           EndDate = assigment.Course.EndDate,
+                           Url = assigment.Course.Url,
+                           ClassName = assigment.Course.ClassName,
+                           TeacherID = assigment.Course.TeacherID
+                       }
 
-
-                        }
                     });
                 }
                 return assigmentsDTO;
@@ -183,20 +176,18 @@ namespace Business.Services
                     Title = assigment.Title,
                     Description = assigment.Description,
                     Marks = assigment.Marks,
-                    LessonID = assigment.LessonID,
-                    Lesson = new LessonDTO
-                    {
-                        LessonID = assigment.Lesson.LessonID,
-                        Title = assigment.Lesson.Title,
-                        Description = assigment.Lesson.Description,
-                        Content = assigment.Lesson.Content,
-                        CourseID = assigment.Lesson.CourseID,
-                        CourseName = assigment.Lesson.Course?.SubjectName ?? "No CourseName",
-                        TeacherName = assigment.Lesson.Course?.Users.Where(u => u.Id == assigment.Lesson.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher",
-                        TeacherID = assigment.Lesson.Course?.TeacherID ?? 0,
-                        CourseTotalMark = assigment.Lesson.Course?.TotalMarks.ToString() ?? "0"
-
-                    }
+                    CourseID = assigment.CourseID,
+                        Course = new CourseDTO
+                        {
+                            CourseID = assigment.Course.CourseID,
+                            SubjectName = assigment.Course.SubjectName,
+                            TotalMarks = assigment.Course.TotalMarks,
+                            StartDate = assigment.Course.StartDate,
+                            EndDate = assigment.Course.EndDate,
+                            Url = assigment.Course.Url,
+                            ClassName = assigment.Course.ClassName,
+                            TeacherID = assigment.Course.TeacherID
+                        }
 
                 };
 

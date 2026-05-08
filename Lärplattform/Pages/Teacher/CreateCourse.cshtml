@@ -40,6 +40,25 @@
                     <input asp-for="NewCourse.ClassName" class="form-control" placeholder="e.g. MatteA" />
                     <span asp-validation-for="NewCourse.ClassName" class="text-danger"></span>
                 </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="NewCourse.Url" class="form-label">Url</label>
+                                <input asp-for="NewCourse.Url" class="form-control" placeholder="e.g. Matte A jpeg" />
+                                <span asp-validation-for="NewCourse.Url" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="NewCourse.StartDate" class="form-label">Start Date</label>
+                                <input asp-for="NewCourse.StartDate" class="form-control" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+                                <span asp-validation-for="NewCourse.StartDate" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label class="form-label">Duration</label>
+                                <select name="Duration" class="form-control">
+                                    <option value="1">1 hour</option>
+                                    <option value="2">2 hours</option>
+                                    <option value="3">3 hours</option>
+                                </select>
+                            </div>
+
                 <div class="form-group mb-3">
                    
                     <input type="hidden" asp-for="NewCourse.TeacherID" class="form-control" />

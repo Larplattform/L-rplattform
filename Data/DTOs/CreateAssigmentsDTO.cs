@@ -14,9 +14,11 @@ namespace Data.DTOs
 
         public int Marks { get; set; }
 
-        public int LessonID { get; set; }
+        public string Url { get; set; } = string.Empty;
 
-       
+        public int CourseID { get; set; }
+
+
 
     }
 }

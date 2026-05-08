@@ -21,7 +21,7 @@ namespace Lärplattform.Pages.Teacher
         [BindProperty]
         public UpdateCourseViewModel NewCourse { get; set; } = new UpdateCourseViewModel();
 
-        public async Task<IActionResult> OnPostAsync(int id)
+        public async Task<IActionResult> OnPostAsync(int id, int Duration)
         {
 
             var user = await _userManager.GetUserAsync(User);
@@ -39,7 +39,8 @@ namespace Lärplattform.Pages.Teacher
             {
                 return Page();
             }
-
+            var start = DateTime.Now;
+            var end = NewCourse.EndDate ?? DateTime.Now.AddMonths(Duration);
             var updateCourseDTO = new UpdateCourseDTO
             {
 
@@ -95,7 +96,12 @@ namespace Lärplattform.Pages.Teacher
                         SubjectName = courseDTO.SubjectName,
                         TotalMarks = courseDTO.TotalMarks,
                         ClassName = courseDTO.ClassName,
-                        TeacherID = courseDTO.TeacherID
+                        TeacherID = courseDTO.TeacherID,
+                        Url = courseDTO.Url,
+                        StartDate = courseDTO.StartDate,
+                        EndDate = courseDTO.EndDate,
+
+                        
                     };
                     return Page();
                 }

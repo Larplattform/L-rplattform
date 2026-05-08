@@ -100,6 +100,8 @@ namespace Business.Services
                             ClassName = schedule.Course.ClassName,
                             TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
                             TeacherID = schedule.Course.TeacherID,
+                            StartDate = schedule.Course.StartDate,
+                            EndDate = schedule.Course.EndDate,
                            
                             Users = schedule.Course.Users.Select(u => new UserDTO
                             {
@@ -148,6 +150,8 @@ namespace Business.Services
                             ClassName = schedule.Course.ClassName,
                             TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
                             TeacherID = schedule.Course.TeacherID,
+                            StartDate = schedule.Course.StartDate,
+                            EndDate = schedule.Course.EndDate,
                             Users = schedule.Course.Users.Select(u => new UserDTO
                             {
                                 FirstName = u.FirstName,
@@ -195,6 +199,8 @@ namespace Business.Services
                             ClassName = schedule.Course.ClassName,
                             TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
                             TeacherID = schedule.Course.TeacherID,
+                            StartDate = schedule.Course.StartDate,
+                            EndDate = schedule.Course.EndDate,
                             Users = schedule.Course.Users.Select(u => new UserDTO
                             {
                                 FirstName = u.FirstName,
@@ -241,6 +247,8 @@ namespace Business.Services
                         ClassName = schedule.Course.ClassName,
                         TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
                         TeacherID = schedule.Course.TeacherID,
+                        StartDate = schedule.Course.StartDate,
+                        EndDate = schedule.Course.EndDate,
                         Users = schedule.Course.Users.Select(u => new UserDTO
                         {
                             FirstName = u.FirstName,
@@ -287,6 +295,8 @@ namespace Business.Services
                             ClassName = schedule.Course.ClassName,
                             TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
                             TeacherID = schedule.Course.TeacherID,
+                            StartDate = schedule.Course.StartDate,
+                            EndDate = schedule.Course.EndDate,
                             Users = schedule.Course.Users.Select(u => new UserDTO
                             {
                               

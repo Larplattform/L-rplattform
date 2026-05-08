@@ -9,5 +9,9 @@
 
         public string ClassName { get; set; } = string.Empty;
         public int TeacherID { get; set; }
+
+        public DateTime? StartDate { get; set; }
+
+        public DateTime? EndDate { get; set; }
     }
 }

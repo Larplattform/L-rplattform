@@ -12,11 +12,15 @@ namespace Lärplattform.ViewModels
 
         public int Marks { get; set; }
 
-        public int LessonID { get; set; }
+        public string Url { get; set; } = string.Empty;
+
+        public DateTime DueDate { get; set; }
+
+       
 
         public int CourseID { get; set; }
 
-        public LessonViewModel Lesson { get; set; } = null!;
+        public CourseViewModel Course { get; set; } = null!;
 
         public bool IsPublished { get; set; }
     }

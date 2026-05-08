@@ -21,7 +21,7 @@ namespace Lärplattform.Pages.Teacher
         [BindProperty]
         public CreateCourseViewModel NewCourse { get; set; } = new CreateCourseViewModel();
 
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(int Duration)
         {
           
             var user = await _userManager.GetUserAsync(User);
@@ -40,13 +40,22 @@ namespace Lärplattform.Pages.Teacher
                 return Page();
             }
 
+            var start = NewCourse.StartDate ?? DateTime.Now;
+
+            var end = NewCourse.EndDate ?? DateTime.Now.AddMonths(Duration);
+
             var createCourseDTO = new CreateCourseDTO
             {
                 SubjectName = NewCourse.SubjectName,
                 TotalMarks = NewCourse.TotalMarks,
                 ClassName = NewCourse.ClassName,
+                Url = NewCourse.Url,
+                StartDate = start,
+                EndDate = end,
                 TeacherID = user.Id,
             };
+
+          
 
             var client = HttpClientFactory.CreateClient("APIClient");
             var response = await client.PostAsJsonAsync("api/Course", createCourseDTO);

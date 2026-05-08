@@ -15,9 +15,9 @@ namespace Data.DTOs
 
         public int Marks { get; set; }
 
-        public int LessonID { get; set; }
+         public int CourseID { get; set; }
 
-        public LessonDTO Lesson { get; set; } = null!;
+        public CourseDTO Course { get; set; } = null!;
 
         public bool IsPublished { get; set; }
 

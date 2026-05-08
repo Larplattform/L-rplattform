@@ -15,6 +15,11 @@ namespace Data.DTOs
 
         public string TeacherName { get; set; } = string.Empty;
 
+
+            public DateTime StartDate { get; set; }
+    
+            public DateTime EndDate { get; set; }
+
         public string? Url { get; set; }
 
         public IEnumerable<UserDTO> Users { get; set; } = new List<UserDTO>();
