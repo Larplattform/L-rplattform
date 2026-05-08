@@ -38,6 +38,8 @@ builder.Services.AddScoped<IScheduleRepository, ScheduleRepository>();
 builder.Services.AddScoped<ScheduleInterface, ScheduleService>();
 builder.Services.AddScoped<IAssigmentsRepository, AssigmentsRepository>();
 builder.Services.AddScoped<AssigmentsInterface, AssigmentsService>();
+builder.Services.AddScoped<ISubmissonsRepository, SubmissonsRepository>();
+builder.Services.AddScoped<SubmissonsInterface, SubmissonsService>();
 
 var app = builder.Build();
 
