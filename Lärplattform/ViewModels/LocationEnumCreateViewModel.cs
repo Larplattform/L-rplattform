@@ -1,5 +1,8 @@
-﻿namespace Lärplattform.ViewModels
+﻿using System.Text.Json.Serialization;
+
+namespace Lärplattform.ViewModels
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum LocationEnumCreateViewModel
     {
         Gym = 0,

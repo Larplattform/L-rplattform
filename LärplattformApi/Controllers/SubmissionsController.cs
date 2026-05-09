@@ -1,5 +1,6 @@
 ﻿using Business.Interfaces;
 using Data.DTOs;
+using Data.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,23 @@ namespace LärplattformApi.Controllers
             {
                 var submissons = await _submissonsInterface.GetAllSubmissionsAsync();
                 return Ok(submissons);
+            }catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
+        [HttpGet("page/{pageNumber:int}/size/{pageSize:int}")]
+        public async Task<IActionResult> GetAllSubmissonsPages(int pageNumber , int pageSize)
+        {
+            try
+            {
+                var submission = await _submissonsInterface.GetAllSubmissionbyPagesAsync(pageNumber, pageSize);
+                if(submission == null || !submission.Any()){
+                    return NotFound($"No submission found for page {pageNumber} with page size {pageSize}.");
+                }
+                return Ok(submission);
             }catch (Exception ex)
             {
                 return StatusCode(500, $"Internal server error: {ex.Message}");

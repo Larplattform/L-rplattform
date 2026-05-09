@@ -75,6 +75,40 @@ namespace Business.Services
             }
         }
 
+        public async Task<IEnumerable<SubmissonsDTO>> GetAllSubmissionbyPagesAsync(int pageNumber, int pageSize)
+        {
+            try
+            {
+                var Allsubmissions = await _SubmissonsRepository.GetsubmissionPageAsync(pageNumber, pageSize);
+                var SubmissionDtos = new List<SubmissonsDTO>();
+                foreach (var submission in Allsubmissions)
+                {
+                    var submissionsDto = new SubmissonsDTO
+                    {
+                        SubmissionID = submission.SubmissionID,
+                        Grade = (GradeEnumDTO)submission.Grade,
+                        UserId = submission.UserId,
+                        Feedback = submission.Feedback,
+                        Status = submission.Status,
+                        Content = submission.Content,
+                        AssigmentId = submission.AssigmentId,
+                        StudentName = submission.User != null ? $"{submission.User.FirstName} {submission.User.LastName}" : "Onknown Student",
+                        AssigmentTitle = submission.Assigment != null ? submission.Assigment.Title : "Onkown Assigment Title"
+                    };
+
+                    SubmissionDtos.Add(submissionsDto);
+                }
+
+                return SubmissionDtos;
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving paginated submission: {ex.Message}");
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<SubmissonsDTO>> GetAllSubmissionsAsync()
         {
             try

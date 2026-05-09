@@ -29,7 +29,7 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Submission>> GetAllSubmíssonbyAssigmentAsync(int assigmentId)
         {
-          return await _dbContext.Submissions.Include(x => x.Assigment).Where(x => x.AssigmentId == assigmentId).ToListAsync();
+          return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.Users).Where(x => x.AssigmentId == assigmentId).ToListAsync();
         }
 
         public async Task<Submission?> GetSubmissionById(int id)
@@ -37,9 +37,10 @@ namespace Data.Repositories
             return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(z => z.Course).ThenInclude(x => x.Users).FirstOrDefaultAsync(z => z.SubmissionID == id);
         }
 
-        public Task<IEnumerable<Submission>> GetsubmissionPageAsync(int pageNumber, int pageSize)
+        public async Task<IEnumerable<Submission>> GetsubmissionPageAsync(int pageNumber, int pageSize)
         {
-            throw new NotImplementedException();
+           var submissions =  await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.Users).Where(x => !x.IsDeleted).Skip((pageNumber -1) * pageSize).Take(pageSize).ToListAsync();
+            return submissions;
         }
 
         public async Task<IEnumerable<Submission>> GetSubmissonForReportAsync(int coursesId, int studentId)

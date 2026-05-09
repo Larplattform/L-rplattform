@@ -20,6 +20,8 @@ namespace Business.Interfaces
 
         public Task<UpdateSubmissionsDTO> UpdateSubmissionsAsync(UpdateSubmissionsDTO submissions, int id);
 
+        public Task<IEnumerable<SubmissonsDTO>> GetAllSubmissionbyPagesAsync(int pageNumber, int pageSize);
+
         public Task<SubmissonsDTO?> FindSubmissionbyId(int id);
     }
 }

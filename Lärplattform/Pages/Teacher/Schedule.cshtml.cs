@@ -1,6 +1,7 @@
 using Lärplattform.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Text.Json.Serialization;
 
 namespace Lärplattform.Pages.Teacher
 {
@@ -33,7 +34,8 @@ namespace Lärplattform.Pages.Teacher
                 var content = await response.Content.ReadAsStringAsync();
                 Schedules = System.Text.Json.JsonSerializer.Deserialize<List<ScheduleViewModel>>(content, new System.Text.Json.JsonSerializerOptions
                 {
-                    PropertyNameCaseInsensitive = true
+                    PropertyNameCaseInsensitive = true,
+                    
                 }) ?? new List<ScheduleViewModel>();
             }
             else

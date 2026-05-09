@@ -3,7 +3,7 @@
 namespace Lärplattform.ViewModels
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum CreateGradeEnumViewModel
+    public enum UpdateGradeEnumViewModel
     {
         A = 0,
 
