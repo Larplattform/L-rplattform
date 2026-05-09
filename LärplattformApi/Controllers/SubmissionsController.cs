@@ -78,6 +78,21 @@ namespace LärplattformApi.Controllers
             }
         }
 
+        [HttpGet("{Id:int}")]
+        public async Task<IActionResult> GetSubmissionbyId( int id)
+        {
+            try
+            {
+                var createSubmission = await _submissonsInterface.FindSubmissionbyId( id);
+                return Ok(createSubmission);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
 
         [HttpGet("student{studentId:int}")]
 
