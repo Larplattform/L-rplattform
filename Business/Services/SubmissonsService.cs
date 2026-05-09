@@ -44,6 +44,37 @@ namespace Business.Services
             }
         }
 
+        public async Task<SubmissonsDTO?> FindSubmissionbyId(int id)
+        {
+            try
+            {
+                var submission = await _SubmissonsRepository.GetSubmissionById(id);
+                if(submission == null)
+                {
+                    return null;
+                }
+                var scheduledto = new SubmissonsDTO
+                {
+                    SubmissionID = submission.SubmissionID,
+                    Grade = (GradeEnumDTO)submission.Grade,
+                    UserId = submission.UserId,
+                    Feedback = submission.Feedback,
+                    Status = submission.Status,
+                    Content = submission.Content,
+                    AssigmentId = submission.AssigmentId,
+                    StudentName = submission.User != null ? $"{submission.User.FirstName} {submission.User.LastName}" : "Onknown Student",
+                    AssigmentTitle = submission.Assigment != null ? submission.Assigment.Title : "Onkown Assigment Title"
+                };
+
+                return scheduledto;
+
+            }catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving a submission by ID: {ex.Message}");
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<SubmissonsDTO>> GetAllSubmissionsAsync()
         {
             try
@@ -176,6 +207,32 @@ namespace Business.Services
             catch (Exception ex)
             {
                 Console.WriteLine($"An error occurred while retrieving Submissions: {ex.Message}");
+                throw;
+            }
+        }
+
+        public async Task<UpdateSubmissionsDTO> UpdateSubmissionsAsync(UpdateSubmissionsDTO submissions , int id)
+        {
+            try
+            {
+
+                var submission = await _SubmissonsRepository.GetSubmissionById(id);
+                if(submission == null)
+                {
+                    throw new Exception($"Schedule with ID {id} not found.");
+                }
+                submission.Feedback = submissions.Feedback;
+                submission.Grade = (GradeEnum)submissions.Grade;
+                submission.UserId = submissions.UserId;
+                submission.AssigmentId = submissions.AssigmentId;
+                await _SubmissonsRepository.Update(submission);
+                await _SubmissonsRepository.SaveChangesAsync();
+
+                return submissions;
+
+            }catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while updating a submission: {ex.Message}");
                 throw;
             }
         }

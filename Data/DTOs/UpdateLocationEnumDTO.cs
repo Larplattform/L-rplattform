@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Data.DTOs
 {
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum UpdateLocationEnumDTO
     {
         Gym = 0,

@@ -6,7 +6,7 @@ using System.Text.Json.Serialization;
 namespace Data.DTOs
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum GradeEnumDTO
+    public enum UpdateGradeEnumDTO
     {
         A = 0,
 

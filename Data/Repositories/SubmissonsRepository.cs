@@ -32,6 +32,16 @@ namespace Data.Repositories
           return await _dbContext.Submissions.Include(x => x.Assigment).Where(x => x.AssigmentId == assigmentId).ToListAsync();
         }
 
+        public async Task<Submission?> GetSubmissionById(int id)
+        {
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(z => z.Course).ThenInclude(x => x.Users).FirstOrDefaultAsync(z => z.SubmissionID == id);
+        }
+
+        public Task<IEnumerable<Submission>> GetsubmissionPageAsync(int pageNumber, int pageSize)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<Submission>> GetSubmissonForReportAsync(int coursesId, int studentId)
         {
             return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x =>x.Users).Where(x => x.UserId == studentId && x.Assigment.CourseID == coursesId).ToListAsync();
@@ -45,6 +55,12 @@ namespace Data.Repositories
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Submission> Update(Submission submission)
+        {
+             _dbContext.Submissions.Update(submission);
+            return submission;
         }
     }
 }

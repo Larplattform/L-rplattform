@@ -45,6 +45,22 @@ namespace LärplattformApi.Controllers
             }
         }
 
+        [HttpPut("{id:int}")]
+        public async Task<IActionResult> UpdateSubmission([FromBody]UpdateSubmissionsDTO submissonsDTO, int id)
+        {
+            try
+            {
+                var createSubmission = await _submissonsInterface.UpdateSubmissionsAsync(submissonsDTO, id);
+                return Ok(createSubmission);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+
         [HttpGet("student{studentId:int}")]
 
         public async Task<IActionResult> GetAllSubmssionsbyStudent(int studentId)
@@ -75,7 +91,7 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpGet("Gradereport{CourseId:int}/{studentId:int}")]
+        [HttpGet("Gradereport{courseId:int}/{studentId:int}")]
 
         public async Task<IActionResult> GetGradeReport(int courseId , int studentId)
         {

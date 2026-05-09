@@ -17,6 +17,12 @@ namespace Data.Repositories
 
         public Task<IEnumerable<Submission>> GetSubmissonForReportAsync(int coursesId, int studentId);
 
+        public Task<Submission> Update(Submission submission);
+
+        public Task<Submission?> GetSubmissionById(int id);
+
+        public Task<IEnumerable<Submission>> GetsubmissionPageAsync(int pageNumber , int pageSize);
+
         public Task SaveChangesAsync();
     }
 }
