@@ -18,6 +18,17 @@ namespace Data.Repositories
         }
         public async Task<Assigment> CreateAssigmentAsync(Assigment assigment)
         {
+            var courses = await _dbContext.Courses.Include(x => x.Users).FirstOrDefaultAsync(x => x.CourseID == assigment.CourseID);
+
+            if (courses != null)
+            {
+                var teacher = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == courses.TeacherID);
+
+                if (teacher != null && !courses.Users.Any(x => x.Id == teacher.Id))
+                {
+                    courses.Users.Add(teacher);
+                }
+            }
             _dbContext.Assigments.Add(assigment);
           
             return assigment;

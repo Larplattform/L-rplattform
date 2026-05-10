@@ -139,6 +139,19 @@ namespace LärplattformApi.Controllers
             }
         }
 
+        [HttpGet("AllGradeReports{teacherId:int}/{pageNumber:int}/size/{pageSize:int}")]
 
+        public async Task<IActionResult> GeAllGradeReport( int teacherId, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var submissons = await _submissonsInterface.GetAllSubmissionsForReportPagesAsync(teacherId, pageNumber, pageSize);
+                return Ok(submissons);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

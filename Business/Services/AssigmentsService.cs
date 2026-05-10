@@ -29,6 +29,7 @@ namespace Business.Services
                     CourseID = assigment.CourseID,
                     DueDate = assigment.DueDate,
                     
+                    
                 };
 
                 await AssigmentsRepository.CreateAssigmentAsync(creaeatedAssigment);

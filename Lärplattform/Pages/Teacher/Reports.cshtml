@@ -20,7 +20,9 @@
                 <tr>
                     <th scope="col">StudentName</th>
                     <th scope="col">AssigmentName</th>
-                    <th scope="col">CourseId</th>
+                    <th scope="col">CourseName</th>
+                    <th scope="col">Grade</th>
+                        <th scope="col">AssigmentsTurnedIn</th>
                    
                 </tr>
             </thead>
@@ -30,8 +32,9 @@
                     <tr>
                         <td>@entry.StudentName</td>
                         <td>@entry.AssigmentTitle</td>
-                        <td>@entry.CourseId</td>
-                      
+                        <td>@entry.CourseName</td>
+                         <td>@entry.Grade</td>
+                          <td>@entry.TotalAssigmentTurnedIn</td>
                         
                       
                     </tr>
@@ -42,14 +45,14 @@
         <nav aria-label="Page navigation example" class="mt-3">
             <ul class="pagination justify-content-center">
                 <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
-                    <a class="page-link" asp-page="./Reports" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@(Model.PageSize) " asp-route-studentId="@(Model.StudentId) " asp-route-courseId="@(Model.CourseId)">Previous</a>
+                    <a class="page-link" asp-page="./Reports" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@(Model.PageSize) ">Previous</a>
                 </li>
                 <li class="page-item active">
                     <span class="page-link">@Model.PageNumber</span>
                 </li>
 
                 <li class="page-item @(Model.Report.Count < Model.PageSize ? "disabled" : "")">
-                        <a class="page-link" asp-page="./Reports" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@(Model.PageSize)" asp-route-studentId="@(Model.StudentId) " asp-route-courseId="@(Model.CourseId) " >Next</a>
+                        <a class="page-link" asp-page="./Reports" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@(Model.PageSize)" >Next</a>
                 </li>
             </ul>
         </nav>

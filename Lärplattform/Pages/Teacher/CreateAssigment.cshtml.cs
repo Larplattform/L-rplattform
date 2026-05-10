@@ -30,9 +30,9 @@ namespace Lärplattform.Pages.Teacher
 
         public async Task OnGetAsync()
         {
-          
 
-            var UserId = _userManager.GetUserId(User);
+
+            var UserId = await _userManager.GetUserAsync(User);
 
             var httpClient = HttpClientFactory.CreateClient("APIClient");
             var response = await httpClient.GetAsync("api/Course");
@@ -42,7 +42,7 @@ namespace Lärplattform.Pages.Teacher
                 if (courses != null && UserId != null)
                 {
 
-                    var teacherCourses = courses.Where(c => c.TeacherID.ToString() == UserId).ToList();
+                    var teacherCourses = courses.Where(c => c.TeacherID == UserId.Id).ToList();
                     Courses = new SelectList(teacherCourses, "CourseID", "SubjectName");
 
                 }
@@ -72,6 +72,7 @@ namespace Lärplattform.Pages.Teacher
                 DueDate = end,
                 Marks = Assigment.Marks,
                 CourseID = Assigment.CourseID,
+             
             };
 
             
@@ -80,7 +81,7 @@ namespace Lärplattform.Pages.Teacher
 
             if (response.IsSuccessStatusCode)
             {
-                return RedirectToPage("/Teacher/Plannings");
+                return RedirectToPage("/Teacher/Assigments");
 
             }
            
@@ -94,7 +95,7 @@ namespace Lärplattform.Pages.Teacher
         {
             try
             {
-                var UserId = _userManager.GetUserId(User);
+                var UserId = await _userManager.GetUserAsync(User);
                 var httpClient = HttpClientFactory.CreateClient("APIClient");
                 var response = await httpClient.GetAsync("api/Course");
                 if (response.IsSuccessStatusCode)
@@ -102,7 +103,7 @@ namespace Lärplattform.Pages.Teacher
                     var courses = await response.Content.ReadFromJsonAsync<List<CourseViewModel>>();
                     if (courses != null && UserId != null)
                     {
-                        var teacherCourses = courses.Where(c => c.TeacherID.ToString() == UserId).ToList();
+                        var teacherCourses = courses.Where(c => c.TeacherID == UserId.Id).ToList();
                         Courses = new SelectList(teacherCourses, "CourseID", "SubjectName");
                     }
 

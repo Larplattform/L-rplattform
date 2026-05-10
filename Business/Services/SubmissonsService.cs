@@ -143,6 +143,41 @@ namespace Business.Services
 
         }
 
+        public async Task<IEnumerable<GradeReportDTO>> GetAllSubmissionsForReportPagesAsync(int teacherId, int pageNumber, int pageSize)
+        {
+            try
+            {
+              var AllReports =  await _SubmissonsRepository.GetAllSubmissionForTeacherReportPages(teacherId, pageNumber, pageSize);
+                var GradeReport = new List<GradeReportDTO>();
+
+                var studentId = AllReports.Select(x => x.UserId).Distinct().ToList();
+             
+                 var counts = await _SubmissonsRepository.GetSubmissionsCountForStudents(studentId);
+                foreach (var gradereport in AllReports)
+                {
+                    var GradereporDTO = new GradeReportDTO
+                    {
+                        AssigmentId = gradereport.AssigmentId,
+                        AssigmentTitle = gradereport.Assigment.Title,
+                        CourseName = gradereport.Assigment.Course.SubjectName,
+                        Grade = (GradeEnumDTO)gradereport.Grade,
+                        CourseId = gradereport.Assigment.Course.CourseID,
+                        StudentName = $"{gradereport.User.FirstName} {gradereport.User.LastName}",
+                        TotalAssigmentTurnedIn = counts.GetValueOrDefault(gradereport.UserId, 0)
+
+
+                    }; 
+                    GradeReport.Add(GradereporDTO);
+                }
+                return GradeReport;
+
+            }catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving Reports: {ex.Message}");
+                throw;
+            }
+        }
+
         public async Task<IEnumerable<SubmissonsDTO>> GetAllSubmíssonbyAssigmentAsync(int assigmentId)
         {
             try

@@ -1,5 +1,6 @@
 using Data.Entities;
 using Lärplattform.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -8,41 +9,45 @@ namespace Lärplattform.Pages.Teacher
     public class ReportsModel : PageModel
     {
         public readonly IHttpClientFactory _httpClientFactory;
+        public readonly UserManager<User> _userManager;
 
-        public ReportsModel(IHttpClientFactory httpClientFactory)
+        public ReportsModel(IHttpClientFactory httpClientFactory, UserManager<User> userManager)
         {
             _httpClientFactory = httpClientFactory;
+            _userManager = userManager;
         }
 
-        public List<SubmissonsViewModel> Report { get; set; } = new List<SubmissonsViewModel>();
+        public List<GradeReportViewModel> Report { get; set; } = new List<GradeReportViewModel>();
 
         public int PageSize { get; set; }
 
         public int PageNumber { get; set; }
 
-        [BindProperty(SupportsGet = true)]
-        public int StudentId { get; set; }
-
-        [BindProperty(SupportsGet =true)]
-        public int CourseId { get; set; }
-        public async Task<IActionResult> OnGetAsync(int studentId,int courseId,int pageNumber = 1, int pageSize = 10)
+      
+        public async Task<IActionResult> OnGetAsync(int pageNumber = 1, int pageSize = 10)
         {
-            
-            StudentId = studentId;
-            CourseId = courseId;
+            var user = await _userManager.GetUserAsync(User);
+
+            if(user == null)
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
+            int teacherid = user.Id;
+          
             PageNumber = pageNumber;
             PageSize = pageSize;
 
             var httpClient = _httpClientFactory.CreateClient("APIClient");
-            var response = await httpClient.GetAsync($"api/Submissions/Gradereport{courseId}/{studentId}/{pageNumber}/size/{pageSize}");
+            var response = await httpClient.GetAsync($"api/Submissions/AllGradeReports{teacherid}/{pageNumber}/size/{pageSize}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                Report = System.Text.Json.JsonSerializer.Deserialize<List<SubmissonsViewModel>>(content, new System.Text.Json.JsonSerializerOptions
+                Report = System.Text.Json.JsonSerializer.Deserialize<List<GradeReportViewModel>>(content, new System.Text.Json.JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true,
 
-                }) ?? new List<SubmissonsViewModel>();
+                }) ?? new List<GradeReportViewModel>();
             }
             else
             {
