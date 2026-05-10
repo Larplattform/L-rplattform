@@ -44,6 +44,16 @@
                             </select>
                             <span asp-validation-for="UpdateSubmission.Grade" class="text-danger"></span>
                         </div>
+                         <div class="form-group mb-3">
+                   
+                                <input type="hidden" asp-for="UpdateSubmission.AssigmentId" class="form-control" />
+                                <span asp-validation-for="UpdateSubmission.AssigmentId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                   
+                                <input type="hidden" asp-for="UpdateSubmission.UserId" class="form-control" />
+                                <span asp-validation-for="UpdateSubmission.UserId" class="text-danger"></span>
+                            </div>
 
                             
 

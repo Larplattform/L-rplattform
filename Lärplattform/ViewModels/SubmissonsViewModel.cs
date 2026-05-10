@@ -26,6 +26,10 @@ namespace Lärplattform.ViewModels
 
         public string AssigmentTitle { get; set; } = string.Empty;
 
+        public int CourseId { get; set; }
+
+        public string CourseName = string.Empty!;
+
         public bool Status { get; set; }
     }
 }

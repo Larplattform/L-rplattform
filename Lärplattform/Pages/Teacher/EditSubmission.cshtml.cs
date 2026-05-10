@@ -47,6 +47,8 @@ namespace Lärplattform.Pages.Teacher
                         UpdateSubmission.Content = submission.Content;
                         UpdateSubmission.Feedback = submission.Feedback.ToString();
                         UpdateSubmission.Grade = (UpdateGradeEnumViewModel)submission.Grade;
+                        UpdateSubmission.AssigmentId = submission.AssigmentId;
+                        UpdateSubmission.UserId = submission.UserId;
                     }
                 }
                 else
@@ -84,7 +86,7 @@ namespace Lärplattform.Pages.Teacher
                 var response = await httpClient.PutAsJsonAsync($"api/Submissions/{Submissionid}", UpdateSubmission);
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToPage("/Teacher/Assigments");
+                    return RedirectToPage("/Teacher/Submissions", new { AssigmentId = UpdateSubmission.AssigmentId});
                 }
                 else
                 {

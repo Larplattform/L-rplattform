@@ -124,13 +124,13 @@ namespace LärplattformApi.Controllers
             }
         }
 
-        [HttpGet("Gradereport{courseId:int}/{studentId:int}")]
+        [HttpGet("Gradereport{courseId:int}/{studentId:int}/{PageNumber:int}/size/{PageSize:int}")]
 
-        public async Task<IActionResult> GetGradeReport(int courseId , int studentId)
+        public async Task<IActionResult> GetGradeReport(int courseId , int studentId, int PageNumber , int PageSize)
         {
             try
             {
-                var submissons = await _submissonsInterface.GetSubmissonForReportAsync(courseId, studentId);
+                var submissons = await _submissonsInterface.GetSubmissonForReportPagesAsync(courseId, studentId, PageNumber , PageSize);
                 return Ok(submissons);
             }
             catch (Exception ex)

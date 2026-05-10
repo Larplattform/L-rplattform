@@ -177,11 +177,11 @@ namespace Business.Services
             }
         }
 
-        public  async Task<IEnumerable<SubmissonsDTO>> GetSubmissonForReportAsync(int coursesId, int studentId)
+        public  async Task<IEnumerable<SubmissonsDTO>> GetSubmissonForReportPagesAsync(int coursesId, int studentId, int PageNumber, int PageSize)
         {
             try
             {
-                var AllSubmissions = await _SubmissonsRepository.GetSubmissonForReportAsync(coursesId, studentId);
+                var AllSubmissions = await _SubmissonsRepository.GetSubmissonForReportPagesAsync(coursesId, studentId, PageNumber , PageSize);
 
                 var SubmissionDtos = new List<SubmissonsDTO>();
                 foreach (var submission in AllSubmissions)

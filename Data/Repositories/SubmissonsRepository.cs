@@ -43,9 +43,10 @@ namespace Data.Repositories
             return submissions;
         }
 
-        public async Task<IEnumerable<Submission>> GetSubmissonForReportAsync(int coursesId, int studentId)
+        public async Task<IEnumerable<Submission>> GetSubmissonForReportPagesAsync(int coursesId, int studentId, int PageNumber , int PageSize)
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x =>x.Users).Where(x => x.UserId == studentId && x.Assigment.CourseID == coursesId).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x =>x.Users).Where(x => x.UserId == studentId && x.Assigment.CourseID == coursesId).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+          
         }
 
         public async Task<IEnumerable<Submission>> GetSubmissonsbyStudentAsync(int studentId)

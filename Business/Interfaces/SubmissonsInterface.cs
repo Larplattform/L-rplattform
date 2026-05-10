@@ -16,7 +16,7 @@ namespace Business.Interfaces
 
         public Task<IEnumerable<SubmissonsDTO>> GetAllSubmíssonbyAssigmentAsync(int assigmentId);
 
-        public Task<IEnumerable<SubmissonsDTO>> GetSubmissonForReportAsync(int coursesId, int studentId);
+        public Task<IEnumerable<SubmissonsDTO>> GetSubmissonForReportPagesAsync(int coursesId, int studentId, int PageNumber , int PageSize);
 
         public Task<UpdateSubmissionsDTO> UpdateSubmissionsAsync(UpdateSubmissionsDTO submissions, int id);
 
