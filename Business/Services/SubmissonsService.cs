@@ -160,6 +160,7 @@ namespace Business.Services
                         AssigmentId = gradereport.AssigmentId,
                         AssigmentTitle = gradereport.Assigment.Title,
                         CourseName = gradereport.Assigment.Course.SubjectName,
+                        CourseEndDate = gradereport.Assigment.Course.EndDate,
                         Grade = (GradeEnumDTO)gradereport.Grade,
                         CourseId = gradereport.Assigment.Course.CourseID,
                         StudentName = $"{gradereport.User.FirstName} {gradereport.User.LastName}",

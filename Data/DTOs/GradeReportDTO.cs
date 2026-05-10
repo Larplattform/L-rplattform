@@ -33,5 +33,7 @@ namespace Data.DTOs
 
         public string CourseName {  get; set; } = string.Empty;
 
+        public DateTime CourseEndDate { get; set; }
+
     }
 }
