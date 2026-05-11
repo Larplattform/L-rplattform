@@ -155,14 +155,14 @@ namespace Business.Services
                  var counts = await _SubmissonsRepository.GetSubmissionsCountForStudents(studentId);
                 foreach (var gradereport in AllReports)
                 {
-                   
+                   var FinalGradeForCourse =  gradereport.Assigment.Course.CourseUsers.FirstOrDefault(x => x.User.Id == gradereport.UserId);
                     var GradereporDTO = new GradeReportDTO
                     {
                         AssigmentId = gradereport.AssigmentId,
                         AssigmentTitle = gradereport.Assigment.Title,
                         CourseName = gradereport.Assigment.Course.SubjectName,
                         CourseEndDate = gradereport.Assigment.Course.EndDate,
-                        FinalGrade = (GradeEnumDTO)gradereport.Grade,
+                        FinalGrade = (GradeEnumDTO)(FinalGradeForCourse?.FinalGrade ?? GradeEnum.F ),
                         CourseId = gradereport.Assigment.Course.CourseID,
                         StudentName = $"{gradereport.User.FirstName} {gradereport.User.LastName}",
                         TotalAssigmentTurnedIn = counts.GetValueOrDefault(gradereport.UserId, 0)
