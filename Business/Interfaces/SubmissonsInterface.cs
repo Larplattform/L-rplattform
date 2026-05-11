@@ -24,5 +24,7 @@ namespace Business.Interfaces
         public Task<IEnumerable<SubmissonsDTO>> GetAllSubmissionbyPagesAsync(int pageNumber, int pageSize);
 
         public Task<SubmissonsDTO?> FindSubmissionbyId(int id);
+
+        public Task<bool> UpdateCourseFinalGrade(int id, GradeEnumDTO FinalGrade);
     }
 }

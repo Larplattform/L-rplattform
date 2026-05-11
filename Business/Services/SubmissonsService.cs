@@ -162,6 +162,7 @@ namespace Business.Services
                         CourseName = gradereport.Assigment.Course.SubjectName,
                         CourseEndDate = gradereport.Assigment.Course.EndDate,
                         Grade = (GradeEnumDTO)gradereport.Grade,
+                        FinalGrade = gradereport.FinalGrade.HasValue ? (GradeEnumDTO) gradereport.FinalGrade.Value : null,
                         CourseId = gradereport.Assigment.Course.CourseID,
                         StudentName = $"{gradereport.User.FirstName} {gradereport.User.LastName}",
                         TotalAssigmentTurnedIn = counts.GetValueOrDefault(gradereport.UserId, 0)
@@ -279,6 +280,20 @@ namespace Business.Services
                 Console.WriteLine($"An error occurred while retrieving Submissions: {ex.Message}");
                 throw;
             }
+        }
+
+        public async Task<bool> UpdateCourseFinalGrade(int id, GradeEnumDTO FinalGrade)
+        {
+            var grade = (GradeEnum)FinalGrade;
+            var UpdatedFinalGrade = await _SubmissonsRepository.UpdateCourseFinalGrade(id, grade);
+
+                if (UpdatedFinalGrade)
+            {
+                await _SubmissonsRepository.SaveChangesAsync();
+                return true;
+            }
+
+                return false;
         }
 
         public async Task<UpdateSubmissionsDTO> UpdateSubmissionsAsync(UpdateSubmissionsDTO submissions , int id)

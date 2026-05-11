@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,6 +22,8 @@ namespace Data.Repositories
 
         public Task<Dictionary<int,int>> GetSubmissionsCountForStudents(List<int> studentids);
         public Task<Submission> Update(Submission submission);
+
+        public Task<bool> UpdateCourseFinalGrade (int submissionId , GradeEnum FinalGrade);
 
         public Task<Submission?> GetSubmissionById(int id);
 

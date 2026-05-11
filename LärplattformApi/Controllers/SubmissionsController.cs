@@ -153,5 +153,26 @@ namespace LärplattformApi.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+
+        [HttpPost("ReportFinalGrade/{id:int}")]
+
+        public async Task<IActionResult> ReportFinalGrade(int id , GradeEnumDTO FinalGrade)
+        {
+            try
+            {
+                bool reported = await _submissonsInterface.UpdateCourseFinalGrade(id, FinalGrade);
+
+                if (!reported)
+                {
+                    return NotFound(new {message =$"Submission id: {id} couldnt be found"});
+                }
+                return Ok(new { success = true, value = FinalGrade.ToString() });
+            }catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+          
+        }
     }
 }

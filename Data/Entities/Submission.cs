@@ -17,6 +17,8 @@ namespace Data.Entities
 
         public GradeEnum Grade { get; set; }
 
+        public GradeEnum? FinalGrade { get; set; }
+
         public int UserId { get; set; } 
 
         public User User { get; set; } = null!;

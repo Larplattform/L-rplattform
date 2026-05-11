@@ -1,5 +1,6 @@
 ﻿using Data.Context;
 using Data.Entities;
+using Data.Enums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -73,6 +74,18 @@ namespace Data.Repositories
         {
              _dbContext.Submissions.Update(submission);
             return submission;
+        }
+
+        public async Task<bool> UpdateCourseFinalGrade(int submissionId, GradeEnum FinalGrade)
+        {
+          var Submission = await _dbContext.Submissions.FindAsync(submissionId);
+            if(Submission == null)  return false; 
+
+            Submission.FinalGrade = FinalGrade;
+            Submission.Status = true;
+
+            return true;
+            
         }
     }
 }
