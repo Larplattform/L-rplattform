@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AddInitalCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -212,24 +212,26 @@ namespace Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "CourseUser",
+                name: "CourseUsers",
                 columns: table => new
                 {
-                    CoursesCourseID = table.Column<int>(type: "int", nullable: false),
-                    UsersId = table.Column<int>(type: "int", nullable: false)
+                    CourseID = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    FinalGrade = table.Column<int>(type: "int", nullable: true),
+                    IsReported = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseUser", x => new { x.CoursesCourseID, x.UsersId });
+                    table.PrimaryKey("PK_CourseUsers", x => new { x.CourseID, x.UserID });
                     table.ForeignKey(
-                        name: "FK_CourseUser_AspNetUsers_UsersId",
-                        column: x => x.UsersId,
+                        name: "FK_CourseUsers_AspNetUsers_UserID",
+                        column: x => x.UserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_CourseUser_Courses_CoursesCourseID",
-                        column: x => x.CoursesCourseID,
+                        name: "FK_CourseUsers_Courses_CourseID",
+                        column: x => x.CourseID,
                         principalTable: "Courses",
                         principalColumn: "CourseID",
                         onDelete: ReferentialAction.Cascade);
@@ -357,9 +359,9 @@ namespace Data.Migrations
                 column: "CourseID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_CourseUser_UsersId",
-                table: "CourseUser",
-                column: "UsersId");
+                name: "IX_CourseUsers_UserID",
+                table: "CourseUsers",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lessons_CourseID",
@@ -401,7 +403,7 @@ namespace Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "CourseUser");
+                name: "CourseUsers");
 
             migrationBuilder.DropTable(
                 name: "Lessons");

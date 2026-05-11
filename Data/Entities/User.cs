@@ -15,7 +15,7 @@ namespace Data.Entities
         public string Country { get; set; } = string.Empty;
        public string Street { get; set; } = string.Empty; 
         
-        public ICollection<Course> Courses { get; set; } = new List<Course>();
+        public ICollection<CourseUser> CourseUsers { get; set; } = new List<CourseUser>();
 
 
 

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Reflection.Emit;
 using System.Text;
 using static System.Collections.Specialized.BitVector32;
 
@@ -25,6 +26,8 @@ namespace Data.Context
 
         public DbSet<Submission> Submissions { get; set; } = null!;
 
+        public DbSet<CourseUser> CourseUsers { get; set; } = null!;
+
 
 
         /// <inheritdoc cref="Microsoft.EntityFrameworkCore.DbContext.OnModelCreating"/>
@@ -32,10 +35,18 @@ namespace Data.Context
         {
             base.OnModelCreating(builder);
 
-            // ============================================
-            // SESSION ENTITY CONFIGURATION
-            // ============================================
-        
+            builder.Entity<CourseUser>()
+         .HasKey(cu => new { cu.CourseID, cu.UserID });
+
+            builder.Entity<CourseUser>()
+                .HasOne(cu => cu.Course)
+                .WithMany(c => c.CourseUsers)
+                .HasForeignKey(cu => cu.CourseID);
+
+            builder.Entity<CourseUser>()
+                .HasOne(cu => cu.User)
+                .WithMany(u => u.CourseUsers)
+                .HasForeignKey(cu => cu.UserID);
 
         }
        

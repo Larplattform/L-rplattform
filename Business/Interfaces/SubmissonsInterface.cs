@@ -25,6 +25,6 @@ namespace Business.Interfaces
 
         public Task<SubmissonsDTO?> FindSubmissionbyId(int id);
 
-        public Task<bool> UpdateCourseFinalGrade(int id, GradeEnumDTO FinalGrade);
+        
     }
 }

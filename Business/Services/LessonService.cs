@@ -82,7 +82,7 @@ namespace Business.Services
                     CourseName = x.Course?.SubjectName ?? "No CourseName",
                     CourseTotalMark = x.Course?.TotalMarks.ToString() ?? "no Total Marks",
                     TeacherID = x.Course?.TeacherID ?? 0,
-                    TeacherName = x.Course?.Users.Where(u => u.Id == x.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                    TeacherName = x.Course?.CourseUsers.Where(u => u.UserID == x.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
 
                 }).ToList();
                 
@@ -118,7 +118,7 @@ namespace Business.Services
                     CourseName = lesson.Course?.SubjectName ?? "No CourseName",
                     CourseTotalMark = lesson.Course?.TotalMarks.ToString() ?? "no Total Marks",
                     TeacherID = lesson.Course?.TeacherID ?? 0,
-                    TeacherName = lesson.Course?.Users.Where(u => u.Id == lesson.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                    TeacherName = lesson.Course?.CourseUsers.Where(u => u.UserID == u.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
 
                 };
             }catch(Exception ex)
@@ -148,7 +148,7 @@ namespace Business.Services
                         Description = lesson.Description,
                         Title = lesson.Title,
                         CourseID = lesson.CourseID,
-                        TeacherName = lesson.Course?.Users.Where(u => u.Id == lesson.Course.TeacherID).Select(u => $"{u.FirstName} {u.LastName}").FirstOrDefault() ?? "Unknown Teacher",
+                        TeacherName = lesson.Course?.CourseUsers.Where(u => u.UserID == u.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher",
                         TeacherID = lesson.Course?.TeacherID ?? 0,
 
                     });

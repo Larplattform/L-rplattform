@@ -20,5 +20,7 @@ namespace Business.Interfaces
         public Task<LinkStudentToCourseDTO> LinkStudentToCourse(LinkStudentToCourseDTO linkDTO);
 
         public Task DeleteCourse(int courseId);
+
+        public Task<bool> SetFinalGrade (int courseId , int studentid , GradeEnumDTO FinalGrade);
     }
 }

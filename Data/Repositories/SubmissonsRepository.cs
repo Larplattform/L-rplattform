@@ -30,22 +30,22 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Submission>> GetAllSubmissionsAsync()
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.Users).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).ToListAsync();
         }
 
         public async Task<IEnumerable<Submission>> GetAllSubmíssonbyAssigmentAsync(int assigmentId)
         {
-          return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.Users).Where(x => x.AssigmentId == assigmentId).ToListAsync();
+          return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).Where(x => x.AssigmentId == assigmentId).ToListAsync();
         }
 
         public async Task<Submission?> GetSubmissionById(int id)
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(z => z.Course).ThenInclude(x => x.Users).FirstOrDefaultAsync(z => z.SubmissionID == id);
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(z => z.Course).ThenInclude(x => x.CourseUsers).FirstOrDefaultAsync(z => z.SubmissionID == id);
         }
 
         public async Task<IEnumerable<Submission>> GetsubmissionPageAsync(int pageNumber, int pageSize)
         {
-           var submissions =  await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.Users).Where(x => !x.IsDeleted).Skip((pageNumber -1) * pageSize).Take(pageSize).ToListAsync();
+           var submissions =  await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).Where(x => !x.IsDeleted).Skip((pageNumber -1) * pageSize).Take(pageSize).ToListAsync();
             return submissions;
         }
 
@@ -56,13 +56,13 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Submission>> GetSubmissonForReportPagesAsync(int coursesId, int studentId, int PageNumber , int PageSize)
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x =>x.Users).Where(x => x.UserId == studentId && x.Assigment.CourseID == coursesId).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x =>x.CourseUsers).Where(x => x.UserId == studentId && x.Assigment.CourseID == coursesId).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
           
         }
 
         public async Task<IEnumerable<Submission>> GetSubmissonsbyStudentAsync(int studentId)
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.Users).Where(x => x.UserId == studentId).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).Where(x => x.UserId == studentId).ToListAsync();
         }
 
         public async Task SaveChangesAsync()
@@ -76,16 +76,6 @@ namespace Data.Repositories
             return submission;
         }
 
-        public async Task<bool> UpdateCourseFinalGrade(int submissionId, GradeEnum FinalGrade)
-        {
-          var Submission = await _dbContext.Submissions.FindAsync(submissionId);
-            if(Submission == null)  return false; 
-
-            Submission.FinalGrade = FinalGrade;
-            Submission.Status = true;
-
-            return true;
-            
-        }
+       
     }
 }

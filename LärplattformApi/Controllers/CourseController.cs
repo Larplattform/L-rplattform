@@ -135,5 +135,27 @@ namespace LärplattformApi.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpPost("SetFinalGradeForCourse/{studentId:int}/{CourseId:int}/{FinalGrade}")]
+
+        public async Task<IActionResult> SetFinalGradeForCourse(int CourseId, int studentId, GradeEnumDTO FinalGrade)
+        {
+            try
+            {
+                var reported = await CourseService.SetFinalGrade(CourseId, studentId, FinalGrade);
+
+                if (!reported)
+                {
+                    return NotFound("Couldnt find the course to the student");
+                }
+                return Ok(reported);
+            }
+            catch (Exception ex)
+            {
+                {
+                    return StatusCode(500, $"Internal server error: {ex.Message}");
+                }
+            }
+        }
     }
 }

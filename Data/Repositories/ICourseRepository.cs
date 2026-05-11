@@ -1,4 +1,5 @@
 ﻿using Data.Entities;
+using Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -32,5 +33,9 @@ namespace Data.Repositories
 
         // Gets all teachers by their ID asynchronously.
         Task<IEnumerable<Course>> GetAllTeachersByIdAsync(int teacherId);
+
+        //This method only updates the finalgrade.
+
+        Task<bool> SetFinalGrade(int studentid, int CourseId , GradeEnum FinalGrade);
     }
 }

@@ -2,6 +2,7 @@
 using Data.Context;
 using Data.DTOs;
 using Data.Entities;
+using Data.Enums;
 using Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -99,9 +100,9 @@ namespace Business.Services
                         StartDate = course.StartDate,
                         EndDate = course.EndDate,
                         TeacherName = allTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
-                        Users = course.Users.
-                        GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
-                        Where(g => g.Key.Id != course.TeacherID).
+                        Users = course.CourseUsers.
+                        GroupBy(u => new { u.User.FirstName, u.User.LastName, u.UserID }).
+                        Where(g => g.Key.UserID != course.TeacherID).
                         Select(g => new UserDTO
                         {
                             FirstName = g.Key.FirstName,
@@ -142,9 +143,9 @@ namespace Business.Services
                     StartDate = course.StartDate,
                     EndDate = course.EndDate,
                     TeacherName = allTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {allTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
-                    Users = course.Users.
-                    GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
-                    Where(g => g.Key.Id != course.TeacherID).
+                    Users = course.CourseUsers.
+                    GroupBy(u => new { u.User.FirstName, u.User.LastName, u.UserID }).
+                    Where(g => g.Key.UserID != course.TeacherID).
                     Select(g => new UserDTO
                     {
                         FirstName = g.Key.FirstName,
@@ -179,9 +180,9 @@ namespace Business.Services
                         Url = course.Url,
                         StartDate = course.StartDate,
                         EndDate = course.EndDate,
-                        Users = course.Users.
-                        GroupBy(u => new { u.FirstName, u.LastName, u.Id }).
-                        Where(g => g.Key.Id != course.TeacherID).
+                        Users = course.CourseUsers.
+                        GroupBy(u => new { u.User.FirstName, u.User.LastName, u.UserID }).
+                        Where(g => g.Key.UserID != course.TeacherID).
                         Select(g => new UserDTO
                         {
                             FirstName = g.Key.FirstName,
@@ -216,7 +217,13 @@ namespace Business.Services
                 {
                     throw new KeyNotFoundException($"User with ID {linkDTO.UserId} not found.");
                 }
-                course.Users.Add(user);
+                course.CourseUsers.Add(
+                    new CourseUser
+                    {
+                        UserID = user.Id,
+                        CourseID = course.CourseID,
+                    });
+                
                 await _courseRepository.SaveChangesAsync();
                 return linkDTO;
 
@@ -231,8 +238,18 @@ namespace Business.Services
             }
         }
 
+        public async Task<bool> SetFinalGrade(int courseId, int studentid, GradeEnumDTO FinalGrade)
+        {
+            var CastToDto = (GradeEnum)FinalGrade;
 
-        
+            bool reported = await _courseRepository.SetFinalGrade(studentid, courseId, CastToDto);
+
+            await _courseRepository.SaveChangesAsync();
+            return reported;
+        }
+
+
+
 
         // This method updates an existing course with the specified courseId based on the provided UpdateCourseDTO.
         public async Task<UpdateCourseDTO> UpdateCourse(int courseId, UpdateCourseDTO courseDTO)

@@ -20,15 +20,7 @@ namespace Data.Repositories
         public async Task<Schedule> AddScheduleAsync(Schedule schedule)
         {
            
-            var course = _dbContext.Courses.Include(c => c.Users).FirstOrDefault(c => c.CourseID == schedule.CourseID);
-            if(course != null)
-            {
-               var teacher = _dbContext.Users.FirstOrDefault(u => u.Id == course.TeacherID);
-                if(teacher != null && !course.Users.Any(x => x.Id == teacher.Id))
-                {
-                    course.Users.Add(teacher);
-                }
-            }
+           
 
             var IsOcopied = await _dbContext.Schedules.AnyAsync(s => s.Location == schedule.Location && schedule.StartDate < s.EndDate && schedule.EndDate > s.StartDate);
             if (IsOcopied)
@@ -55,19 +47,19 @@ namespace Data.Repositories
         // It retrieves all schedules for a specific course by filtering the schedules based on the CourseID and ensuring that they are not marked as deleted.
         public async Task<IEnumerable<Schedule>> GetAllCourseScheduleAsync(int courseId)
         {
-             var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.Users).Where(s => s.CourseID == courseId && !s.IsDeleted).ToListAsync();
+             var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.CourseUsers).Where(s => s.CourseID == courseId && !s.IsDeleted).ToListAsync();
             return schedules;
         }
         // It retrieves all schedules that are not marked as deleted, including their associated course information.
         public async Task<IEnumerable<Schedule>> GetAllSchedulesAsync()
         {
-            var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.Users).Where(s => !s.IsDeleted).ToListAsync();
+            var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.CourseUsers).Where(s => !s.IsDeleted).ToListAsync();
             return schedules;
         }
         // It retrieves a schedule by its ID, including the associated course information, and ensures that the schedule is not marked as deleted.
         public async Task<Schedule?> GetScheduleByIdAsync(int id)
         {
-            var schedule = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.Users).FirstOrDefaultAsync(s => s.ScheduleID == id && !s.IsDeleted);
+            var schedule = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.CourseUsers).FirstOrDefaultAsync(s => s.ScheduleID == id && !s.IsDeleted);
             return schedule;
         }
         // It saves the changes made to the database context asynchronously.
@@ -78,15 +70,8 @@ namespace Data.Repositories
         // It updates an existing schedule in the database context and returns the updated schedule.
         public async Task<Schedule> UpdateScheduleAsync(Schedule schedule)
         {
-            var course = _dbContext.Courses.Include(c => c.Users).FirstOrDefault(c => c.CourseID == schedule.CourseID);
-            if (course != null)
-            {
-                var teacher = _dbContext.Users.FirstOrDefault(u => u.Id == course.TeacherID);
-                if (teacher != null && !course.Users.Any(x => x.Id == teacher.Id))
-                {
-                    course.Users.Add(teacher);
-                }
-            }
+            
+          
                 var IsOcopied = await _dbContext.Schedules.AnyAsync(s => s.ScheduleID != schedule.ScheduleID && s.Location == schedule.Location && schedule.StartDate < s.EndDate && schedule.EndDate > s.StartDate);
             if(IsOcopied)
             {
@@ -99,7 +84,7 @@ namespace Data.Repositories
         // It retrieves all schedules that fall within a specified date range, including their associated course information, and ensures that they are not marked as deleted.
         public async Task<IEnumerable<Schedule>> GetAllSchedulesByDateRangeAsync(DateTime startDate, DateTime endDate)
         {
-            var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.Users)
+            var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.CourseUsers)
                 .Where(s => s.StartDate >= startDate && s.EndDate <= endDate && !s.IsDeleted)
                 .ToListAsync();
             return schedules;
@@ -107,7 +92,7 @@ namespace Data.Repositories
         // It retrieves a paginated list of schedules, including their associated course information, and ensures that they are not marked as deleted. The pagination is achieved by skipping a certain number of records based on the page number and page size, and then taking a specified number of records for the current page.
         public async Task<IEnumerable<Schedule>> GetSchedulePagesAsync(int pageNumber, int pageSize)
         {
-            var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.Users)
+            var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.CourseUsers)
                 .Where(s => !s.IsDeleted)
                 .Skip((pageNumber - 1) * pageSize)
                 .Take(pageSize)

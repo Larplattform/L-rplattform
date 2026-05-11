@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContexts))]
-    [Migration("20260511110519_AddFinalGradeToSubmission")]
-    partial class AddFinalGradeToSubmission
+    [Migration("20260511170255_AddInitalCreate")]
+    partial class AddInitalCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,21 +24,6 @@ namespace Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("CourseUser", b =>
-                {
-                    b.Property<int>("CoursesCourseID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("CoursesCourseID", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("CourseUser");
-                });
 
             modelBuilder.Entity("Data.Entities.Assigment", b =>
                 {
@@ -119,6 +104,27 @@ namespace Data.Migrations
                     b.HasKey("CourseID");
 
                     b.ToTable("Courses");
+                });
+
+            modelBuilder.Entity("Data.Entities.CourseUser", b =>
+                {
+                    b.Property<int>("CourseID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("FinalGrade")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsReported")
+                        .HasColumnType("bit");
+
+                    b.HasKey("CourseID", "UserID");
+
+                    b.HasIndex("UserID");
+
+                    b.ToTable("CourseUsers");
                 });
 
             modelBuilder.Entity("Data.Entities.Lesson", b =>
@@ -202,9 +208,6 @@ namespace Data.Migrations
                     b.Property<string>("Feedback")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("FinalGrade")
-                        .HasColumnType("int");
 
                     b.Property<int>("Grade")
                         .HasColumnType("int");
@@ -459,21 +462,6 @@ namespace Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("CourseUser", b =>
-                {
-                    b.HasOne("Data.Entities.Course", null)
-                        .WithMany()
-                        .HasForeignKey("CoursesCourseID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Data.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Data.Entities.Assigment", b =>
                 {
                     b.HasOne("Data.Entities.Course", "Course")
@@ -483,6 +471,25 @@ namespace Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Data.Entities.CourseUser", b =>
+                {
+                    b.HasOne("Data.Entities.Course", "Course")
+                        .WithMany("CourseUsers")
+                        .HasForeignKey("CourseID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data.Entities.User", "User")
+                        .WithMany("CourseUsers")
+                        .HasForeignKey("UserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Data.Entities.Lesson", b =>
@@ -575,6 +582,16 @@ namespace Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Data.Entities.Course", b =>
+                {
+                    b.Navigation("CourseUsers");
+                });
+
+            modelBuilder.Entity("Data.Entities.User", b =>
+                {
+                    b.Navigation("CourseUsers");
                 });
 #pragma warning restore 612, 618
         }

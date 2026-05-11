@@ -98,16 +98,16 @@ namespace Business.Services
                             TotalMarks = schedule.Course.TotalMarks,
                             Url = schedule.Course.Url,
                             ClassName = schedule.Course.ClassName,
-                            TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
+                            TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
                             TeacherID = schedule.Course.TeacherID,
                             StartDate = schedule.Course.StartDate,
                             EndDate = schedule.Course.EndDate,
                            
-                            Users = schedule.Course.Users.Select(u => new UserDTO
+                            Users = schedule.Course.CourseUsers.Select(u => new UserDTO
                             {
-                                FirstName = u.FirstName,
-                                LastName = u.LastName,
-                                Email = u.Email,
+                                FirstName = u.User.FirstName,
+                                LastName = u.User.LastName,
+                                Email = u.User.Email,
                             }).ToList()
                         },
                        
@@ -148,15 +148,15 @@ namespace Business.Services
                             TotalMarks = schedule.Course.TotalMarks,
                             Url = schedule.Course.Url,
                             ClassName = schedule.Course.ClassName,
-                            TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
+                            TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.FirstName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
                             TeacherID = schedule.Course.TeacherID,
                             StartDate = schedule.Course.StartDate,
                             EndDate = schedule.Course.EndDate,
-                            Users = schedule.Course.Users.Select(u => new UserDTO
+                            Users = schedule.Course.CourseUsers.Select(u => new UserDTO
                             {
-                                FirstName = u.FirstName,
-                                LastName = u.LastName,
-                                Email = u.Email,
+                                FirstName = u.User.FirstName,
+                                LastName = u.User.LastName,
+                                Email = u.User.Email,
                             }).ToList()
                         },
                         
@@ -197,15 +197,15 @@ namespace Business.Services
                             SubjectName = schedule.Course.SubjectName,
                             TotalMarks = schedule.Course.TotalMarks,
                             ClassName = schedule.Course.ClassName,
-                            TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
+                            TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.FirstName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
                             TeacherID = schedule.Course.TeacherID,
                             StartDate = schedule.Course.StartDate,
                             EndDate = schedule.Course.EndDate,
-                            Users = schedule.Course.Users.Select(u => new UserDTO
+                            Users = schedule.Course.CourseUsers.Select(u => new UserDTO
                             {
-                                FirstName = u.FirstName,
-                                LastName = u.LastName,
-                                Email = u.Email,
+                                FirstName = u.User.FirstName,
+                                LastName = u.User.LastName,
+                                Email = u.User.Email,
                             }).ToList()
                         },
                        
@@ -245,15 +245,15 @@ namespace Business.Services
                         TotalMarks = schedule.Course.TotalMarks,
                         Url = schedule.Course.Url,
                         ClassName = schedule.Course.ClassName,
-                        TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
+                        TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.FirstName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
                         TeacherID = schedule.Course.TeacherID,
                         StartDate = schedule.Course.StartDate,
                         EndDate = schedule.Course.EndDate,
-                        Users = schedule.Course.Users.Select(u => new UserDTO
+                        Users = schedule.Course.CourseUsers.Select(u => new UserDTO
                         {
-                            FirstName = u.FirstName,
-                            LastName = u.LastName,
-                            Email = u.Email,
+                            FirstName = u.User.FirstName,
+                            LastName = u.User.LastName,
+                            Email = u.User.Email,
                         }).ToList()
                     }
                 };
@@ -293,17 +293,15 @@ namespace Business.Services
                             TotalMarks = schedule.Course.TotalMarks,
                             Url = schedule.Course.Url,
                             ClassName = schedule.Course.ClassName,
-                            TeacherName = $"{schedule.Course.Users.FirstOrDefault()?.FirstName} {schedule.Course.Users.FirstOrDefault()?.LastName}".Trim(),
+                            TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.FirstName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
                             TeacherID = schedule.Course.TeacherID,
                             StartDate = schedule.Course.StartDate,
                             EndDate = schedule.Course.EndDate,
-                            Users = schedule.Course.Users.Select(u => new UserDTO
+                            Users = schedule.Course.CourseUsers.Select(u => new UserDTO
                             {
-                              
-                                FirstName = u.FirstName,
-                                LastName = u.LastName,
-                                Email = u.Email,
-                                
+                                FirstName = u.User.FirstName,
+                                LastName = u.User.LastName,
+                                Email = u.User.Email,
                             }).ToList()
                         },
                         

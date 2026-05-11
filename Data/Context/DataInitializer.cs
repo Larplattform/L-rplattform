@@ -75,7 +75,7 @@ namespace Data.Context
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddMonths(3),
                 TeacherID = teacher.Id,
-                Users = new List<User> { teacher, student! }
+                CourseUsers = new List<CourseUser> { new CourseUser { User = student } }
 
 
 
@@ -122,6 +122,8 @@ namespace Data.Context
                 Status = true
             };
 
+          
+
             await dbContext.Submissions.AddAsync(submission);
             await dbContext.SaveChangesAsync();
 
@@ -138,7 +140,15 @@ namespace Data.Context
             await dbContext.Schedules.AddAsync(Schedule);
             await dbContext.SaveChangesAsync();
 
+            var CourseUser = new CourseUser
+            {
+                FinalGrade = GradeEnum.A,
+                IsReported = true,
+                UserID = student!.Id,
+            };
 
+            await dbContext.CourseUsers.AddAsync(CourseUser);
+            await dbContext.SaveChangesAsync();
         }
 
         /// <summary>

@@ -19,7 +19,7 @@ namespace Data.Entities
         public string? Url { get; set; }
         public int TeacherID { get; set; }
 
-       public ICollection<User> Users { get; set; } = new List<User>();
+       public ICollection<CourseUser> CourseUsers { get; set; } = new List<CourseUser>();
 
         public bool IsDeleted { get; set; }
     }
