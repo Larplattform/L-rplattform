@@ -25,22 +25,22 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Assigment>> GetAllAssigmentsByCourseIdAsync(int courseId)
         {
-            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).Where(c => c.CourseID == courseId && !c.IsDeleted).ToListAsync();
+            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).Where(c => c.CourseID == courseId && !c.IsDeleted).ToListAsync();
         }
 
         public async Task<IEnumerable<Assigment>> GetAllAssigmentsByTeacherIdAsync(int teacherId)
         {
-            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).Where(c => c.Course.TeacherID == teacherId && !c.IsDeleted).ToListAsync();
+            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).Where(c => c.Course.TeacherID == teacherId && !c.IsDeleted).ToListAsync();
         }
 
         public async Task<IEnumerable<Assigment>> GetAllAssigmentsWithCourseAsync()
         {
-            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).Where(c => !c.IsDeleted).ToListAsync();
+            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).Where(c => !c.IsDeleted).ToListAsync();
         }
 
         public async Task<Assigment?> GetAssigmentByIdAsync(int id)
         {
-            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).FirstOrDefaultAsync(c => c.AssigmentID == id && !c.IsDeleted);
+            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).FirstOrDefaultAsync(c => c.AssigmentID == id && !c.IsDeleted);
         }
 
         public async Task SaveChangesAsync()

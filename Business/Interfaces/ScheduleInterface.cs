@@ -11,7 +11,7 @@ namespace Business.Interfaces
 
         public Task<ScheduleDTO?> GetScheduleByIdAsync(int id);
 
-        public Task<CreateScheduleDTO> AddScheduleAsync(CreateScheduleDTO schedule);
+        public Task<ScheduleDTO> AddScheduleAsync(CreateScheduleDTO schedule);
 
         public Task<UpdateScheduleDTO> UpdateScheduleAsync(int id, UpdateScheduleDTO schedule);
 

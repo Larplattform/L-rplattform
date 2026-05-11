@@ -73,7 +73,7 @@ namespace Business.Services
                              Url = assigment.Course.Url,
                              ClassName = assigment.Course.ClassName,
                              TeacherID = assigment.Course.TeacherID,
-                             TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.FirstName}").FirstOrDefault() ?? "Unknown Teacher"
+                             TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
                          }
                     });
                 }
@@ -117,7 +117,7 @@ namespace Business.Services
                             Url = assigment.Course.Url,
                             ClassName = assigment.Course.ClassName,
                             TeacherID = assigment.Course.TeacherID,
-                            TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.FirstName}").FirstOrDefault() ?? "Unknown Teacher"
+                            TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
                         }
                     });
                 }
@@ -160,7 +160,7 @@ namespace Business.Services
                            Url = assigment.Course.Url,
                            ClassName = assigment.Course.ClassName,
                            TeacherID = assigment.Course.TeacherID,
-                           TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.FirstName}").FirstOrDefault() ?? "Unknown Teacher"
+                           TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
                        }
 
                     });
@@ -202,7 +202,7 @@ namespace Business.Services
                             Url = assigment.Course.Url,
                             ClassName = assigment.Course.ClassName,
                             TeacherID = assigment.Course.TeacherID,
-                            TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.FirstName}").FirstOrDefault() ?? "Unknown Teacher"
+                            TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
                         }
 
                 };

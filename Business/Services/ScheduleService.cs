@@ -25,22 +25,52 @@ namespace Business.Services
         
         }
         // It adds a new schedule to the database by creating a Schedule entity from the provided CreateScheduleDTO, saving it using the repository, and returning the original DTO.
-        public async Task<CreateScheduleDTO> AddScheduleAsync(CreateScheduleDTO schedule)
+        public async Task<ScheduleDTO> AddScheduleAsync(CreateScheduleDTO schedule)
         {
             try
             {
-              
+
                 var scheduleCreate = new Schedule
                 {
                     StartDate = schedule.StartDate,
                     EndDate = schedule.EndDate,
-                   Location = (LocationEnum)schedule.Location,
+                    Location = (LocationEnum)schedule.Location,
                     CourseID = schedule.CourseID
 
                 };
-                    await _scheduleRepository.AddScheduleAsync(scheduleCreate);
-                    await _scheduleRepository.SaveChangesAsync();
-                return schedule;
+                await _scheduleRepository.AddScheduleAsync(scheduleCreate);
+                await _scheduleRepository.SaveChangesAsync();
+
+
+                var course = await _scheduleRepository.GetScheduleByIdAsync(scheduleCreate.ScheduleID);
+                return new ScheduleDTO
+                {
+
+                    ScheduleID = course.ScheduleID,
+                    StartDate = course.StartDate,
+                    EndDate = course.EndDate,
+                    Location = (LocationEnumDTO)course.Location,
+                    CourseID = course.CourseID,
+                    Course = new CourseDTO
+                    {
+                        CourseID = course.Course.CourseID,
+                        SubjectName = course.Course.SubjectName,
+                        TotalMarks = course.Course.TotalMarks,
+                        Url = course.Course.Url,
+                        ClassName = course.Course.ClassName,
+                        TeacherName = course.Course.CourseUsers.Where(x => x.UserID == course.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
+                        TeacherID = course.Course.TeacherID,
+                        StartDate = course.Course.StartDate,
+                        EndDate = course.Course.EndDate,
+
+                        Users = course.Course.CourseUsers.Select(u => new UserDTO
+                        {
+                            FirstName = u.User.FirstName,
+                            LastName = u.User.LastName,
+                            Email = u.User.Email,
+                        }).ToList()
+                    }
+                };
 
 
 
@@ -98,7 +128,7 @@ namespace Business.Services
                             TotalMarks = schedule.Course.TotalMarks,
                             Url = schedule.Course.Url,
                             ClassName = schedule.Course.ClassName,
-                            TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
+                            TeacherName = schedule.Course.CourseUsers.Where(x => x.UserID == schedule.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
                             TeacherID = schedule.Course.TeacherID,
                             StartDate = schedule.Course.StartDate,
                             EndDate = schedule.Course.EndDate,
@@ -148,7 +178,7 @@ namespace Business.Services
                             TotalMarks = schedule.Course.TotalMarks,
                             Url = schedule.Course.Url,
                             ClassName = schedule.Course.ClassName,
-                            TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.FirstName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
+                            TeacherName = schedule.Course.CourseUsers.Where(x => x.UserID == schedule.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
                             TeacherID = schedule.Course.TeacherID,
                             StartDate = schedule.Course.StartDate,
                             EndDate = schedule.Course.EndDate,
@@ -197,7 +227,7 @@ namespace Business.Services
                             SubjectName = schedule.Course.SubjectName,
                             TotalMarks = schedule.Course.TotalMarks,
                             ClassName = schedule.Course.ClassName,
-                            TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.FirstName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
+                            TeacherName = schedule.Course.CourseUsers.Where(x => x.UserID == schedule.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
                             TeacherID = schedule.Course.TeacherID,
                             StartDate = schedule.Course.StartDate,
                             EndDate = schedule.Course.EndDate,
@@ -245,7 +275,7 @@ namespace Business.Services
                         TotalMarks = schedule.Course.TotalMarks,
                         Url = schedule.Course.Url,
                         ClassName = schedule.Course.ClassName,
-                        TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.FirstName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
+                        TeacherName = schedule.Course.CourseUsers.Where(x => x.UserID == schedule.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
                         TeacherID = schedule.Course.TeacherID,
                         StartDate = schedule.Course.StartDate,
                         EndDate = schedule.Course.EndDate,
@@ -293,7 +323,7 @@ namespace Business.Services
                             TotalMarks = schedule.Course.TotalMarks,
                             Url = schedule.Course.Url,
                             ClassName = schedule.Course.ClassName,
-                            TeacherName = $"{schedule.Course.CourseUsers.FirstOrDefault()?.User.FirstName} {schedule.Course.CourseUsers.FirstOrDefault()?.User.LastName}".Trim(),
+                            TeacherName = schedule.Course.CourseUsers.Where(x => x.UserID == schedule.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
                             TeacherID = schedule.Course.TeacherID,
                             StartDate = schedule.Course.StartDate,
                             EndDate = schedule.Course.EndDate,

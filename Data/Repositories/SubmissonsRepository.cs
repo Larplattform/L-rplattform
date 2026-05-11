@@ -25,27 +25,27 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Submission>> GetAllSubmissionForTeacherReportPages(int teacherid, int pageNumber, int pageSize)
         {
-            return await _dbContext.Submissions.Include(x => x.User).Include(x => x.Assigment).ThenInclude(x => x.Course).Where(x => x.Assigment.Course.TeacherID == teacherid).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.User).Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).Where(x => x.Assigment.Course.TeacherID == teacherid).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
         public async Task<IEnumerable<Submission>> GetAllSubmissionsAsync()
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).ThenInclude(x => x.User).ToListAsync();
         }
 
         public async Task<IEnumerable<Submission>> GetAllSubmíssonbyAssigmentAsync(int assigmentId)
         {
-          return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).Where(x => x.AssigmentId == assigmentId).ToListAsync();
+          return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).ThenInclude(x => x.User).Where(x => x.AssigmentId == assigmentId).ToListAsync();
         }
 
         public async Task<Submission?> GetSubmissionById(int id)
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(z => z.Course).ThenInclude(x => x.CourseUsers).FirstOrDefaultAsync(z => z.SubmissionID == id);
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(z => z.Course).ThenInclude(x => x.CourseUsers).ThenInclude(x => x.User).FirstOrDefaultAsync(z => z.SubmissionID == id);
         }
 
         public async Task<IEnumerable<Submission>> GetsubmissionPageAsync(int pageNumber, int pageSize)
         {
-           var submissions =  await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).Where(x => !x.IsDeleted).Skip((pageNumber -1) * pageSize).Take(pageSize).ToListAsync();
+           var submissions =  await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).ThenInclude(x => x.User).Where(x => !x.IsDeleted).Skip((pageNumber -1) * pageSize).Take(pageSize).ToListAsync();
             return submissions;
         }
 
@@ -56,13 +56,13 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Submission>> GetSubmissonForReportPagesAsync(int coursesId, int studentId, int PageNumber , int PageSize)
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x =>x.CourseUsers).Where(x => x.UserId == studentId && x.Assigment.CourseID == coursesId).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x =>x.CourseUsers).ThenInclude(x => x.User).Where(x => x.UserId == studentId && x.Assigment.CourseID == coursesId).Skip((PageNumber - 1) * PageSize).Take(PageSize).ToListAsync();
           
         }
 
         public async Task<IEnumerable<Submission>> GetSubmissonsbyStudentAsync(int studentId)
         {
-            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).Where(x => x.UserId == studentId).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).ThenInclude(x => x.User).Where(x => x.UserId == studentId).ToListAsync();
         }
 
         public async Task SaveChangesAsync()

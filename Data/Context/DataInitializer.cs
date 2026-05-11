@@ -75,13 +75,37 @@ namespace Data.Context
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddMonths(3),
                 TeacherID = teacher.Id,
-                CourseUsers = new List<CourseUser> { new CourseUser { User = student } }
+               
 
 
 
             };
 
+          
+
             await dbContext.Courses.AddAsync(MathematicsCourse);
+            await dbContext.SaveChangesAsync();
+
+            var teacherinCourse = new CourseUser
+            {
+                CourseID = MathematicsCourse.CourseID,
+                UserID = teacher.Id,
+                FinalGrade = null,
+                IsReported = false,
+            };
+
+            await dbContext.CourseUsers.AddAsync(teacherinCourse);
+
+
+            var studentInCourse = new CourseUser
+            {
+                CourseID = MathematicsCourse.CourseID,
+                UserID = student.Id,
+                FinalGrade = GradeEnum.A,
+                IsReported = true
+            };
+
+            await dbContext.CourseUsers.AddAsync(studentInCourse);
             await dbContext.SaveChangesAsync();
 
             var Mathlesson = new Lesson
@@ -140,15 +164,8 @@ namespace Data.Context
             await dbContext.Schedules.AddAsync(Schedule);
             await dbContext.SaveChangesAsync();
 
-            var CourseUser = new CourseUser
-            {
-                FinalGrade = GradeEnum.A,
-                IsReported = true,
-                UserID = student!.Id,
-            };
+         
 
-            await dbContext.CourseUsers.AddAsync(CourseUser);
-            await dbContext.SaveChangesAsync();
         }
 
         /// <summary>
