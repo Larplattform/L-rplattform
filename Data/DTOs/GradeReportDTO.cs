@@ -18,7 +18,7 @@ namespace Data.DTOs
         public GradeEnumDTO? FinalGrade { get; set; }
 
       
-
+        public int StuedntId { get; set; }
 
 
         public int AssigmentId { get; set; }

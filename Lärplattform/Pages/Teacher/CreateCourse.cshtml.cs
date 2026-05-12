@@ -21,13 +21,19 @@ namespace Lärplattform.Pages.Teacher
         [BindProperty]
         public CreateCourseViewModel NewCourse { get; set; } = new CreateCourseViewModel();
 
-        public async Task<IActionResult> OnPostAsync(int Duration)
+        public async Task<IActionResult> OnPostAsync()
         {
           
             var user = await _userManager.GetUserAsync(User);
             if(user == null)
             {
                ModelState.AddModelError(string.Empty, "User not found. Please log in again.");
+                return Page();
+            }
+
+            if(NewCourse.StartDate >=  NewCourse.EndDate)
+            {
+                ModelState.AddModelError(string.Empty, "Enddate must be after Startdate");
                 return Page();
             }
 
@@ -40,9 +46,7 @@ namespace Lärplattform.Pages.Teacher
                 return Page();
             }
 
-            var start = NewCourse.StartDate ?? DateTime.Now;
-
-            var end = NewCourse.EndDate ?? DateTime.Now.AddMonths(Duration);
+         
 
             var createCourseDTO = new CreateCourseDTO
             {
@@ -50,8 +54,8 @@ namespace Lärplattform.Pages.Teacher
                 TotalMarks = NewCourse.TotalMarks,
                 ClassName = NewCourse.ClassName,
                 Url = NewCourse.Url,
-                StartDate = start,
-                EndDate = end,
+                StartDate = NewCourse.StartDate ?? DateTime.Now,
+                EndDate = NewCourse.EndDate ?? DateTime.Now,
                 TeacherID = user.Id,
             };
 

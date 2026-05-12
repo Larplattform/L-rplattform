@@ -5,6 +5,7 @@ using Data.Enums;
 using Data.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Text;
 
 namespace Business.Services
@@ -163,6 +164,7 @@ namespace Business.Services
                         CourseName = gradereport.Assigment.Course.SubjectName,
                         CourseEndDate = gradereport.Assigment.Course.EndDate,
                         FinalGrade = (GradeEnumDTO)(FinalGradeForCourse?.FinalGrade ?? GradeEnum.F ),
+                        StuedntId = gradereport.User.Id,
                         CourseId = gradereport.Assigment.Course.CourseID,
                         StudentName = $"{gradereport.User.FirstName} {gradereport.User.LastName}",
                         TotalAssigmentTurnedIn = counts.GetValueOrDefault(gradereport.UserId, 0)
@@ -214,29 +216,36 @@ namespace Business.Services
             }
         }
 
-        public  async Task<IEnumerable<SubmissonsDTO>> GetSubmissonForReportPagesAsync(int coursesId, int studentId, int PageNumber, int PageSize)
+        public  async Task<IEnumerable<GradeReportDTO>> GetSubmissonForReportPagesAsync(int coursesId, int studentId, int PageNumber, int PageSize)
         {
             try
             {
-                var AllSubmissions = await _SubmissonsRepository.GetSubmissonForReportPagesAsync(coursesId, studentId, PageNumber , PageSize);
+                var StudentReport = await _SubmissonsRepository.GetSubmissonForReportPagesAsync(coursesId, studentId, PageNumber , PageSize);
 
-                var SubmissionDtos = new List<SubmissonsDTO>();
-                foreach (var submission in AllSubmissions)
+                var SubmissionDtos = new List<GradeReportDTO>();
+
+
+                var UserId = StudentReport.Select(x => x.UserId).Distinct().ToList();
+
+                var counts = await _SubmissonsRepository.GetSubmissionsCountForStudents(UserId);
+                foreach (var gradereport in StudentReport)
                 {
-                    var submissionsDto = new SubmissonsDTO
+                    var FinalGradeForCourse = gradereport.Assigment.Course.CourseUsers.FirstOrDefault(x => x.UserID == gradereport.UserId);
+                    var GradereporDTO = new GradeReportDTO
                     {
-                        SubmissionID = submission.SubmissionID,
-                        Grade = (GradeEnumDTO)submission.Grade,
-                        UserId = submission.UserId,
-                        Feedback = submission.Feedback,
-                        Status = submission.Status,
-                        Content = submission.Content,
-                        AssigmentId = submission.AssigmentId,
-                        StudentName = submission.User != null ? $"{submission.User.FirstName} {submission.User.LastName}" : "Onknown Student",
-                        AssigmentTitle = submission.Assigment != null ? submission.Assigment.Title : "Onkown Assigment Title"
-                    };
+                        AssigmentId = gradereport.AssigmentId,
+                        AssigmentTitle = gradereport.Assigment.Title,
+                        CourseName = gradereport.Assigment.Course.SubjectName,
+                        CourseEndDate = gradereport.Assigment.Course.EndDate,
+                        FinalGrade = (GradeEnumDTO)(FinalGradeForCourse?.FinalGrade ?? GradeEnum.F),
+                        StuedntId = gradereport.UserId,
+                        CourseId = gradereport.Assigment.Course.CourseID,
+                        StudentName = $"{gradereport.User.FirstName} {gradereport.User.LastName}",
+                        TotalAssigmentTurnedIn = counts.GetValueOrDefault(gradereport.UserId, 0)
 
-                    SubmissionDtos.Add(submissionsDto);
+                        
+                    };
+                    SubmissionDtos.Add(GradereporDTO);
                 }
 
                 return SubmissionDtos;

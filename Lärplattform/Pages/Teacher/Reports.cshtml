@@ -21,9 +21,10 @@
                     <th scope="col">StudentName</th>
                     <th scope="col">AssigmentName</th>
                     <th scope="col">CourseName</th>
-                    <th scope="col">Grade</th>
+                    <th scope="col">FinalGrade</th>
                         <th scope="col">AssigmentsTurnedIn</th>
                         <th scope="col">CoursEnddate</th>
+                        <th scope="col">ReportGrade</th>
                    
                 </tr>
             </thead>
@@ -34,9 +35,20 @@
                         <td>@entry.StudentName</td>
                         <td>@entry.AssigmentTitle</td>
                         <td>@entry.CourseName</td>
-                         <td>@entry.Grade</td>
+                         <td>@entry.FinalGrade</td>
                           <td>@entry.TotalAssigmentTurnedIn</td>
                             <td>@entry.CourseEnddate.ToShortDateString()</td>
+                            
+                            <td>
+                                @if (entry.CourseEnddate.Date <=  DateTime.Today)
+                                {
+                                    <a asp-page="/Teacher/EditFinalGrade" asp-route-StudentId="@entry.StuedntId" asp-route-CourseId="@entry.CourseId" class="btn btn-primary">Edit</a>
+                                }
+                                else
+                                {
+                                    <p>The course is still ongoing you can not report finalgrade</p>
+                                }
+                            </td>
 
                         
                       

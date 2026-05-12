@@ -52,7 +52,7 @@ namespace Lärplattform.Pages.Teacher
             }
             }
        
-        public async Task<IActionResult> OnPostAsync(int Duration)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -60,20 +60,22 @@ namespace Lärplattform.Pages.Teacher
                 return Page();
             }
 
-
+            if(Schedule.StartDate >= Schedule.EndDate)
+            {
+                ModelState.AddModelError(string.Empty, "Enddate must be after Startdate");
+                return Page();
+            }
          
 
             var client = HttpClientFactory.CreateClient("APIClient");
 
-            var start = Schedule.StartDate ?? DateTime.Now;
-
-            var end = Schedule.EndDate ?? DateTime.Now.AddHours(Duration);
+           
 
             var createdScheduleDto = new Data.DTOs.CreateScheduleDTO
             {
                 CourseID = Schedule.CourseID,
-                EndDate = end,
-                StartDate = start,
+                EndDate = Schedule.EndDate ?? DateTime.Now,
+                StartDate = Schedule.StartDate ?? DateTime.Now,
                 Location = (Data.DTOs.LocationEnumCreateDTO)Schedule.Location
 
 

@@ -4,7 +4,7 @@ namespace Lärplattform.ViewModels
 {
     public class GradeReportViewModel
     {
-        public GradeEnumViewModel Grade { get; set; }
+        public GradeEnumViewModel FinalGrade { get; set; }
 
 
 
@@ -12,7 +12,7 @@ namespace Lärplattform.ViewModels
 
         public int AssigmentId { get; set; }
 
-
+        public int StuedntId { get; set; }
 
         public string StudentName { get; set; } = string.Empty!;
 

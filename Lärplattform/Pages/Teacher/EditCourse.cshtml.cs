@@ -21,7 +21,7 @@ namespace Lärplattform.Pages.Teacher
         [BindProperty]
         public UpdateCourseViewModel NewCourse { get; set; } = new UpdateCourseViewModel();
 
-        public async Task<IActionResult> OnPostAsync(int id, int Duration)
+        public async Task<IActionResult> OnPostAsync(int id)
         {
 
             var user = await _userManager.GetUserAsync(User);
@@ -31,6 +31,13 @@ namespace Lärplattform.Pages.Teacher
                 return Page();
             }
 
+            if (NewCourse.StartDate >= NewCourse.EndDate)
+            {
+                ModelState.AddModelError(string.Empty, "Enddate must be after Startdate");
+                return Page();
+            }
+
+
             NewCourse.TeacherID = user.Id;
 
             ModelState.Remove("NewCourse.TeacherID");
@@ -39,8 +46,7 @@ namespace Lärplattform.Pages.Teacher
             {
                 return Page();
             }
-            var start = NewCourse.StartDate ?? DateTime.Now;
-            var end = NewCourse.EndDate ?? DateTime.Now.AddMonths(Duration);
+          
             var updateCourseDTO = new UpdateCourseDTO
             {
 
@@ -49,8 +55,8 @@ namespace Lärplattform.Pages.Teacher
                 ClassName = NewCourse.ClassName,
                 TeacherID = NewCourse.TeacherID,
                 Url = NewCourse.Url,
-                EndDate = end,
-                StartDate = start,
+                EndDate = NewCourse.EndDate ?? DateTime.Now,
+                StartDate = NewCourse.StartDate ?? DateTime.Now,
             };
 
             var client = HttpClientFactory.CreateClient("APIClient");

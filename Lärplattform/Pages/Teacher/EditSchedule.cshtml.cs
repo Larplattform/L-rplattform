@@ -66,7 +66,7 @@ namespace Lärplattform.Pages.Teacher
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(int Duration)
+        public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
             {
@@ -74,9 +74,14 @@ namespace Lärplattform.Pages.Teacher
                 return Page();
             }
 
+            if (UpdateSchedule.StartDate >= UpdateSchedule.EndDate)
+            {
+                ModelState.AddModelError(string.Empty, "Enddate must be after Startdate");
+                return Page();
+            }
             try
             {
-                UpdateSchedule.EndDate = UpdateSchedule.StartDate.AddHours(Duration);
+               
                 var httpClient = HttpClientFactory.CreateClient("APIClient");
                 var response = await httpClient.PutAsJsonAsync($"api/Schedule/{ScheduleID}", UpdateSchedule);
                 if (response.IsSuccessStatusCode)
