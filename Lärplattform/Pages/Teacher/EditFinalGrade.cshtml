@@ -17,7 +17,7 @@
             <div class="col-md-6">
                 <div class="card shadow">
                     <div class="card-header bg-primary text-white">
-                        <h3 class="mb-0">Edit Submission</h3>
+                        <h3 class="mb-0">Edit FinalGrade</h3>
                     </div>
                     <div class="card-body">
        
@@ -30,10 +30,20 @@
                                 <input asp-for="FinalGradeUpdate.StudentName" class="form-control" readonly />
                                 <span asp-validation-for="FinalGradeUpdate.StudentName" class="text-danger"></span>
                             </div>
-                           
-                        
+
                             <div class="form-group mb-3">
-                                <label asp-for="FinalGradeUpdate.FinalGrade" class="form-label">Grade</label>
+                                <label asp-for="FinalGradeUpdate.CourseName" class="form-label">CourseName</label>
+                                <input asp-for="FinalGradeUpdate.CourseName" class="form-control" readonly />
+                                <span asp-validation-for="FinalGradeUpdate.CourseName" class="text-danger"></span>
+                            </div>
+                           
+                            <div class="form-group mb-3">
+                                <label asp-for="FinalGradeUpdate.TotalAssigmentTurnedIn" class="form-label">TotalAssigmentsTurnedIn</label>
+                                <input asp-for="FinalGradeUpdate.TotalAssigmentTurnedIn" class="form-control" readonly />
+                                <span asp-validation-for="FinalGradeUpdate.TotalAssigmentTurnedIn" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label asp-for="FinalGradeUpdate.FinalGrade" class="form-label">FinalGrade</label>
                                 <select asp-for="FinalGradeUpdate.FinalGrade" class="form-control" asp-items="Model.Grade">
                                     <option value="">-- Select Grade --</option>
                                   
@@ -54,7 +64,7 @@
                             
 
                             <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-success">Update Submission</button>
+                                <button type="submit" class="btn btn-success">Update FinalGrade</button>
                            
                             </div>
                         </form>
