@@ -15,7 +15,7 @@ namespace LärplattformApi.Controllers
             UserService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("Teachers")]
 
         public async Task<IActionResult> GetAllTeachers()
         {
@@ -23,6 +23,22 @@ namespace LärplattformApi.Controllers
             {
                 var teachers = await UserService.GetAllTeachersAsync();
                 return Ok(teachers);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+
+        }
+
+        [HttpGet("Students")]
+
+        public async Task<IActionResult> GetAllStudents()
+        {
+            try
+            {
+                var student = await UserService.GetAllStudentsAsync();
+                return Ok(student);
             }
             catch (Exception ex)
             {

@@ -10,6 +10,12 @@ namespace Data.Repositories
         Task<User?> GetUserByIdAsync(int id);
 
         Task<IEnumerable<User>> GetAllTeachersAsync();
+
+        Task<IEnumerable<User>> GetAllStudentsAsync();
+
+        Task<int> CountAllTeachersAsync();
+
+        Task<int> CountAllStudentsAsync();
         
     }
 }

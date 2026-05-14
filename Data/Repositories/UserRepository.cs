@@ -32,5 +32,23 @@ namespace Data.Repositories
             var teachers = await _userManager.GetUsersInRoleAsync("Teacher");
             return teachers;
         }
+
+        public async Task<IEnumerable<User>> GetAllStudentsAsync()
+        {
+            var Students = await _userManager.GetUsersInRoleAsync("Student");
+            return Students;
+        }
+
+        public async Task<int> CountAllTeachersAsync()
+        {
+             var teachercount = await _dbContext.Roles.FirstOrDefaultAsync(u => u.Name == "Teacher");
+              return await _dbContext.UserRoles.CountAsync( u => u.RoleId == teachercount.Id);
+        }
+
+        public async Task<int> CountAllStudentsAsync()
+        {
+            var studentcount = await _dbContext.Roles.FirstOrDefaultAsync(u => u.Name == "Student");
+            return await _dbContext.UserRoles.CountAsync(u => u.RoleId == studentcount.Id);
+        }
     }
 }

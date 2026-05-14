@@ -99,6 +99,11 @@ namespace Data.Repositories
 
             return true;
         }
+
+        public async Task<int> CountAllCourses()
+        {
+            return await _dbContext.Courses.CountAsync();
+        }
     }
 }
 

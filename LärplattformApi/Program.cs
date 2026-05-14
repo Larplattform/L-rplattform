@@ -40,6 +40,7 @@ builder.Services.AddScoped<IAssigmentsRepository, AssigmentsRepository>();
 builder.Services.AddScoped<AssigmentsInterface, AssigmentsService>();
 builder.Services.AddScoped<ISubmissonsRepository, SubmissonsRepository>();
 builder.Services.AddScoped<SubmissonsInterface, SubmissonsService>();
+builder.Services.AddScoped<ITotalStatsInterface, TotalStatsService>();
 
 var app = builder.Build();
 

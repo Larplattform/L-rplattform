@@ -9,5 +9,7 @@ namespace Business.Interfaces
     {
         
         Task<IEnumerable<UserDTO>> GetAllTeachersAsync();
+
+        Task<IEnumerable<UserDTO>> GetAllStudentsAsync();
     }
 }

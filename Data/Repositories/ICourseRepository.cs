@@ -37,5 +37,7 @@ namespace Data.Repositories
         //This method only updates the finalgrade.
 
         Task<bool> SetFinalGrade(int studentid, int CourseId , GradeEnum FinalGrade);
+
+        Task<int> CountAllCourses();
     }
 }

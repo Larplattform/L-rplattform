@@ -14,44 +14,47 @@
                 <p class="lead mb-0 text-muted">A better way to start building your future at FlowerSchool.</p>
            </div>
         </div>
-
-        <div class="row row-cols-1 row-cols-lg-3 g-4">
-            <div class="col">
-                <div class="d-flex align-items-center p-3 border rounded-3 shadow-sm bg-white h-100">
-                 <div class="feature text-dark rounded-3 p-2 me-3 bg-light text-center">
-                        <i class="fa-solid fa-chalkboard-user"></i>
-                 </div>
-                 <div class="text-start">
-                     <h3 class="h6 fw-bold mb-1">4</h3>
-                        <a class="mb-0 text-muted small text-decoration-none" href="/Teachers">Amount of teachers</a>
-                 </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="d-flex align-items-center p-3 border rounded-3 shadow-sm bg-white h-100">
-                    <div class="feature text-dark rounded-3 p-2 me-3 bg-light text-center">
-                        <i class="fa-solid fa-graduation-cap"></i>
-                    </div>
-                    <div class="text-start">
-                        <h3 class="h6 fw-bold mb-1">4</h3>
-                        <a class="mb-0 text-muted small text-decoration-none" href="/Teachers">Amount of students</a>
+        
+        
+            <div class="row row-cols-1 row-cols-lg-3 g-4">
+                <div class="col">
+                    <div class="d-flex align-items-center p-3 border rounded-3 shadow-sm bg-white h-100">
+                        <div class="feature text-dark rounded-3 p-2 me-3 bg-light text-center">
+                            <i class="fa-solid fa-chalkboard-user"></i>
+                        </div>
+                        <div class="text-start">
+                            <h3 class="h6 fw-bold mb-1">@Model.TotalCount.Teachers</h3>
+                            <a class="mb-0 text-muted small text-decoration-none" >Amount of teachers</a>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-
-            <div class="col">
-                <div class="d-flex align-items-center p-3 border rounded-3 shadow-sm bg-white h-100">
-                    <div class="feature text-dark rounded-3 p-2 me-3 bg-light text-center">
-                        <i class="fa-solid fa-book-open-reader"></i>
+                <div class="col">
+                    <div class="d-flex align-items-center p-3 border rounded-3 shadow-sm bg-white h-100">
+                        <div class="feature text-dark rounded-3 p-2 me-3 bg-light text-center">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                        </div>
+                        <div class="text-start">
+                            <h3 class="h6 fw-bold mb-1">@Model.TotalCount.Students</h3>
+                            <a class="mb-0 text-muted small text-decoration-none" >Amount of students</a>
+                        </div>
                     </div>
-                    <div class="text-start">
-                        <h3 class="h6 fw-bold mb-1">4</h3>
-                        <a class="mb-0 text-muted small text-decoration-none" href="/Teachers">Amount of courses</a>
+                </div>
+
+
+                <div class="col">
+                    <div class="d-flex align-items-center p-3 border rounded-3 shadow-sm bg-white h-100">
+                        <div class="feature text-dark rounded-3 p-2 me-3 bg-light text-center">
+                            <i class="fa-solid fa-book-open-reader"></i>
+                        </div>
+                        <div class="text-start">
+                            <h3 class="h6 fw-bold mb-1">@Model.TotalCount.CourseCount</h3>
+                            <a class="mb-0 text-muted small text-decoration-none" >Amount of courses</a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        
+       
     </div>
 </section>

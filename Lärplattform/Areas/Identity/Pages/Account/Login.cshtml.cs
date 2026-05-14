@@ -70,10 +70,7 @@ namespace Lärplattform.Areas.Identity.Pages.Account
 
             /// <summary>
 
-            [Required]
-            [Display(Name = "First Name")]
-
-            public string FirstName { get; set; }
+            
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
