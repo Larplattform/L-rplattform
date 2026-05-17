@@ -22,5 +22,7 @@ namespace Business.Interfaces
         public Task DeleteCourse(int courseId);
 
         public Task<bool> SetFinalGrade (int courseId , int studentid , GradeEnumDTO FinalGrade);
+
+        public Task<IEnumerable<CourseDTO>> GetCoursebyUserid(int userid);
     }
 }

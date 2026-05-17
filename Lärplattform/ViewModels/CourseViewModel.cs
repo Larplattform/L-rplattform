@@ -16,6 +16,8 @@ namespace Lärplattform.ViewModels
         public string ClassName { get; set; } = string.Empty;
         public int TeacherID { get; set; }
 
+        public string TeacherName { get; set; } = string.Empty;
+
 
 
         public IEnumerable<UserViewModel> Users { get; set; } = new List<UserViewModel>();

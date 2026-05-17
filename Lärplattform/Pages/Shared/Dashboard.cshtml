@@ -49,33 +49,67 @@
             </form>
 
                     <ul class=" list-unstyled mx-2 bg-white rounded shadow-sm overflow-hidden">
-    <li class="nav-item">
-        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Teacher">
-            <i class="fa fa-home text-dark mr-2"></i>
-            <span class="text-dark font-weight-bold small">Courses</span>
-        </a>
-    </li>
+                @if (User.IsInRole("Teacher"))
+                    {
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Teacher">
+                            <i class="fa fa-home text-dark mr-2"></i>
+                            <span class="text-dark font-weight-bold small">Courses</span>
+                        </a>
+                    </li>
 
-    <li class="nav-item">
-        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Schedule">
-            <i class="fa fa-calendar text-dark mr-2"></i>
-            <span class="text-dark font-weight-bold small">Schedule</span>
-        </a>
-    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Schedule">
+                            <i class="fa fa-calendar text-dark mr-2"></i>
+                            <span class="text-dark font-weight-bold small">Schedule</span>
+                        </a>
+                    </li>
 
-    <li class="nav-item">
-        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Assigments">
-            <i class="fa fa-book-open text-dark mr-2"></i>
-            <span class="text-dark font-weight-bold small">Assigments</span>
-        </a>
-    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Assigments">
+                            <i class="fa fa-book-open text-dark mr-2"></i>
+                            <span class="text-dark font-weight-bold small">Assigments</span>
+                        </a>
+                    </li>
 
-    <li class="nav-item">
-        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Reports">
-            <i class="fa fa-address-book text-dark mr-2"></i>
-            <span class="text-dark font-weight-bold small">Reports</span>
-        </a>
-    </li>
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Teacher/Reports">
+                            <i class="fa fa-address-book text-dark mr-2"></i>
+                            <span class="text-dark font-weight-bold small">Reports</span>
+                        </a>
+                    </li>
+                    }
+                @if (User.IsInRole("Student"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Student/Teacher">
+                            <i class="fa fa-home text-dark mr-2"></i>
+                            <span class="text-dark font-weight-bold small">Courses</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Student/Schedule">
+                            <i class="fa fa-calendar text-dark mr-2"></i>
+                            <span class="text-dark font-weight-bold small">Schedule</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Student/Assigments">
+                            <i class="fa fa-book-open text-dark mr-2"></i>
+                            <span class="text-dark font-weight-bold small">Assigments</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center py-2 px-2" asp-area="" asp-page="/Student/Reports">
+                            <i class="fa fa-address-book text-dark mr-2"></i>
+                            <span class="text-dark font-weight-bold small">Reports</span>
+                        </a>
+                    </li>
+                }
+  
 </ul>
 
             <!-- Logout Section -->

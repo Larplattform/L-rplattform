@@ -159,6 +159,42 @@ namespace Business.Services
             }
         }
 
+        public async Task<IEnumerable<CourseDTO>> GetCoursebyUserid(int userid)
+        {
+            var coursebyuserid = await _courseRepository.GetByUserIdAsync(userid);
+
+            var AllTeachers = await _userRepository.GetAllTeachersAsync();
+
+            var coursedto = new List<CourseDTO>();
+
+            foreach (var course in coursebyuserid)
+            {
+                coursedto.Add(new CourseDTO
+                {
+                    CourseID = course.CourseID,
+                    SubjectName = course.SubjectName,
+                    TotalMarks = course.TotalMarks,
+                    ClassName = course.ClassName,
+                    TeacherID = course.TeacherID,
+                    TeacherName = AllTeachers.FirstOrDefault(t => t.Id == course.TeacherID) != null ? $"{AllTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.FirstName} {AllTeachers.FirstOrDefault(t => t.Id == course.TeacherID)!.LastName}" : "Unknown Teacher",
+                    Url = course.Url,
+                    StartDate = course.StartDate,
+                    EndDate = course.EndDate,
+                    Users = course.CourseUsers.
+                    GroupBy(u => new { u.User.FirstName, u.User.LastName, u.UserID }).
+                    Where(g => g.Key.UserID != course.TeacherID).
+                    Select(g => new UserDTO
+                    {
+                        FirstName = g.Key.FirstName,
+                        LastName = g.Key.LastName,
+                    }).ToList()
+                });
+            }
+            return coursedto;
+
+
+        }
+
         public async Task<IEnumerable<CourseDTO>> GetCoursesByTeacherId(int teacherId)
         {
             try

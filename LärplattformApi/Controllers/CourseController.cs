@@ -136,6 +136,20 @@ namespace LärplattformApi.Controllers
             }
         }
 
+        [HttpGet("student/{studentid:int}")]
+        public async Task<IActionResult> GetCoursesByStudentId([FromRoute] int studentid)
+        {
+            try
+            {
+                var courses = await CourseService.GetCoursebyUserid(studentid);
+                return Ok(courses);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpPost("SetFinalGradeForCourse/{studentId:int}/{CourseId:int}/{FinalGrade}")]
 
         public async Task<IActionResult> SetFinalGradeForCourse(int CourseId, int studentId, GradeEnumDTO FinalGrade)
