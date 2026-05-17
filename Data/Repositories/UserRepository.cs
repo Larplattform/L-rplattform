@@ -41,14 +41,16 @@ namespace Data.Repositories
 
         public async Task<int> CountAllTeachersAsync()
         {
-             var teachercount = await _dbContext.Roles.FirstOrDefaultAsync(u => u.Name == "Teacher");
-              return await _dbContext.UserRoles.CountAsync( u => u.RoleId == teachercount.Id);
+            var teachercount = await _dbContext.Roles.FirstOrDefaultAsync(u => u.Name == "Teacher");
+            if(teachercount == null) return 0;
+            return await _dbContext.Users.CountAsync(u => !u.IsDeleted && _dbContext.UserRoles.Any(x => x.UserId == u.Id && x.RoleId == teachercount.Id));
         }
 
         public async Task<int> CountAllStudentsAsync()
         {
             var studentcount = await _dbContext.Roles.FirstOrDefaultAsync(u => u.Name == "Student");
-            return await _dbContext.UserRoles.CountAsync(u => u.RoleId == studentcount.Id);
+            if(studentcount == null) return 0;
+            return await _dbContext.Users.CountAsync(u => !u.IsDeleted && _dbContext.UserRoles.Any(x => x.UserId == u.Id && x.RoleId == studentcount.Id));
         }
     }
 }
