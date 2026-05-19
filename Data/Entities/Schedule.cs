@@ -13,6 +13,8 @@ namespace Data.Entities
 
         public LocationEnum Location { get; set; }  
 
+        public string TeacherName { get; set; } = string.Empty;
+
         public int CourseID { get; set; }
 
        public Course Course { get; set; } = null!;

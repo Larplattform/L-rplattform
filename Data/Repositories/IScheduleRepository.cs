@@ -35,6 +35,8 @@ namespace Data.Repositories
         // Get schedules paginated by page number and page size
         public Task<IEnumerable<Schedule>> GetSchedulePagesAsync(int pageNumber, int pageSize);
 
+        public Task<IEnumerable<Schedule>> GetScheduleStudentPagesAsync(int studentId,int pageNumber, int pageSize);
+
 
     }
 }

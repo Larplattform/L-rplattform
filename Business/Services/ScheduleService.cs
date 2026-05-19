@@ -316,6 +316,7 @@ namespace Business.Services
                         EndDate = schedule.EndDate,
                        Location = (LocationEnumDTO)schedule.Location,
                         CourseID = schedule.CourseID,
+                        TeacherName = schedule.Course?.CourseUsers?.Where(x => x.UserID == schedule.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
                         Course = new CourseDTO
                         {
                             CourseID = schedule.Course.CourseID,
@@ -335,6 +336,56 @@ namespace Business.Services
                             }).ToList()
                         },
                         
+                    };
+                    scheduleDTOs.Add(scheduleDTO);
+                }
+                return scheduleDTOs;
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"An error occurred while retrieving paginated schedules: {ex.Message}");
+                throw; // Rethrow the exception to be handled by the caller
+            }
+        }
+
+        public async Task<IEnumerable<ScheduleDTO>> GetScheduleStudentPagesAsync(int studentId, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var AllSchdule = await _scheduleRepository.GetScheduleStudentPagesAsync(studentId,pageNumber, pageSize);
+
+                var scheduleDTOs = new List<ScheduleDTO>();
+                foreach (var schedule in AllSchdule)
+                {
+                    var scheduleDTO = new ScheduleDTO
+                    {
+                        ScheduleID = schedule.ScheduleID,
+                        StartDate = schedule.StartDate,
+                        EndDate = schedule.EndDate,
+                        Location = (LocationEnumDTO)schedule.Location,
+                        CourseID = schedule.CourseID,
+                        TeacherName = schedule.Course?.CourseUsers?.Where(x => x.UserID == schedule.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
+                        Course = new CourseDTO
+                        {
+                            CourseID = schedule.Course.CourseID,
+                            SubjectName = schedule.Course.SubjectName,
+                            TotalMarks = schedule.Course.TotalMarks,
+                            Url = schedule.Course.Url,
+                            ClassName = schedule.Course.ClassName,
+                            TeacherName = schedule.Course.CourseUsers.Where(x => x.UserID == schedule.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unkown Teacher",
+                            TeacherID = schedule.Course.TeacherID,
+                            StartDate = schedule.Course.StartDate,
+                            EndDate = schedule.Course.EndDate,
+                            Users = schedule.Course.CourseUsers.Select(u => new UserDTO
+                            {
+                                FirstName = u.User.FirstName,
+                                LastName = u.User.LastName,
+                                Email = u.User.Email,
+                            }).ToList()
+                        },
+
                     };
                     scheduleDTOs.Add(scheduleDTO);
                 }

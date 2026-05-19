@@ -122,5 +122,15 @@ namespace Data.Repositories
                 .ToListAsync();
             return schedules;
         }
+
+        public async Task<IEnumerable<Schedule>> GetScheduleStudentPagesAsync(int studentId, int pageNumber, int pageSize)
+        {
+           var schedules = await _dbContext.Schedules.Include(s => s.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User)
+                 .Where(s => !s.IsDeleted && s.Course.CourseUsers.Any(x => x.UserID == studentId))
+                 .Skip((pageNumber - 1) * pageSize)
+                 .Take(pageSize)
+                 .ToListAsync();
+            return schedules;
+        }
     }
 }

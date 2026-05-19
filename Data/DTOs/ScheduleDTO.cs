@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace Data.DTOs
 {
@@ -14,6 +15,9 @@ namespace Data.DTOs
         public LocationEnumDTO Location { get; set; }
 
         public int CourseID { get; set; }
+
+
+        public string TeacherName { get; set; } = string.Empty;
 
         public CourseDTO Course { get; set; } = null!;
 

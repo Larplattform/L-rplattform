@@ -23,6 +23,8 @@ namespace Business.Interfaces
 
         public Task<IEnumerable<ScheduleDTO>> GetSchedulePagesAsync(int pageNumber, int pageSize);
 
+        public Task<IEnumerable<ScheduleDTO>> GetScheduleStudentPagesAsync(int studentId,int pageNumber, int pageSize);
+
 
     }
 }
