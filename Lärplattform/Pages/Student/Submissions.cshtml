@@ -13,7 +13,7 @@
             </p>
            
         </div>
-        <a class="btn btn-primary btn-lg px-5  shadow-sm font-weight-bold rounded-pill" href="#">
+        <a class="btn btn-primary btn-lg px-5  shadow-sm font-weight-bold rounded-pill" asp-page="/Student/CreateSubmission" asp-route-AssigmentId="@Model.AssigmentId">
             <i class="fas fa-plus mr-2"></i> Add submission
         </a>
 
@@ -63,7 +63,7 @@
             <div class="alert alert-info" role="alert">
                 No submission found for this assigment.
             </div>
-            <a class="btn btn-primary btn-lg px-5  shadow-sm font-weight-bold rounded-pill" href="#">
+            <a class="btn btn-primary btn-lg px-5  shadow-sm font-weight-bold rounded-pill" asp-page="/Student/CreateSubmission" asp-route-AssigmentId="@Model.AssigmentId">
                 <i class="fas fa-plus mr-2"></i> Add submsiion
             </a>
 

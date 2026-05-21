@@ -26,11 +26,11 @@ namespace Business.Services
                 {
 
                     Content = submission.Content,
-                    Status = submission.Status,
-                    Grade = (GradeEnum)submission.Grade,
+                   
+                  
                     UserId = submission.UserId,
                     AssigmentId = submission.AssigmentId,
-                    Feedback = submission.Feedback,
+                  
                 };
 
                 await _SubmissonsRepository.AddSubmissionAsync(newSubmisson);

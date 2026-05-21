@@ -13,9 +13,7 @@ namespace Data.DTOs
 
         public string Content { get; set; } = string.Empty;
 
-        public string Feedback { get; set; } = string.Empty;
-
-        public CreateGradeEnumDTO Grade { get; set; }
+       
 
         public int UserId { get; set; }
 
@@ -23,8 +21,7 @@ namespace Data.DTOs
 
         public int AssigmentId { get; set; }
 
-        [JsonIgnore]
-       public bool Status { get; set; }
+       
 
        
 

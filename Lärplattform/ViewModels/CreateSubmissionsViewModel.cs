@@ -6,9 +6,7 @@ namespace Lärplattform.ViewModels
     {
         public string Content { get; set; } = string.Empty;
 
-        public string Feedback { get; set; } = string.Empty;
-
-        public CreateGradeEnumViewModel Grade { get; set; }
+      
 
         public int UserId { get; set; }
 

@@ -20,7 +20,7 @@ namespace Lärplattform.Pages.Student
         public List<SubmissonsViewModel> Submission = new List<SubmissonsViewModel>();
 
         [BindProperty(SupportsGet = true)]
-        public int AssignmentId { get; set; }
+        public int AssigmentId { get; set; }
 
        
         public async Task<IActionResult> OnGetAsync()
@@ -35,7 +35,7 @@ namespace Lärplattform.Pages.Student
             var currentUserId = user.Id;
 
             var httpClient = _httpClientFactory.CreateClient("APIClient");
-            var response = await httpClient.GetAsync($"api/Submissions/assignment/{AssignmentId}/student{currentUserId}");
+            var response = await httpClient.GetAsync($"api/Submissions/assignment/{AssigmentId}/student{currentUserId}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

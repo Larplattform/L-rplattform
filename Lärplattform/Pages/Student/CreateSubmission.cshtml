@@ -1,0 +1,59 @@
+﻿@page
+@model Lärplattform.Pages.Student.CreateSubmissionModel
+@{
+    Layout = "~/Pages/Shared/Dashboard.cshtml";
+}
+<div id="content" style="background-color:#3F6E2F">
+
+    <div id="Img-Dashboard" class="rounded shadow-sm mb-4 d-flex align-items-center">
+        <div class="pl-5">
+            <h1 class="text-dark font-weight-bold">Welcome Student! </h1>
+           
+        </div>
+    </div>
+
+    <div class="container mt-5">
+        <div class=" row justify-content-center ">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Create Submission</h3>
+                    </div>
+                    <div class="card-body">
+       
+                        <form method="post">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                       
+                            <div class="form-group mb-3">
+                                <label asp-for="CreateSubmission.Content" class="form-label">Content</label>
+                                <input asp-for="CreateSubmission.Content" class="form-control"  />
+                                <span asp-validation-for="CreateSubmission.Content" class="text-danger"></span>
+                            </div>
+                           
+                        
+                           
+                            <div class="form-group mb-3">
+                   
+                                <input type="hidden" asp-for="CreateSubmission.AssigmentId" class="form-control" />
+                                <span asp-validation-for="CreateSubmission.AssigmentId" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mb-3">
+                   
+                                <input type="hidden" asp-for="CreateSubmission.UserId" class="form-control" />
+                                <span asp-validation-for="CreateSubmission.UserId" class="text-danger"></span>
+                            </div>
+
+                            
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" class="btn btn-success">Create Submission</button>
+                           
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
