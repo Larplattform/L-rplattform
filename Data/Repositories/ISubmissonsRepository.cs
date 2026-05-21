@@ -13,6 +13,7 @@ namespace Data.Repositories
         public Task<IEnumerable<Submission>> GetAllSubmissionsAsync();
 
         public Task<IEnumerable<Submission>> GetSubmissonsbyStudentAsync(int studentId);
+        public Task<IEnumerable<Submission>> GetSubmissionsbyCourseAssignmentByStudent(int assigmentId , int studentId);
 
         public Task<IEnumerable<Submission>> GetAllSubmíssonbyAssigmentAsync(int assigmentId);
 

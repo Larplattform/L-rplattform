@@ -216,6 +216,40 @@ namespace Business.Services
             }
         }
 
+        public async Task<IEnumerable<SubmissonsDTO>> GetSubmissionbyCourseAssignmentbyStudent( int assigmentid , int studentId)
+        {
+            try
+            {
+                var AllSubmissions = await _SubmissonsRepository.GetSubmissionsbyCourseAssignmentByStudent(assigmentid, studentId);
+
+                var SubmissionDtos = new List<SubmissonsDTO>();
+                foreach (var submission in AllSubmissions)
+                {
+                    var submissionsDto = new SubmissonsDTO
+                    {
+                        SubmissionID = submission.SubmissionID,
+                        Grade = (GradeEnumDTO)submission.Grade,
+                        UserId = submission.UserId,
+                        Feedback = submission.Feedback,
+                        Status = submission.Status,
+                        Content = submission.Content,
+                        AssigmentId = submission.AssigmentId,
+                        StudentName = submission.User != null ? $"{submission.User.FirstName} {submission.User.LastName}" : "Onknown Student",
+                        AssigmentTitle = submission.Assigment != null ? submission.Assigment.Title : "Onkown Assigment Title"
+                    };
+
+                    SubmissionDtos.Add(submissionsDto);
+                }
+
+                return SubmissionDtos;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while retrieving Submissions: {ex.Message}");
+                throw;
+            }
+        }
+
         public  async Task<IEnumerable<GradeReportDTO>> GetSubmissonForReportPagesAsync(int coursesId, int studentId, int PageNumber, int PageSize)
         {
             try

@@ -49,6 +49,11 @@ namespace Data.Repositories
             return submissions;
         }
 
+        public async Task<IEnumerable<Submission>> GetSubmissionsbyCourseAssignmentByStudent( int assigmentid , int studentId)
+        {
+            return await _dbContext.Submissions.Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).ThenInclude(x => x.User).Where(x => x.UserId == studentId && x.AssigmentId == assigmentid).ToListAsync();
+        }
+
         public async Task<Dictionary<int, int>> GetSubmissionsCountForStudents(List<int> studentids)
         {
            return await _dbContext.Submissions.Where(x => studentids.Contains(x.UserId)).GroupBy(x => x.UserId).Select(g => new {UserId = g.Key , Count = g.Count()}).ToDictionaryAsync(x => x.UserId, x => x.Count);

@@ -109,6 +109,22 @@ namespace LärplattformApi.Controllers
             }
         }
 
+
+        [HttpGet("assignment/{assigmentId:int}/student{studentId:int}")]
+
+        public async Task<IActionResult> GetAllSubmssionsbyAssignmentStudent(int assigmentId , int studentId)
+        {
+            try
+            {
+                var submissons = await _submissonsInterface.GetSubmissionbyCourseAssignmentbyStudent( assigmentId, studentId);
+                return Ok(submissons);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
         [HttpGet("assigment{assigmentId:int}")]
 
         public async Task<IActionResult> GetAllSubmssionsbyAssigment(int assigmentId)
