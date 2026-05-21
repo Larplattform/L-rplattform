@@ -15,6 +15,8 @@ namespace Business.Interfaces
 
         public Task<IEnumerable<AssigmentsDTO>> GetAllAssigmentsByTeacherIdAsync(int teacherId);
 
+        public Task<IEnumerable<AssigmentsDTO>> GetAllAssigmentsbyStudentIdAsync (int studentId);
+
         public Task<IEnumerable<AssigmentsDTO>> GetAllAssigmentsByCourseIdAsync(int courseId);
     }
 }

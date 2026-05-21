@@ -17,6 +17,8 @@ namespace Data.Repositories
 
         public Task<IEnumerable<Assigment>> GetAllAssigmentsByCourseIdAsync(int courseId);
 
+        public Task<IEnumerable<Assigment>> GetAllAssigmentsbyStudentId(int studentId);
+
         public Task SaveChangesAsync();
 
 

@@ -1,10 +1,12 @@
 using Data.Entities;
 using Lärplattform.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Lärplattform.Pages.Teacher
 {
+    [Authorize(Roles = "Teacher")]
     public class SubmissionsModel : PageModel
     {
         public readonly IHttpClientFactory _httpClientFactory;

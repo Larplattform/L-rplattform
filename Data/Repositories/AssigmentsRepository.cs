@@ -28,6 +28,11 @@ namespace Data.Repositories
             return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).Where(c => c.CourseID == courseId && !c.IsDeleted).ToListAsync();
         }
 
+        public async Task<IEnumerable<Assigment>> GetAllAssigmentsbyStudentId(int studentId)
+        {
+            return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).Where(c => c.Course.CourseUsers.Any(x => x.UserID == studentId)).ToListAsync();
+        }
+
         public async Task<IEnumerable<Assigment>> GetAllAssigmentsByTeacherIdAsync(int teacherId)
         {
             return await _dbContext.Assigments.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).Where(c => c.Course.TeacherID == teacherId && !c.IsDeleted).ToListAsync();

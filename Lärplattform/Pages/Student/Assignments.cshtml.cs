@@ -1,19 +1,17 @@
 using Data.Entities;
 using Lärplattform.ViewModels;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Lärplattform.Pages.Teacher
+namespace Lärplattform.Pages.Student
 {
-    [Authorize(Roles ="Teacher")]
-    public class PlanningsModel : PageModel
+    public class AssignmentsModel : PageModel
     {
         public readonly IHttpClientFactory _httpClientFactory;
         public readonly UserManager<User> _userManager;
 
-        public PlanningsModel(IHttpClientFactory httpClientFactory, UserManager<User> userManager)
+        public AssignmentsModel(IHttpClientFactory httpClientFactory, UserManager<User> userManager)
         {
             _httpClientFactory = httpClientFactory;
             _userManager = userManager;
@@ -21,7 +19,7 @@ namespace Lärplattform.Pages.Teacher
 
         public List<AssigementsViewModel> Assigements { get; set; } = new List<AssigementsViewModel>();
 
-      
+
         public async Task<IActionResult> OnGet()
         {
             var user = await _userManager.GetUserAsync(User);
@@ -34,12 +32,12 @@ namespace Lärplattform.Pages.Teacher
             var currentUserId = user.Id;
 
             var httpClient = _httpClientFactory.CreateClient("APIClient");
-            var response = await httpClient.GetAsync($"api/Assigments/teacher/{currentUserId}");
+            var response = await httpClient.GetAsync($"api/Assigments/student/{currentUserId}");
 
             if (response.IsSuccessStatusCode)
             {
                 var teacher = await response.Content.ReadFromJsonAsync<List<AssigementsViewModel>>();
-                if(teacher != null && teacher.Any())
+                if (teacher != null && teacher.Any())
                 {
                     Assigements = teacher.Select(
                    a => new AssigementsViewModel
@@ -48,15 +46,15 @@ namespace Lärplattform.Pages.Teacher
                        Title = a.Title,
                        Description = a.Description,
                        Marks = a.Marks,
-                      CourseID = a.CourseID,
-                      Url = a.Url,
+                       CourseID = a.CourseID,
+                       Url = a.Url,
 
 
                        IsPublished = a.IsPublished
                    }).ToList();
                 }
-               
-               
+
+
                 else
                 {
                     return NotFound("Teacher not found.");

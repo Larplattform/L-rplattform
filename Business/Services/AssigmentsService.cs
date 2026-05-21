@@ -86,6 +86,49 @@ namespace Business.Services
             }
         }
 
+        public  async Task<IEnumerable<AssigmentsDTO>> GetAllAssigmentsbyStudentIdAsync(int studentId)
+        {
+            try
+            {
+                var assigments = await AssigmentsRepository.GetAllAssigmentsbyStudentId(studentId);
+                if (assigments == null)
+                {
+                    throw new Exception("No assigments found for the specified teacher.");
+                }
+                var assigmentsDTO = new List<AssigmentsDTO>();
+                foreach (var assigment in assigments)
+                {
+                    assigmentsDTO.Add(new AssigmentsDTO
+                    {
+                        AssigmentID = assigment.AssigmentID,
+                        Title = assigment.Title,
+                        Description = assigment.Description,
+                        Marks = assigment.Marks,
+                        CourseID = assigment.Course.CourseID,
+                        DueDate = assigment.DueDate,
+                        Url = assigment.Url,
+                        Course = new CourseDTO
+                        {
+                            CourseID = assigment.Course.CourseID,
+                            SubjectName = assigment.Course.SubjectName,
+                            TotalMarks = assigment.Course.TotalMarks,
+                            StartDate = assigment.Course.StartDate,
+                            EndDate = assigment.Course.EndDate,
+                            Url = assigment.Course.Url,
+                            ClassName = assigment.Course.ClassName,
+                            TeacherID = assigment.Course.TeacherID,
+                            TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                        }
+                    });
+                }
+                return assigmentsDTO;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"An error occurred while retrieving the assigments: {ex.Message}");
+            }
+        }
+
         public async Task<IEnumerable<AssigmentsDTO>> GetAllAssigmentsByTeacherIdAsync(int teacherId)
         {
             try
