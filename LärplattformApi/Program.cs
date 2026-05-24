@@ -3,6 +3,7 @@ using Business.Services;
 using Data.Context;
 using Data.Entities;
 using Data.Repositories;
+using LärplattformApi.Worker;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -41,6 +42,8 @@ builder.Services.AddScoped<AssigmentsInterface, AssigmentsService>();
 builder.Services.AddScoped<ISubmissonsRepository, SubmissonsRepository>();
 builder.Services.AddScoped<SubmissonsInterface, SubmissonsService>();
 builder.Services.AddScoped<ITotalStatsInterface, TotalStatsService>();
+builder.Services.AddScoped<IDatabaseControllInterface , DatabaseControlService>();
+builder.Services.AddHostedService<DatabaseWorker>();
 
 var app = builder.Build();
 

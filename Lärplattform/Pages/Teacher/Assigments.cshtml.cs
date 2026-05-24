@@ -39,7 +39,7 @@ namespace Lärplattform.Pages.Teacher
             if (response.IsSuccessStatusCode)
             {
                 var teacher = await response.Content.ReadFromJsonAsync<List<AssigementsViewModel>>();
-                if(teacher != null && teacher.Any())
+                if(teacher != null )
                 {
                     Assigements = teacher.Select(
                    a => new AssigementsViewModel

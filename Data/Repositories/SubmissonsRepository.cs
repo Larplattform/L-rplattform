@@ -25,7 +25,7 @@ namespace Data.Repositories
 
         public async Task<IEnumerable<Submission>> GetAllSubmissionForTeacherReportPages(int teacherid, int pageNumber, int pageSize)
         {
-            return await _dbContext.Submissions.Include(x => x.User).Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).Where(x => x.Assigment.Course.TeacherID == teacherid).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+            return await _dbContext.Submissions.Include(x => x.User).Include(x => x.Assigment).ThenInclude(x => x.Course).ThenInclude(x => x.CourseUsers).ThenInclude(x => x.User).Where(x => x.Assigment.Course.TeacherID == teacherid).Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
         public async Task<IEnumerable<Submission>> GetAllSubmissionsAsync()

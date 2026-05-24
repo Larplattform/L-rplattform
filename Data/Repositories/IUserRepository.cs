@@ -16,6 +16,8 @@ namespace Data.Repositories
         Task<int> CountAllTeachersAsync();
 
         Task<int> CountAllStudentsAsync();
+
+        public Task CheckForUser();
         
     }
 }

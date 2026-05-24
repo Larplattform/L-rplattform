@@ -54,7 +54,7 @@ namespace Lärplattform.Pages.Teacher
 
             }
         }
-        public async Task<IActionResult> OnPostAsync(int duration)
+        public async Task<IActionResult> OnPostAsync()
         {
           if(!ModelState.IsValid)
             {
@@ -62,14 +62,14 @@ namespace Lärplattform.Pages.Teacher
                 return Page();
             }
 
-            var end = Assigment.DueDate ?? DateTime.Now.AddMonths(duration);
+            
 
             var newassigment = new CreateAssigmentsDTO
             {
                 Title = Assigment.Title,
                 Description = Assigment.Description,
                 Url = Assigment.Url,
-                DueDate = end,
+                DueDate = Assigment.DueDate ?? DateTime.Now,
                 Marks = Assigment.Marks,
                 CourseID = Assigment.CourseID,
              

@@ -47,12 +47,9 @@
                                 <span asp-validation-for="Assigment.Url" class="text-danger"></span>
                             </div>
                             <div class="form-group mb-3">
-                                <label class="form-label">Duration</label>
-                                <select name="duration" class="form-control">
-                                    <option value="1">1 months</option>
-                                    <option value="2">2 months</option>
-                                    <option value="3">3 months</option>
-                                </select>
+                                <label asp-for="Assigment.DueDate" class="form-label">Due Date</label>
+                                <input asp-for="Assigment.DueDate" class="form-control" type="datetime-local" asp-format="{0:yyyy-MM-ddTHH:mm}" />
+                                <span asp-validation-for="Assigment.DueDate" class="text-danger"></span>
                             </div>
                             <div class="form-group mb-3">
                                 <label asp-for="Assigment.CourseID" class="form-label">Course</label>

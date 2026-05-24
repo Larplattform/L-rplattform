@@ -52,5 +52,15 @@ namespace Data.Repositories
             if(studentcount == null) return 0;
             return await _dbContext.Users.CountAsync(u => !u.IsDeleted && _dbContext.UserRoles.Any(x => x.UserId == u.Id && x.RoleId == studentcount.Id));
         }
+
+        public async Task CheckForUser()
+        {
+            var DoesUserExist = await _dbContext.Users.AnyAsync();
+
+            if(!DoesUserExist)
+            {
+                new InvalidOperationException("Data loss warning no users found");
+            }
+        }
     }
 }
