@@ -21,6 +21,8 @@ namespace Data.Repositories
 
         public Task<IEnumerable<Submission>> GetAllSubmissionForTeacherReportPages(int teacherid, int pageNumber, int pageSize);
 
+        public Task<IEnumerable<Submission>> GetAllSubmissionForStudentReportPages(int studentid, int pageNumber, int pageSize);
+
         public Task<Dictionary<int,int>> GetSubmissionsCountForStudents(List<int> studentids);
         public Task<Submission> Update(Submission submission);
 

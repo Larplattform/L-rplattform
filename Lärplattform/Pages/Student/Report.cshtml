@@ -1,0 +1,82 @@
+﻿@page
+@model Lärplattform.Pages.Student.ReportModel
+@{
+    Layout = "~/Pages/Shared/Dashboard.cshtml";
+}
+<div id="content" style="background-color:#3F6E2F">
+    <div id="Img-Dashboard" class="rounded shadow-sm mb-4 d-flex align-items-center">
+        <div class="pl-5">
+            <h1 class="text-dark font-weight-bold">Teacher Schedule</h1>
+        </div>
+    </div>
+
+    @if (Model.Report != null && Model.Report.Count > 0)
+    {
+        <div class="d-flex flex-column align-items-center">
+            <table class="table table-bordered table-striped bg-white shadow-sm rounded w-75">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">StudentName</th>
+                        <th scope="col">AssigmentName</th>
+                        <th scope="col">CourseName</th>
+                        <th scope="col">FinalGrade</th>
+                        <th scope="col">AssigmentsTurnedIn</th>
+                        <th scope="col">CoursEnddate</th>
+                        <th scope="col">ReportGrade</th>
+                   
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var entry in Model.Report)
+                    {
+                        <tr>
+                            <td>@entry.StudentName</td>
+                            <td>@entry.AssigmentTitle</td>
+                            <td>@entry.CourseName</td>
+                            <td>@entry.FinalGrade</td>
+                            <td>@entry.TotalAssigmentTurnedIn</td>
+                            <td>@entry.CourseEnddate.ToShortDateString()</td>
+                            
+                            <td>
+                                @if (entry.CourseEnddate.Date <= DateTime.Today)
+                                {
+                                    <a asp-page="/Teacher/EditFinalGrade" asp-route-StudentId="@entry.StuedntId" asp-route-CourseId="@entry.CourseId" class="btn btn-primary">Edit</a>
+                                }
+                                else
+                                {
+                                    <p>The course is still ongoing you can not report finalgrade</p>
+                                }
+                            </td>
+
+                        
+                      
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <nav aria-label="Page navigation example" class="mt-3">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                        <a class="page-link" asp-page="./Reports" asp-route-pageNumber="@(Model.PageNumber - 1)" asp-route-pageSize="@(Model.PageSize) ">Previous</a>
+                    </li>
+                    <li class="page-item active">
+                        <span class="page-link">@Model.PageNumber</span>
+                    </li>
+
+                    <li class="page-item @(Model.Report.Count < Model.PageSize ? "disabled" : "")">
+                        <a class="page-link" asp-page="./Reports" asp-route-pageNumber="@(Model.PageNumber + 1)" asp-route-pageSize="@(Model.PageSize)">Next</a>
+                    </li>
+                </ul>
+            </nav>
+
+       
+            
+        </div>
+    }
+    else
+    {
+        <div class="d-flex justify-content-center">
+            <p class="text-white">No reports available.</p>
+        </div>
+    }
