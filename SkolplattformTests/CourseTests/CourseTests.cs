@@ -1,4 +1,5 @@
 ﻿using Business.Interfaces;
+using Business.Services;
 using Data.DTOs;
 using Data.Entities;
 using Data.Repositories;
@@ -18,10 +19,13 @@ namespace SkolplattformTests.CourseTests
 
         public readonly Mock<ICourseInterface> _courseInterface;
 
+        public readonly Mock<IUserRepository> _userepository;
+
         public CourseTests()
         {
             _courseRepository = new Mock<ICourseRepository>();
             _courseInterface = new Mock<ICourseInterface>();
+            _userepository = new Mock<IUserRepository>();
         }
 
         [Fact]
@@ -157,6 +161,36 @@ namespace SkolplattformTests.CourseTests
             var respository = _courseRepository.Object;
             await respository.DeleteAsync(1);
             _courseRepository.Verify(repo => repo.DeleteAsync(1), Times.Once);
+        }
+
+        [Fact]
+        public async Task IF_linkStudentToCourse_Works_Send_CourseStudent()
+        {
+            var LinkDto = new LinkStudentToCourseDTO
+            {
+             CourseId = 1,
+             UserId = 1,
+              
+            };
+            _courseRepository
+             .Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(new Course { CourseID = 1, CourseUsers = new List<CourseUser>() });
+
+          _userepository
+             .Setup(repo => repo.GetUserByIdAsync(1)).ReturnsAsync(new User {Id = 1 });
+
+            var courseService = new CourseService(_courseRepository.Object , _userepository.Object);
+
+            var result = await courseService.LinkStudentToCourse(LinkDto);
+
+
+            Assert.NotNull(result);
+            Assert.Equal(1 , result.CourseId);
+            Assert.Equal(1 , result.UserId);
+
+            _courseRepository.Verify(repo => repo.SaveChangesAsync(), Times.Once);
+
+
+
         }
     }
 }
