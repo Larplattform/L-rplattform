@@ -33,8 +33,8 @@ namespace Data.Context
         private async Task SeedUsers()
         {
             await AddUserIfNotExists("Admin1@admin.com", "Erik", "Lund", "Lundgatan 2", "Stockholm", "Sweden", "Hejsan123#", ["Admin"]);
-            await AddUserIfNotExists("Elev1@elev.com", "Amanda", "Persson", "Lundgatan 29", "Stockholm", "Sweden", "Hejsan123#", ["Student"]);
-            await AddUserIfNotExists("Larare@larare.com", "Gunila", "Andersson", "Lundgatan 3", "Stockholm", "Sweden", "Hejsan123#", ["Teacher"]);
+            await AddUserIfNotExists("Student@student.com", "Amanda", "Persson", "Lundgatan 29", "Stockholm", "Sweden", "Hejsan123#", ["Student"]);
+            await AddUserIfNotExists("Teacher@teacher.com", "Gunila", "Andersson", "Lundgatan 3", "Stockholm", "Sweden", "Hejsan123#", ["Teacher"]);
         }
 
         /// <summary>
@@ -59,8 +59,8 @@ namespace Data.Context
             }
 
 
-            var teacher = await userManager.FindByEmailAsync("Larare@larare.com");
-            var student = await userManager.FindByEmailAsync("Elev1@elev.com");
+            var teacher = await userManager.FindByEmailAsync("Teacher@teacher.com");
+            var student = await userManager.FindByEmailAsync("Student@student.com");
 
             if (teacher == null)
             {
