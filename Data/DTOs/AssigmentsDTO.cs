@@ -23,6 +23,8 @@ namespace Data.DTOs
 
         public CourseDTO Course { get; set; } = null!;
 
+        public int TeacherID { get; set; }
+
         public bool IsPublished { get; set; }
 
        

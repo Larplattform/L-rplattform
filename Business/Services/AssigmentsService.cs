@@ -63,6 +63,7 @@ namespace Business.Services
                          CourseID = assigment.CourseID,
                          Url = assigment.Url,
                          DueDate= assigment.DueDate,
+                         TeacherID = assigment.TeacherID,
                          
                          Course = new CourseDTO
                          {
@@ -74,7 +75,7 @@ namespace Business.Services
                              Url = assigment.Course.Url,
                              ClassName = assigment.Course.ClassName,
                              TeacherID = assigment.Course.TeacherID,
-                             TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                             TeacherName = assigment.Teacher != null ? $"{assigment.Teacher.FirstName} {assigment.Teacher.FirstName}" : "Uknown Teacher"
                          }
                     });
                 }
@@ -108,6 +109,7 @@ namespace Business.Services
                         CourseID = assigment.Course.CourseID,
                         DueDate = assigment.DueDate,
                         Url = assigment.Url,
+                        TeacherID = assigment.TeacherID,
                         Course = new CourseDTO
                         {
                             CourseID = assigment.Course.CourseID,
@@ -118,7 +120,7 @@ namespace Business.Services
                             Url = assigment.Course.Url,
                             ClassName = assigment.Course.ClassName,
                             TeacherID = assigment.Course.TeacherID,
-                            TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                            TeacherName = assigment.Teacher != null ? $"{assigment.Teacher.FirstName} {assigment.Teacher.FirstName}" : "Uknown Teacher"
                         }
                     });
                 }
@@ -151,6 +153,7 @@ namespace Business.Services
                         CourseID = assigment.Course.CourseID,
                         DueDate = assigment.DueDate,
                         Url = assigment.Url,
+                        TeacherID = assigment.TeacherID,
                         Course = new CourseDTO
                         {
                             CourseID = assigment.Course.CourseID,
@@ -161,7 +164,7 @@ namespace Business.Services
                             Url = assigment.Course.Url,
                             ClassName = assigment.Course.ClassName,
                             TeacherID = assigment.Course.TeacherID,
-                            TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                            TeacherName = assigment.Teacher != null ? $"{assigment.Teacher.FirstName} {assigment.Teacher.FirstName}" : "Uknown Teacher"
                         }
                     });
                 }
@@ -194,6 +197,7 @@ namespace Business.Services
                        CourseID = assigment.Course.CourseID,
                        DueDate = assigment.DueDate,
                        Url = assigment.Url,
+                       TeacherID = assigment.TeacherID,
                        Course = new CourseDTO
                        {
                            CourseID = assigment.Course.CourseID,
@@ -204,7 +208,7 @@ namespace Business.Services
                            Url = assigment.Course.Url,
                            ClassName = assigment.Course.ClassName,
                            TeacherID = assigment.Course.TeacherID,
-                           TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                           TeacherName = assigment.Teacher != null ? $"{assigment.Teacher.FirstName} {assigment.Teacher.FirstName}" : "Uknown Teacher"
                        }
 
                     });
@@ -236,17 +240,18 @@ namespace Business.Services
                     CourseID = assigment.CourseID,
                     DueDate = assigment.DueDate,
                     Url = assigment.Url,
-                        Course = new CourseDTO
-                        {
-                            CourseID = assigment.Course.CourseID,
-                            SubjectName = assigment.Course.SubjectName,
-                            TotalMarks = assigment.Course.TotalMarks,
-                            StartDate = assigment.Course.StartDate,
-                            EndDate = assigment.Course.EndDate,
-                            Url = assigment.Course.Url,
-                            ClassName = assigment.Course.ClassName,
-                            TeacherID = assigment.Course.TeacherID,
-                            TeacherName = assigment.Course?.CourseUsers.Where(u => u.UserID == assigment.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                    TeacherID = assigment.TeacherID,
+                    Course = new CourseDTO
+                    {
+                        CourseID = assigment.Course.CourseID,
+                        SubjectName = assigment.Course.SubjectName,
+                        TotalMarks = assigment.Course.TotalMarks,
+                        StartDate = assigment.Course.StartDate,
+                        EndDate = assigment.Course.EndDate,
+                        Url = assigment.Course.Url,
+                        ClassName = assigment.Course.ClassName,
+                        TeacherID = assigment.Course.TeacherID,
+                        TeacherName = assigment.Teacher != null ? $"{assigment.Teacher.FirstName} {assigment.Teacher.FirstName}" : "Uknown Teacher"
                         }
 
                 };

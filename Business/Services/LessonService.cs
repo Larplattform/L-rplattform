@@ -84,7 +84,7 @@ namespace Business.Services
                     CourseName = x.Course?.SubjectName ?? "No CourseName",
                     CourseTotalMark = x.Course?.TotalMarks.ToString() ?? "no Total Marks",
                     TeacherID = x.Course?.TeacherID ?? 0,
-                    TeacherName = x.Course?.CourseUsers.Where(u => u.UserID == x.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                    TeacherName = x.Teacher != null ? $"{x.Teacher.FirstName} {x.Teacher.FirstName}" : "Uknown Teacher"
 
                 }).ToList();
                 
@@ -120,7 +120,7 @@ namespace Business.Services
                     CourseName = lesson.Course?.SubjectName ?? "No CourseName",
                     CourseTotalMark = lesson.Course?.TotalMarks.ToString() ?? "no Total Marks",
                     TeacherID = lesson.Course?.TeacherID ?? 0,
-                    TeacherName = lesson.Course?.CourseUsers.Where(u => u.UserID == u.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher"
+                    TeacherName = lesson.Teacher != null ? $"{lesson.Teacher.FirstName} {lesson.Teacher.FirstName}" : "Uknown Teacher"
 
                 };
             }catch(Exception ex)
@@ -150,7 +150,7 @@ namespace Business.Services
                         Description = lesson.Description,
                         Title = lesson.Title,
                         CourseID = lesson.CourseID,
-                        TeacherName = lesson.Course?.CourseUsers.Where(u => u.UserID == u.Course.TeacherID).Select(u => $"{u.User.FirstName} {u.User.LastName}").FirstOrDefault() ?? "Unknown Teacher",
+                        TeacherName = lesson.Teacher != null ? $"{lesson.Teacher.FirstName} {lesson.Teacher.FirstName}" : "Uknown Teacher",
                         TeacherID = lesson.Course?.TeacherID ?? 0,
 
                     });
