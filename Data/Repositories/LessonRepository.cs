@@ -30,7 +30,7 @@ namespace Data.Repositories
         public async Task<IEnumerable<Lesson>> AllLessonsWithCoursesAsync()
         {
 
-            return await _dbContext.Lessons.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).Where(c => !c.IsDeleted).ToListAsync();
+            return await _dbContext.Lessons.Include(x => x.Teacher).Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).Where(c => !c.IsDeleted).ToListAsync();
         }
 
         // It deletes the lesson by setting the IsDeleted property to true instead of removing it from the database.
@@ -48,7 +48,7 @@ namespace Data.Repositories
         // It retrieves all lessons associated with a specific course ID, including their associated courses, if they are not marked as deleted.
         public async Task<IEnumerable<Lesson>> GetByCourseIdAsync(int id , string userid)
         {
-            return await _dbContext.Lessons.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User)
+            return await _dbContext.Lessons.Include(x => x.Teacher).Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User)
                 .Where(l => l.CourseID == id && l.Course.TeacherID.ToString() == userid && !l.IsDeleted).ToListAsync();
         }
 
@@ -56,7 +56,7 @@ namespace Data.Repositories
 
         public async Task<Lesson?> GetByIdAsync(int courseID)
         {
-            return await _dbContext.Lessons.Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).FirstOrDefaultAsync(c => c.LessonID == courseID && !c.IsDeleted);
+            return await _dbContext.Lessons.Include(x => x.Teacher).Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).FirstOrDefaultAsync(c => c.LessonID == courseID && !c.IsDeleted);
         }
 
         // It saves the changes made to the database context asynchronously.
