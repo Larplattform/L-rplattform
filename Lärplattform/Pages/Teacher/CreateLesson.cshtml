@@ -45,7 +45,11 @@
                                 <input type="hidden" asp-for="NewLesson.CourseID" class="form-control" />
                                 <span asp-validation-for="NewLesson.CourseID" class="text-danger"></span>
                             </div>
-
+                            <div class="form-group mb-3">
+                   
+                                <input type="hidden" asp-for="NewLesson.TeacherID" class="form-control" />
+                                <span asp-validation-for="NewLesson.TeacherID" class="text-danger"></span>
+                            </div>
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-success">Create Lesson</button>
                                 <a asp-page="/Teacher/Lesson" class="btn btn-secondary">Cancel</a>

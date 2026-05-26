@@ -54,6 +54,11 @@
                                 <span asp-validation-for="Schedule.CourseID" class="text-danger"></span>
                             </div>
                            
+                            <div class="form-group mb-3">
+                   
+                                <input type="hidden" asp-for="Schedule.TeacherID" class="form-control" />
+                                <span asp-validation-for="Schedule.TeacherID" class="text-danger"></span>
+                            </div>
 
                             <div class="d-grid gap-2">
                                 <button type="submit" class="btn btn-success">Create Schedule</button>

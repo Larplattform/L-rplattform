@@ -54,6 +54,17 @@ namespace Lärplattform.Pages.Teacher
        
         public async Task<IActionResult> OnPostAsync()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found. Please log in again.");
+                return Page();
+            }
+        
+        Schedule.TeacherID = user.Id;
+
+            ModelState.Remove("Schedule.TeacherID");
+
             if (!ModelState.IsValid)
             {
                     await PopulateDropDown();
@@ -76,8 +87,9 @@ namespace Lärplattform.Pages.Teacher
                 CourseID = Schedule.CourseID,
                 EndDate = Schedule.EndDate ?? DateTime.Now,
                 StartDate = Schedule.StartDate ?? DateTime.Now,
-                Location = (Data.DTOs.LocationEnumCreateDTO)Schedule.Location
-
+                Location = (Data.DTOs.LocationEnumCreateDTO)Schedule.Location,
+                TeacherID = Schedule.TeacherID,
+                
 
 
             };

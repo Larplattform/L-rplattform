@@ -19,6 +19,10 @@ namespace Data.Entities
 
        public Course Course { get; set; } = null!;
 
+        public int TeacherID { get; set; }
+
+        public User Teacher { get; set; } = null!;
+
         public bool IsDeleted { get; set; }
     }
 }

@@ -30,6 +30,8 @@ namespace Business.Services
                     Description = createLessonDTO.Description,
                     Title = createLessonDTO.Title,
                     CourseID = createLessonDTO.CourseID,
+                    TeacherID = createLessonDTO.TeacherID,
+                   
 
                 };
 

@@ -1,5 +1,6 @@
 using Data.Entities;
 using Lärplattform.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,10 +10,12 @@ namespace Lärplattform.Pages.Teacher
     public class EditScheduleModel : PageModel
     {
         public readonly IHttpClientFactory HttpClientFactory;
+        public readonly UserManager<User> _UserManager;
 
-        public EditScheduleModel(IHttpClientFactory httpClientFactory)
+        public EditScheduleModel(IHttpClientFactory httpClientFactory, UserManager<User> userManager)
         {
             HttpClientFactory = httpClientFactory;
+            _UserManager = userManager;
         }
 
         [BindProperty]
@@ -47,6 +50,7 @@ namespace Lärplattform.Pages.Teacher
                         UpdateSchedule.EndDate = schedule.EndDate;
                         UpdateSchedule.Location = (LocationEnumUpdateViewModel)schedule.Location;
                         UpdateSchedule.CourseID = schedule.CourseID;
+                        UpdateSchedule.TeacherID = schedule.TeacherID;
                     }
                 }
                 else
@@ -68,6 +72,15 @@ namespace Lärplattform.Pages.Teacher
 
         public async Task<IActionResult> OnPostAsync()
         {
+            var user = await _UserManager.GetUserAsync(User);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found. Please log in again.");
+                return Page();
+            }
+            UpdateSchedule.TeacherID = user.Id;
+
+            ModelState.Remove("UpdateSchedule.TeacherID");
             if (!ModelState.IsValid)
             {
                 await PopulateDropdown();

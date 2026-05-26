@@ -1,4 +1,6 @@
+using Data.Entities;
 using Lärplattform.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
@@ -7,17 +9,28 @@ namespace Lärplattform.Pages.Teacher
     public class EditLessonModel : PageModel
     {
         public readonly IHttpClientFactory _HttpClientFactory;
+        public readonly UserManager<User> _userManager;
 
-        public EditLessonModel(IHttpClientFactory httpClientFactory)
+        public EditLessonModel(IHttpClientFactory httpClientFactory, UserManager<User> userManager)
         {
             _HttpClientFactory = httpClientFactory;
+            _userManager = userManager;
             
         }
         [BindProperty]
         public UpdateLessonViewModel NewLesson { get; set; } = new UpdateLessonViewModel();
         public async Task<IActionResult> OnGetAsync(int lessonId)
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found. Please log in again.");
+                return Page();
+            }
+
             NewLesson.LessonID = lessonId;
+
+           
 
             var client = _HttpClientFactory.CreateClient("APIClient");
 
@@ -32,6 +45,7 @@ namespace Lärplattform.Pages.Teacher
                     NewLesson.Description = lessonDTO.Description;
                     NewLesson.Content = lessonDTO.Content;
                     NewLesson.CourseID = lessonDTO.CourseID;
+                    NewLesson.TeacherID = lessonDTO.TeacherID;
                 }
                 return Page();
             }
@@ -46,6 +60,15 @@ namespace Lärplattform.Pages.Teacher
 
         public async Task<IActionResult> OnPostAsync()
         {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found. Please log in again.");
+                return Page();
+            }
+            NewLesson.TeacherID = user.Id;
+
+            ModelState.Remove("NewLesson.TeacherID");
             if (!ModelState.IsValid)
             {
                 return Page();
@@ -56,7 +79,8 @@ namespace Lärplattform.Pages.Teacher
                 Title = NewLesson.Title,
                 Description = NewLesson.Description,
                 Content = NewLesson.Content,
-                CourseID = NewLesson.CourseID
+                CourseID = NewLesson.CourseID,
+                TeacherID = NewLesson.TeacherID,
             };
             var client = _HttpClientFactory.CreateClient("APIClient");
             var response = await client.PutAsJsonAsync($"api/Lessons/{NewLesson.LessonID}", updateLessonDTO);

@@ -30,6 +30,7 @@ namespace Lärplattform.Pages.Teacher
                     Description = dto.Description,
                     Content = dto.Content,
                     CourseID = dto.CourseID,
+                    TeacherID = dto.TeacherID,
                 }).ToList();
                 return Page();
             }

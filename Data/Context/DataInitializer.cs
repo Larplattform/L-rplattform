@@ -113,7 +113,7 @@ namespace Data.Context
                 CourseID = MathematicsCourse.CourseID,
                 Title = "Introduktion till Algebra",
                 Content = "Innehåll för Matematik 101",
-
+                TeacherID=teacher.Id,
                 Description = "Lär dig grunderna i algebra, inklusive variabler, ekvationer och funktioner.",
 
             };
@@ -129,6 +129,7 @@ namespace Data.Context
                 Marks = 20,
                 DueDate = DateTime.Now.AddDays(7),
                 CourseID = MathematicsCourse.CourseID,
+                TeacherID = teacher.Id,
                 IsPublished = true
 
             };
@@ -143,6 +144,7 @@ namespace Data.Context
                 Grade = GradeEnum.A,
                 UserId = student!.Id,
                 AssigmentId = MathAssignment.AssigmentID,
+               
                 Status = true
             };
 
@@ -157,7 +159,8 @@ namespace Data.Context
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddMonths(3),
                 Location = LocationEnum.Gym,
-                Course = MathematicsCourse
+                Course = MathematicsCourse,
+                TeacherID= teacher.Id,
 
             };
 

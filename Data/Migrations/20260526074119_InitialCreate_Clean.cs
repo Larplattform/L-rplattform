@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddInitalCreate : Migration
+    public partial class InitialCreate_Clean : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -197,6 +197,7 @@ namespace Data.Migrations
                     DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Marks = table.Column<int>(type: "int", nullable: false),
                     CourseID = table.Column<int>(type: "int", nullable: false),
+                    TeacherID = table.Column<int>(type: "int", nullable: false),
                     IsPublished = table.Column<bool>(type: "bit", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
@@ -204,11 +205,17 @@ namespace Data.Migrations
                 {
                     table.PrimaryKey("PK_Assigments", x => x.AssigmentID);
                     table.ForeignKey(
+                        name: "FK_Assigments_AspNetUsers_TeacherID",
+                        column: x => x.TeacherID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
                         name: "FK_Assigments_Courses_CourseID",
                         column: x => x.CourseID,
                         principalTable: "Courses",
                         principalColumn: "CourseID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -247,11 +254,18 @@ namespace Data.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourseID = table.Column<int>(type: "int", nullable: false),
+                    TeacherID = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lessons", x => x.LessonID);
+                    table.ForeignKey(
+                        name: "FK_Lessons_AspNetUsers_TeacherID",
+                        column: x => x.TeacherID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Lessons_Courses_CourseID",
                         column: x => x.CourseID,
@@ -269,12 +283,20 @@ namespace Data.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Location = table.Column<int>(type: "int", nullable: false),
+                    TeacherName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CourseID = table.Column<int>(type: "int", nullable: false),
+                    TeacherID = table.Column<int>(type: "int", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Schedules", x => x.ScheduleID);
+                    table.ForeignKey(
+                        name: "FK_Schedules_AspNetUsers_TeacherID",
+                        column: x => x.TeacherID,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Schedules_Courses_CourseID",
                         column: x => x.CourseID,
@@ -305,13 +327,13 @@ namespace Data.Migrations
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Submissions_Assigments_AssigmentId",
                         column: x => x.AssigmentId,
                         principalTable: "Assigments",
                         principalColumn: "AssigmentID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(
@@ -359,6 +381,11 @@ namespace Data.Migrations
                 column: "CourseID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Assigments_TeacherID",
+                table: "Assigments",
+                column: "TeacherID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CourseUsers_UserID",
                 table: "CourseUsers",
                 column: "UserID");
@@ -369,9 +396,19 @@ namespace Data.Migrations
                 column: "CourseID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Lessons_TeacherID",
+                table: "Lessons",
+                column: "TeacherID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Schedules_CourseID",
                 table: "Schedules",
                 column: "CourseID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Schedules_TeacherID",
+                table: "Schedules",
+                column: "TeacherID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Submissions_AssigmentId",
@@ -418,10 +455,10 @@ namespace Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "Assigments");
 
             migrationBuilder.DropTable(
-                name: "Assigments");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "Courses");

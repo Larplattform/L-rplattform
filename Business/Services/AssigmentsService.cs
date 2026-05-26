@@ -27,6 +27,7 @@ namespace Business.Services
                     Marks = assigment.Marks,
                     Url = assigment.Url,
                     CourseID = assigment.CourseID,
+                    TeacherID = assigment.TeacherID,
                     DueDate = assigment.DueDate,
                     
                     

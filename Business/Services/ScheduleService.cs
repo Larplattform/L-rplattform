@@ -35,6 +35,7 @@ namespace Business.Services
                     StartDate = schedule.StartDate,
                     EndDate = schedule.EndDate,
                     Location = (LocationEnum)schedule.Location,
+                    TeacherID = schedule.TeacherID,
                     CourseID = schedule.CourseID
 
                 };

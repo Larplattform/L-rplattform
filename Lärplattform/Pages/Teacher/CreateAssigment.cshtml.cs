@@ -56,7 +56,16 @@ namespace Lärplattform.Pages.Teacher
         }
         public async Task<IActionResult> OnPostAsync()
         {
-          if(!ModelState.IsValid)
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                ModelState.AddModelError(string.Empty, "User not found. Please log in again.");
+                return Page();
+            }
+            Assigment.TeacherID = user.Id;
+
+            ModelState.Remove("Assigment.TeacherID");
+            if (!ModelState.IsValid)
             {
                 await PopulateDropDown();
                 return Page();
@@ -72,6 +81,7 @@ namespace Lärplattform.Pages.Teacher
                 DueDate = Assigment.DueDate ?? DateTime.Now,
                 Marks = Assigment.Marks,
                 CourseID = Assigment.CourseID,
+                TeacherID = user.Id,
              
             };
 

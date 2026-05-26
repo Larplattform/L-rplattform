@@ -19,7 +19,7 @@ namespace Lärplattform.ViewModels
        
 
         public int CourseID { get; set; }
-
+        public int TeacherID { get; set; }
         public CourseViewModel Course { get; set; } = null!;
 
         public bool IsPublished { get; set; }

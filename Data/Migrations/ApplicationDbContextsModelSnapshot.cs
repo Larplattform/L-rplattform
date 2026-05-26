@@ -49,6 +49,9 @@ namespace Data.Migrations
                     b.Property<int>("Marks")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeacherID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -60,6 +63,8 @@ namespace Data.Migrations
                     b.HasKey("AssigmentID");
 
                     b.HasIndex("CourseID");
+
+                    b.HasIndex("TeacherID");
 
                     b.ToTable("Assigments");
                 });
@@ -146,6 +151,9 @@ namespace Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
+                    b.Property<int>("TeacherID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -153,6 +161,8 @@ namespace Data.Migrations
                     b.HasKey("LessonID");
 
                     b.HasIndex("CourseID");
+
+                    b.HasIndex("TeacherID");
 
                     b.ToTable("Lessons");
                 });
@@ -180,6 +190,9 @@ namespace Data.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("TeacherID")
+                        .HasColumnType("int");
+
                     b.Property<string>("TeacherName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -187,6 +200,8 @@ namespace Data.Migrations
                     b.HasKey("ScheduleID");
 
                     b.HasIndex("CourseID");
+
+                    b.HasIndex("TeacherID");
 
                     b.ToTable("Schedules");
                 });
@@ -471,7 +486,15 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Entities.User", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Data.Entities.CourseUser", b =>
@@ -501,7 +524,15 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Entities.User", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Data.Entities.Schedule", b =>
@@ -512,7 +543,15 @@ namespace Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Data.Entities.User", "Teacher")
+                        .WithMany()
+                        .HasForeignKey("TeacherID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Course");
+
+                    b.Navigation("Teacher");
                 });
 
             modelBuilder.Entity("Data.Entities.Submission", b =>
