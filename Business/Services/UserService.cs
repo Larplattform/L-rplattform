@@ -25,6 +25,7 @@ namespace Business.Services
 
                 return student.Select(student => new UserDTO
                 {
+                    Id = student.Id,
                   
                     FirstName = student.FirstName,
                     LastName = student.LastName,
@@ -50,6 +51,7 @@ namespace Business.Services
 
                 return teachers.Select(teacher => new UserDTO
                 {
+                    Id = teacher.Id,
                     FirstName = teacher.FirstName,
                     LastName = teacher.LastName,
                     Email = teacher.Email

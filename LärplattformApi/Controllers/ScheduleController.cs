@@ -151,5 +151,23 @@ namespace LärplattformApi.Controllers
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
         }
+
+        [HttpGet("teacherId/{teacherId:int}/page/{pageNumber:int}/size/{pageSize:int}")]
+        public async Task<IActionResult> GetTeacherSchedulesByPage(int teacherId, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var schedules = await _scheduleInterface.GetScheduleTeacherPagesAsync(teacherId,pageNumber, pageSize);
+                if (schedules == null || !schedules.Any())
+                {
+                    return NotFound($"No schedules found for page {pageNumber} with page size {pageSize}.");
+                }
+                return Ok(schedules);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
     }
 }

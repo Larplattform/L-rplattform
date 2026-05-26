@@ -1,4 +1,5 @@
 ﻿using Data.DTOs;
+using Data.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,6 +26,7 @@ namespace Business.Interfaces
 
         public Task<IEnumerable<ScheduleDTO>> GetScheduleStudentPagesAsync(int studentId,int pageNumber, int pageSize);
 
+        public Task<IEnumerable<ScheduleDTO>> GetScheduleTeacherPagesAsync(int teacherId, int pageNumber, int pageSize);
 
     }
 }

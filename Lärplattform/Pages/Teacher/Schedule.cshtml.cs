@@ -1,4 +1,6 @@
+using Data.Entities;
 using Lärplattform.ViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json.Serialization;
@@ -8,10 +10,12 @@ namespace Lärplattform.Pages.Teacher
     public class ScheduleModel : PageModel
     {
         public readonly IHttpClientFactory httpClientFactory;
+        public readonly UserManager<User> _userManager;
 
-        public ScheduleModel(IHttpClientFactory httpClientFactory)
+        public ScheduleModel(IHttpClientFactory httpClientFactory, UserManager<User> userManager)
         {
             this.httpClientFactory = httpClientFactory;
+            _userManager = userManager;
         }
 
         public List<ScheduleViewModel> Schedules { get; set; } = new List<ScheduleViewModel>();
@@ -26,9 +30,19 @@ namespace Lärplattform.Pages.Teacher
         {
             PageNumber = pageNumber;
             PageSize = pageSize;
-       
+
+            var user = await _userManager.GetUserAsync(User);
+
+            if (user == null)
+            {
+                return RedirectToPage("/Account/Login");
+            }
+
+
+            var currentUserId = user.Id;
+
             var httpClient = httpClientFactory.CreateClient("APIClient");
-            var response = await httpClient.GetAsync($"api/Schedule/page/{pageNumber}/size/{pageSize}");
+            var response = await httpClient.GetAsync($"api/Schedule/teacherId/{currentUserId}/page/{pageNumber}/size/{pageSize}");
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();

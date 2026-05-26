@@ -37,6 +37,8 @@ namespace Data.Repositories
 
         public Task<IEnumerable<Schedule>> GetScheduleStudentPagesAsync(int studentId,int pageNumber, int pageSize);
 
+        public Task<IEnumerable<Schedule>> GetScheduleTeacherPagesAsync(int teacherId, int pageNumber, int pageSize);
+
 
     }
 }

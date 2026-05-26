@@ -401,6 +401,56 @@ namespace Business.Services
             }
         }
 
+        public async Task<IEnumerable<ScheduleDTO>> GetScheduleTeacherPagesAsync(int teacherId, int pageNumber, int pageSize)
+        {
+            try
+            {
+                var AllSchdule = await _scheduleRepository.GetScheduleTeacherPagesAsync(teacherId , pageNumber, pageSize);
+
+                var scheduleDTOs = new List<ScheduleDTO>();
+                foreach (var schedule in AllSchdule)
+                {
+                    var scheduleDTO = new ScheduleDTO
+                    {
+                        ScheduleID = schedule.ScheduleID,
+                        StartDate = schedule.StartDate,
+                        EndDate = schedule.EndDate,
+                        Location = (LocationEnumDTO)schedule.Location,
+                        CourseID = schedule.CourseID,
+                        TeacherName = schedule.Teacher != null ? $"{schedule.Teacher.FirstName} {schedule.Teacher.LastName}" : "Uknown Teacher",
+                        Course = new CourseDTO
+                        {
+                            CourseID = schedule.Course.CourseID,
+                            SubjectName = schedule.Course.SubjectName,
+                            TotalMarks = schedule.Course.TotalMarks,
+                            Url = schedule.Course.Url,
+                            ClassName = schedule.Course.ClassName,
+
+                            TeacherID = schedule.Course.TeacherID,
+                            StartDate = schedule.Course.StartDate,
+                            EndDate = schedule.Course.EndDate,
+                            Users = schedule.Course.CourseUsers.Select(u => new UserDTO
+                            {
+                                FirstName = u.User.FirstName,
+                                LastName = u.User.LastName,
+                                Email = u.User.Email,
+                            }).ToList()
+                        },
+
+                    };
+                    scheduleDTOs.Add(scheduleDTO);
+                }
+                return scheduleDTOs;
+
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"An error occurred while retrieving paginated schedules: {ex.Message}");
+                throw; // Rethrow the exception to be handled by the caller
+            }
+        }
+
         public async Task<UpdateScheduleDTO> UpdateScheduleAsync(int id, UpdateScheduleDTO schedule)
         {
             try
