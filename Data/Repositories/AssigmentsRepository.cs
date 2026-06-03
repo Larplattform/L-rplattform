@@ -47,7 +47,6 @@ namespace Data.Repositories
         {
             return await _dbContext.Assigments.Include(x => x.Teacher).Include(c => c.Course).ThenInclude(c => c.CourseUsers).ThenInclude(x => x.User).FirstOrDefaultAsync(c => c.AssigmentID == id && !c.IsDeleted);
         }
-
         public async Task SaveChangesAsync()
         {
             await _dbContext.SaveChangesAsync();
